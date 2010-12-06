@@ -1,0 +1,43 @@
+DELETE FROM fields_meta_data WHERE
+  name LIKE 'jjwg_maps%';
+
+DELETE FROM fields_meta_data WHERE
+  id LIKE 'jjwg_Maps%';
+
+ALTER TABLE accounts_cstm
+  DROP jjwg_maps_lng_c,
+  DROP jjwg_maps_lat_c,
+  DROP jjwg_maps_geocode_status_c,
+  DROP jjwg_maps_address_c;
+
+ALTER TABLE cases_cstm
+  DROP jjwg_maps_lng_c,
+  DROP jjwg_maps_lat_c,
+  DROP jjwg_maps_geocode_status_c,
+  DROP jjwg_maps_address_c;
+
+ALTER TABLE contacts_cstm
+  DROP jjwg_maps_lng_c,
+  DROP jjwg_maps_lat_c,
+  DROP jjwg_maps_geocode_status_c,
+  DROP jjwg_maps_address_c;
+
+ALTER TABLE leads_cstm
+  DROP jjwg_maps_lat_c,
+  DROP jjwg_maps_lng_c,
+  DROP jjwg_maps_geocode_status_c,
+  DROP jjwg_maps_address_c;
+
+ALTER TABLE opportunities_cstm
+  DROP jjwg_maps_lng_c,
+  DROP jjwg_maps_lat_c,
+  DROP jjwg_maps_geocode_status_c,
+  DROP jjwg_maps_address_c;
+
+ALTER TABLE project_cstm
+  DROP jjwg_maps_lat_c,
+  DROP jjwg_maps_lng_c,
+  DROP jjwg_maps_geocode_status_c,
+  DROP jjwg_maps_address_c;
+
+
