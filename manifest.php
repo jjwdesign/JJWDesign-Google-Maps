@@ -4,27 +4,28 @@ $manifest = array (
      'acceptable_sugar_versions' => 
 	  array (
 		'regex_matches' => array (
-			'6\..*',
+			'6\.[2-9].*',
 		),
       ),
       'acceptable_sugar_flavors' =>
       array(
-        'CE', 'PRO','ENT'
+        'CE','PRO','ENT','CORP','ULT'
       ),
       'key'=>'jjwg',
       'author' => 'Jeff Walters',
-      'description' => 'JJWDesign Google Maps v1.2 for SugarCRM v6.0+',
-      'icon' => 'icons/default/icon_jjwg_Maps.gif',
+      'description' => 'JJWDesign Google Maps v2.0 for SugarCRM v6.2+',
+      'icon' => 'images/icon_jjwg_Maps.gif',
       'is_uninstallable' => true,
       'name' => 'JJWDesign_Google_Maps',
-      'published_date' => '2010-11-13 17:41:01',
+      'published_date' => '2012-08-23 19:02:02',
       'type' => 'module',
-      'version' => '1.2-6.0+',
-      'remove_tables' => 'prompt',
+      'version' => '2.0-6.2+',
+      'remove_tables' => 'prompt'
 );
 
 $installdefs = array (
   'id' => 'Google_Maps',
+
   'beans' => 
   array (
     array (
@@ -33,14 +34,62 @@ $installdefs = array (
       'path' => 'modules/jjwg_Maps/jjwg_Maps.php',
       'tab' => true,
     ),
+    array (
+      'module' => 'jjwg_Markers',
+      'class' => 'jjwg_Markers',
+      'path' => 'modules/jjwg_Markers/jjwg_Markers.php',
+      'tab' => true,
+    ),
+    array (
+      'module' => 'jjwg_Areas',
+      'class' => 'jjwg_Areas',
+      'path' => 'modules/jjwg_Areas/jjwg_Areas.php',
+      'tab' => true,
+    ),
+    array (
+      'module' => 'jjwg_Address_Cache',
+      'class' => 'jjwg_Address_Cache',
+      'path' => 'modules/jjwg_Address_Cache/jjwg_Address_Cache.php',
+      'tab' => true,
+    ),
   ),
+
   'layoutdefs' => 
   array (
+    array (
+      'from' => '<basepath>/SugarModules/relationships/layoutdefs/jjwg_Areas.php',
+      'to_module' => 'jjwg_Areas',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/relationships/layoutdefs/jjwg_Markers.php',
+      'to_module' => 'jjwg_Markers',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/relationships/layoutdefs/jjwg_Maps.php',
+      'to_module' => 'jjwg_Maps',
+    ),
   ),
+
   'relationships' => 
   array (
+    array (
+      'meta_data' => '<basepath>/SugarModules/relationships/relationships/jjwg_maps_jjwg_areasMetaData.php',
+    ),
+    array (
+      'meta_data' => '<basepath>/SugarModules/relationships/relationships/jjwg_maps_jjwg_markersMetaData.php',
+    ),
   ),
-  'image_dir' => '<basepath>/icons',
+
+  // Images copied to the custom/themes/default/images folder
+  'image_dir' => '<basepath>/images',
+
+  'administration' => 
+  array(
+    array(
+      'from' => '<basepath>/SugarModules/modules/Administration/jjwg_Mapsadmin.php',
+      'to' => 'modules/Administration/jjwg_Mapsadmin.php',
+    ),
+  ),
 
   'copy' => 
   array (
@@ -49,89 +98,145 @@ $installdefs = array (
       'from' => '<basepath>/SugarModules/modules/jjwg_Maps',
       'to' => 'modules/jjwg_Maps',
     ),
+    array (
+      'from' => '<basepath>/SugarModules/modules/jjwg_Markers',
+      'to' => 'modules/jjwg_Markers',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/modules/jjwg_Areas',
+      'to' => 'modules/jjwg_Areas',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/modules/jjwg_Address_Cache',
+      'to' => 'modules/jjwg_Address_Cache',
+    ),
 
-    // Controller Entry Point Registry
-    // See post_install.php script
-
-    // Extend List View 
+    // Accounts - Extend List View
     array (
       'from' => '<basepath>/custom/modules/Accounts/views/view.list.php',
       'to' => 'custom/modules/Accounts/views/view.list.php',
     ),
-    // Extend List View Smarty
+    // Accounts - Extend List View Smarty
     array (
       'from' => '<basepath>/custom/modules/Accounts/AccountsListViewSmarty.php',
       'to' => 'custom/modules/Accounts/AccountsListViewSmarty.php',
     ),
-    // Logic Hook
+    // Accounts - Logic Hook
     array (
       'from' => '<basepath>/custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
       'to' => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
     ),
 
-    // Extend List View 
+    // Cases - Extend List View
     array (
       'from' => '<basepath>/custom/modules/Cases/views/view.list.php',
       'to' => 'custom/modules/Cases/views/view.list.php',
     ),
-    // Extend List View Smarty
+    // Cases - Extend List View Smarty
     array (
       'from' => '<basepath>/custom/modules/Cases/CasesListViewSmarty.php',
       'to' => 'custom/modules/Cases/CasesListViewSmarty.php',
     ),
+    // Cases - Logic Hook
+    array (
+      'from' => '<basepath>/custom/modules/Cases/CasesJjwg_MapsLogicHook.php',
+      'to' => 'custom/modules/Cases/CasesJjwg_MapsLogicHook.php',
+    ),
 
-    // Extend List View 
+    // Contacts - Extend List View
     array (
       'from' => '<basepath>/custom/modules/Contacts/views/view.list.php',
       'to' => 'custom/modules/Contacts/views/view.list.php',
     ),
-    // Extend List View Smarty
+    // Contacts - Extend List View Smarty
     array (
       'from' => '<basepath>/custom/modules/Contacts/ContactsListViewSmarty.php',
       'to' => 'custom/modules/Contacts/ContactsListViewSmarty.php',
     ),
-    // Logic Hook
+    // Contacts - Logic Hook
     array (
       'from' => '<basepath>/custom/modules/Contacts/ContactsJjwg_MapsLogicHook.php',
       'to' => 'custom/modules/Contacts/ContactsJjwg_MapsLogicHook.php',
     ),
 
-    // Extend List View 
+    // Leads - Extend List View
     array (
       'from' => '<basepath>/custom/modules/Leads/views/view.list.php',
       'to' => 'custom/modules/Leads/views/view.list.php',
     ),
-    // Extend List View Smarty
+    // Leads - Extend List View Smarty
     array (
       'from' => '<basepath>/custom/modules/Leads/LeadsListViewSmarty.php',
       'to' => 'custom/modules/Leads/LeadsListViewSmarty.php',
     ),
-    // Logic Hook
+    // Leads - Logic Hook
     array (
       'from' => '<basepath>/custom/modules/Leads/LeadsJjwg_MapsLogicHook.php',
       'to' => 'custom/modules/Leads/LeadsJjwg_MapsLogicHook.php',
     ),
 
-    // Extend List View 
+    // Meetings - Extend List View
+    array (
+      'from' => '<basepath>/custom/modules/Meetings/views/view.list.php',
+      'to' => 'custom/modules/Meetings/views/view.list.php',
+    ),
+    // Meetings - Extend List View Smarty
+    array (
+      'from' => '<basepath>/custom/modules/Meetings/MeetingsListViewSmarty.php',
+      'to' => 'custom/modules/Meetings/MeetingsListViewSmarty.php',
+    ),
+    // Meetings - Logic Hook
+    array (
+      'from' => '<basepath>/custom/modules/Meetings/MeetingsJjwg_MapsLogicHook.php',
+      'to' => 'custom/modules/Meetings/MeetingsJjwg_MapsLogicHook.php',
+    ),
+
+    // Opportunities - Extend List View
     array (
       'from' => '<basepath>/custom/modules/Opportunities/views/view.list.php',
       'to' => 'custom/modules/Opportunities/views/view.list.php',
     ),
-    // Extend List View Smarty
+    // Opportunities - Extend List View Smarty
     array (
       'from' => '<basepath>/custom/modules/Opportunities/OpportunitiesListViewSmarty.php',
       'to' => 'custom/modules/Opportunities/OpportunitiesListViewSmarty.php',
     ),
+    // Opportunities - Logic Hook
+    array (
+      'from' => '<basepath>/custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php',
+      'to' => 'custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php',
+    ),
 
-    // Extend List View 
+    // Project - Extend List View
     array (
       'from' => '<basepath>/custom/modules/Project/views/view.list.php',
       'to' => 'custom/modules/Project/views/view.list.php',
     ),
-    // Extend List View Smarty
+    // Project - Extend List View Smarty
     array (
       'from' => '<basepath>/custom/modules/Project/ProjectListViewSmarty.php',
       'to' => 'custom/modules/Project/ProjectListViewSmarty.php',
+    ),
+    // Project - Logic Hook
+    array (
+      'from' => '<basepath>/custom/modules/Project/ProjectJjwg_MapsLogicHook.php',
+      'to' => 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php',
+    ),
+
+    // Prospects - Extend List View
+    array (
+      'from' => '<basepath>/custom/modules/Prospects/views/view.list.php',
+      'to' => 'custom/modules/Prospects/views/view.list.php',
+    ),
+    // Prospects - Extend List View Smarty
+    array (
+      'from' => '<basepath>/custom/modules/Prospects/ProspectsListViewSmarty.php',
+      'to' => 'custom/modules/Prospects/ProspectsListViewSmarty.php',
+    ),
+    // Prospects - Logic Hook
+    array (
+      'from' => '<basepath>/custom/modules/Prospects/ProspectsJjwg_MapsLogicHook.php',
+      'to' => 'custom/modules/Prospects/ProspectsJjwg_MapsLogicHook.php',
     ),
 
   ),
@@ -159,7 +264,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -185,7 +290,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -261,7 +366,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -287,7 +392,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -363,7 +468,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -389,7 +494,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -444,32 +549,6 @@ $installdefs = array (
       'ext3' => NULL,
       'ext4' => NULL,
     ),
-    'Leadsjjwg_maps_lat_c' => 
-    array (
-      'id' => 'Leadsjjwg_maps_lat_c',
-      'name' => 'jjwg_maps_lat_c',
-      'label' => 'LBL_JJWG_MAPS_LAT',
-      'comments' => NULL,
-      'help' => 'Latitude',
-      'module' => 'Leads',
-      'type' => 'float',
-      'max_size' => '10',
-      'require_option' => '0',
-      'default' => '0.00000000',
-      'default_value' => '0.00000000',
-      'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
-      'audited' => '0',
-      'mass_update' => '0',
-      'duplicate_merge' => '0',
-      'reportable' => '1',
-      'importable' => 'true',
-      'precision' => '8',
-      'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
-    ),
     'Leadsjjwg_maps_lng_c' => 
     array (
       'id' => 'Leadsjjwg_maps_lng_c',
@@ -491,7 +570,33 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
+    'Leadsjjwg_maps_lat_c' => 
+    array (
+      'id' => 'Leadsjjwg_maps_lat_c',
+      'name' => 'jjwg_maps_lat_c',
+      'label' => 'LBL_JJWG_MAPS_LAT',
+      'comments' => NULL,
+      'help' => 'Latitude',
+      'module' => 'Leads',
+      'type' => 'float',
+      'max_size' => '10',
+      'require_option' => '0',
+      'default' => '0.00000000',
+      'default_value' => '0.00000000',
+      'date_modified' => '2010-09-18 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'precision' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -546,6 +651,108 @@ $installdefs = array (
       'ext3' => NULL,
       'ext4' => NULL,
     ),
+    'Meetingsjjwg_maps_lng_c' => 
+    array (
+      'id' => 'Meetingsjjwg_maps_lng_c',
+      'name' => 'jjwg_maps_lng_c',
+      'label' => 'LBL_JJWG_MAPS_LNG',
+      'comments' => NULL,
+      'help' => 'Longitude',
+      'module' => 'Meetings',
+      'type' => 'float',
+      'max_size' => '11',
+      'require_option' => '0',
+      'default' => '0.00000000',
+      'default_value' => '0.00000000',
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'precision' => '8',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
+    'Meetingsjjwg_maps_lat_c' => 
+    array (
+      'id' => 'Meetingsjjwg_maps_lat_c',
+      'name' => 'jjwg_maps_lat_c',
+      'label' => 'LBL_JJWG_MAPS_LAT',
+      'comments' => NULL,
+      'help' => 'Latitude',
+      'module' => 'Meetings',
+      'type' => 'float',
+      'max_size' => '10',
+      'require_option' => '0',
+      'default' => '0.00000000',
+      'default_value' => '0.00000000',
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'precision' => '8',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
+    'Meetingsjjwg_maps_geocode_status_c' => 
+    array (
+      'id' => 'Meetingsjjwg_maps_geocode_status_c',
+      'name' => 'jjwg_maps_geocode_status_c',
+      'label' => 'LBL_JJWG_MAPS_GEOCODE_STATUS',
+      'comments' => 'Geocode Status',
+      'help' => 'Geocode Status',
+      'module' => 'Meetings',
+      'type' => 'varchar',
+      'max_size' => '255',
+      'require_option' => '0',
+      'default' => NULL,
+      'default_value' => NULL,
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
+    'Meetingsjjwg_maps_address_c' => 
+    array (
+      'id' => 'Meetingsjjwg_maps_address_c',
+      'name' => 'jjwg_maps_address_c',
+      'label' => 'LBL_JJWG_MAPS_ADDRESS',
+      'comments' => 'Address',
+      'help' => 'Address',
+      'module' => 'Meetings',
+      'type' => 'varchar',
+      'max_size' => '255',
+      'require_option' => '0',
+      'default' => NULL,
+      'default_value' => NULL,
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
     'Opportunitiesjjwg_maps_lng_c' => 
     array (
       'id' => 'Opportunitiesjjwg_maps_lng_c',
@@ -567,7 +774,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -593,7 +800,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -648,6 +855,31 @@ $installdefs = array (
       'ext3' => NULL,
       'ext4' => NULL,
     ),
+    'Projectjjwg_maps_lng_c' => 
+    array (
+      'id' => 'Projectjjwg_maps_lng_c',
+      'name' => 'jjwg_maps_lng_c',
+      'label' => 'LBL_JJWG_MAPS_LNG',
+      'comments' => NULL,
+      'help' => 'Longitude',
+      'module' => 'Project',
+      'type' => 'float',
+      'max_size' => '11',
+      'require_option' => '0',
+      'default' => '0.00000000',
+      'default_value' => '0.00000000',
+      'date_modified' => '2010-09-18 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
     'Projectjjwg_maps_lat_c' => 
     array (
       'id' => 'Projectjjwg_maps_lat_c',
@@ -669,32 +901,7 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'precision' => '8',
-      'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
-    ),
-    'Projectjjwg_maps_lng_c' => 
-    array (
-      'id' => 'Projectjjwg_maps_lng_c',
-      'name' => 'jjwg_maps_lng_c',
-      'label' => 'LBL_JJWG_MAPS_LNG',
-      'comments' => NULL,
-      'help' => 'Longitude',
-      'module' => 'Project',
-      'type' => 'float',
-      'max_size' => '11',
-      'require_option' => '0',
-      'default' => '0.00000000',
-      'default_value' => '0.00000000',
-      'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
-      'audited' => '0',
-      'mass_update' => '0',
-      'duplicate_merge' => '0',
-      'reportable' => '1',
-      'importable' => 'true',
-      'ext1' => '8',
+      'ext1' => NULL,
       'ext2' => NULL,
       'ext3' => NULL,
       'ext4' => NULL,
@@ -749,51 +956,438 @@ $installdefs = array (
       'ext3' => NULL,
       'ext4' => NULL,
     ),
-    // 10/05/2010 - Removed parent_name, parent_type and parent_id fields
-    // See the jjwg_Maps module module vardefs.php instead!
+    'Prospectsjjwg_maps_lng_c' => 
+    array (
+      'id' => 'Prospectsjjwg_maps_lng_c',
+      'name' => 'jjwg_maps_lng_c',
+      'label' => 'LBL_JJWG_MAPS_LNG',
+      'comments' => NULL,
+      'help' => 'Longitude',
+      'module' => 'Prospects',
+      'type' => 'float',
+      'max_size' => '11',
+      'require_option' => '0',
+      'default' => '0.00000000',
+      'default_value' => '0.00000000',
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'precision' => '8',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
+    'Prospectsjjwg_maps_lat_c' => 
+    array (
+      'id' => 'Prospectsjjwg_maps_lat_c',
+      'name' => 'jjwg_maps_lat_c',
+      'label' => 'LBL_JJWG_MAPS_LAT',
+      'comments' => NULL,
+      'help' => 'Latitude',
+      'module' => 'Prospects',
+      'type' => 'float',
+      'max_size' => '10',
+      'require_option' => '0',
+      'default' => '0.00000000',
+      'default_value' => '0.00000000',
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'precision' => '8',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
+    'Prospectsjjwg_maps_geocode_status_c' => 
+    array (
+      'id' => 'Prospectsjjwg_maps_geocode_status_c',
+      'name' => 'jjwg_maps_geocode_status_c',
+      'label' => 'LBL_JJWG_MAPS_GEOCODE_STATUS',
+      'comments' => 'Geocode Status',
+      'help' => 'Geocode Status',
+      'module' => 'Prospects',
+      'type' => 'varchar',
+      'max_size' => '255',
+      'require_option' => '0',
+      'default' => NULL,
+      'default_value' => NULL,
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
+    'Prospectsjjwg_maps_address_c' => 
+    array (
+      'id' => 'Prospectsjjwg_maps_address_c',
+      'name' => 'jjwg_maps_address_c',
+      'label' => 'LBL_JJWG_MAPS_ADDRESS',
+      'comments' => 'Address',
+      'help' => 'Address',
+      'module' => 'Prospects',
+      'type' => 'varchar',
+      'max_size' => '255',
+      'require_option' => '0',
+      'default' => NULL,
+      'default_value' => NULL,
+      'date_modified' => '2012-08-17 22:06:01',
+      'deleted' => '0',
+      'audited' => '0',
+      'mass_update' => '0',
+      'duplicate_merge' => '0',
+      'reportable' => '1',
+      'importable' => 'true',
+      'ext1' => NULL,
+      'ext2' => NULL,
+      'ext3' => NULL,
+      'ext4' => NULL,
+    ),
   ),
 
-  'language' => array (
+  'language' => 
+  array (
+
+    // Administrative Language
+    array (
+      'from' => '<basepath>/SugarModules/modules/Administration/language/en_us.lang.php',
+      'to_module' => 'Administration',
+      'language' => 'en_us',
+    ),
+
+    // Relationships Language
+    array (
+      'from' => '<basepath>/SugarModules/relationships/language/jjwg_Areas.php',
+      'to_module' => 'jjwg_Areas',
+      'language' => 'en_us',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/relationships/language/jjwg_Markers.php',
+      'to_module' => 'jjwg_Markers',
+      'language' => 'en_us',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/relationships/language/jjwg_Maps.php',
+      'to_module' => 'jjwg_Maps',
+      'language' => 'en_us',
+    ),
+
+    // Application Language
     array (
       'from' => '<basepath>/SugarModules/language/application/en_us.lang.php',
       'to_module' => 'application',
       'language' => 'en_us',
     ),
+    array (
+      'from' => '<basepath>/SugarModules/language/application/es_es.lang.php',
+      'to_module' => 'application',
+      'language' => 'es_es',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/language/application/ge_ge.lang.php',
+      'to_module' => 'application',
+      'language' => 'ge_ge',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/language/application/pt_br.lang.php',
+      'to_module' => 'application',
+      'language' => 'pt_br',
+    ),
+  ),
+
+  'vardefs' => 
+  array (
+    array (
+      'from' => '<basepath>/SugarModules/relationships/vardefs/jjwg_Areas.php',
+      'to_module' => 'jjwg_Areas',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/relationships/vardefs/jjwg_Markers.php',
+      'to_module' => 'jjwg_Markers',
+    ),
+    array (
+      'from' => '<basepath>/SugarModules/relationships/vardefs/jjwg_Maps.php',
+      'to_module' => 'jjwg_Maps',
+    ),
   ),
 
   'logic_hooks' => array(
+
+     // Prospects
      array(
-        'module'         => 'Accounts',
+        'module'         => 'Prospects',
         'hook'           => 'before_save',
         'order'          => 77,
-        'description'    => 'removeGeocodeInfo',
-        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-        'class'          => 'AccountsJjwg_MapsLogicHook',
-        'function'       => 'removeGeocodeInfo',
-     ), 
+        'description'    => 'updateGeocodeInfo',
+        'file'           => 'custom/modules/Prospects/ProspectsJjwg_MapsLogicHook.php',
+        'class'          => 'ProspectsJjwg_MapsLogicHook',
+        'function'       => 'updateGeocodeInfo',
+     ),
      array(
-        'module'         => 'Contacts',
-        'hook'           => 'before_save',
+        'module'         => 'Prospects',
+        'hook'           => 'after_save',
         'order'          => 77,
-        'description'    => 'removeGeocodeInfo',
-        'file'           => 'custom/modules/Contacts/ContactsJjwg_MapsLogicHook.php',
-        'class'          => 'ContactsJjwg_MapsLogicHook',
-        'function'       => 'removeGeocodeInfo',
-     ), 
+        'description'    => 'updateRelatedMeetingsGeocodeInfo',
+        'file'           => 'custom/modules/Prospects/ProspectsJjwg_MapsLogicHook.php',
+        'class'          => 'ProspectsJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedMeetingsGeocodeInfo',
+     ),
+
+     // Leads
      array(
         'module'         => 'Leads',
         'hook'           => 'before_save',
         'order'          => 77,
-        'description'    => 'removeGeocodeInfo',
+        'description'    => 'updateGeocodeInfo',
         'file'           => 'custom/modules/Leads/LeadsJjwg_MapsLogicHook.php',
         'class'          => 'LeadsJjwg_MapsLogicHook',
-        'function'       => 'removeGeocodeInfo',
-     ), 
+        'function'       => 'updateGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Leads',
+        'hook'           => 'after_save',
+        'order'          => 77,
+        'description'    => 'updateRelatedMeetingsGeocodeInfo',
+        'file'           => 'custom/modules/Leads/LeadsJjwg_MapsLogicHook.php',
+        'class'          => 'LeadsJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedMeetingsGeocodeInfo',
+     ),
+
+     // Contacts
+     array(
+        'module'         => 'Contacts',
+        'hook'           => 'before_save',
+        'order'          => 77,
+        'description'    => 'updateGeocodeInfo',
+        'file'           => 'custom/modules/Contacts/ContactsJjwg_MapsLogicHook.php',
+        'class'          => 'ContactsJjwg_MapsLogicHook',
+        'function'       => 'updateGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Contacts',
+        'hook'           => 'after_save',
+        'order'          => 77,
+        'description'    => 'updateRelatedMeetingsGeocodeInfo',
+        'file'           => 'custom/modules/Contacts/ContactsJjwg_MapsLogicHook.php',
+        'class'          => 'ContactsJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedMeetingsGeocodeInfo',
+     ),
+
+     // Meetings
+     array(
+        'module'         => 'Meetings',
+        'hook'           => 'after_save',
+        'order'          => 77,
+        'description'    => 'updateMeetingGeocodeInfo',
+        'file'           => 'custom/modules/Meetings/MeetingsJjwg_MapsLogicHook.php',
+        'class'          => 'MeetingsJjwg_MapsLogicHook',
+        'function'       => 'updateMeetingGeocodeInfo',
+     ),
+
+     // Opportunities (5 hooks)
+     array(
+        'module'         => 'Opportunities',
+        'hook'           => 'before_save',
+        'order'          => 77,
+        'description'    => 'updateGeocodeInfo',
+        'file'           => 'custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php',
+        'class'          => 'OpportunitiesJjwg_MapsLogicHook',
+        'function'       => 'updateGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Opportunities',
+        'hook'           => 'after_save',
+        'order'          => 77,
+        'description'    => 'updateRelatedMeetingsGeocodeInfo',
+        'file'           => 'custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php',
+        'class'          => 'OpportunitiesJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedMeetingsGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Opportunities',
+        'hook'           => 'after_save',
+        'order'          => 78,
+        'description'    => 'updateRelatedProjectGeocodeInfo',
+        'file'           => 'custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php',
+        'class'          => 'OpportunitiesJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedProjectGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Opportunities',
+        'hook'           => 'after_relationship_add',
+        'order'          => 77,
+        'description'    => 'addRelationship',
+        'file'           => 'custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php',
+        'class'          => 'OpportunitiesJjwg_MapsLogicHook',
+        'function'       => 'addRelationship',
+     ),
+     array(
+        'module'         => 'Opportunities',
+        'hook'           => 'after_relationship_delete',
+        'order'          => 77,
+        'description'    => 'deleteRelationship',
+        'file'           => 'custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php',
+        'class'          => 'OpportunitiesJjwg_MapsLogicHook',
+        'function'       => 'deleteRelationship',
+     ),
+
+     // Cases (4 Hooks)
+     array(
+        'module'         => 'Cases',
+        'hook'           => 'before_save',
+        'order'          => 77,
+        'description'    => 'updateGeocodeInfo',
+        'file'           => 'custom/modules/Cases/CasesJjwg_MapsLogicHook.php',
+        'class'          => 'CasesJjwg_MapsLogicHook',
+        'function'       => 'updateGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Cases',
+        'hook'           => 'after_save',
+        'order'          => 77,
+        'description'    => 'updateRelatedMeetingsGeocodeInfo',
+        'file'           => 'custom/modules/Cases/CasesJjwg_MapsLogicHook.php',
+        'class'          => 'CasesJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedMeetingsGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Cases',
+        'hook'           => 'after_relationship_add',
+        'order'          => 77,
+        'description'    => 'addRelationship',
+        'file'           => 'custom/modules/Cases/CasesJjwg_MapsLogicHook.php',
+        'class'          => 'CasesJjwg_MapsLogicHook',
+        'function'       => 'addRelationship',
+     ),
+     array(
+        'module'         => 'Cases',
+        'hook'           => 'after_relationship_delete',
+        'order'          => 77,
+        'description'    => 'deleteRelationship',
+        'file'           => 'custom/modules/Cases/CasesJjwg_MapsLogicHook.php',
+        'class'          => 'CasesJjwg_MapsLogicHook',
+        'function'       => 'deleteRelationship',
+     ),
+
+     // Project (4 Hooks)
+     array(
+        'module'         => 'Project',
+        'hook'           => 'before_save',
+        'order'          => 77,
+        'description'    => 'updateGeocodeInfo',
+        'file'           => 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php',
+        'class'          => 'ProjectJjwg_MapsLogicHook',
+        'function'       => 'updateGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Project',
+        'hook'           => 'after_save',
+        'order'          => 77,
+        'description'    => 'updateRelatedMeetingsGeocodeInfo',
+        'file'           => 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php',
+        'class'          => 'ProjectJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedMeetingsGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Project',
+        'hook'           => 'after_relationship_add',
+        'order'          => 77,
+        'description'    => 'addRelationship',
+        'file'           => 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php',
+        'class'          => 'ProjectJjwg_MapsLogicHook',
+        'function'       => 'addRelationship',
+     ),
+     array(
+        'module'         => 'Project',
+        'hook'           => 'after_relationship_delete',
+        'order'          => 77,
+        'description'    => 'deleteRelationship',
+        'file'           => 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php',
+        'class'          => 'ProjectJjwg_MapsLogicHook',
+        'function'       => 'deleteRelationship',
+     ),
+
+     // Accounts (7 hooks)
+     array(
+        'module'         => 'Accounts',
+        'hook'           => 'before_save',
+        'order'          => 77,
+        'description'    => 'updateGeocodeInfo',
+        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+        'class'          => 'AccountsJjwg_MapsLogicHook',
+        'function'       => 'updateGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Accounts',
+        'hook'           => 'after_save',
+        'order'          => 77,
+        'description'    => 'updateRelatedMeetingsGeocodeInfo',
+        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+        'class'          => 'AccountsJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedMeetingsGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Accounts',
+        'hook'           => 'after_save',
+        'order'          => 78,
+        'description'    => 'updateRelatedProjectGeocodeInfo',
+        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+        'class'          => 'AccountsJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedProjectGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Accounts',
+        'hook'           => 'after_save',
+        'order'          => 79,
+        'description'    => 'updateRelatedOpportunitiesGeocodeInfo',
+        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+        'class'          => 'AccountsJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedOpportunitiesGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Accounts',
+        'hook'           => 'after_save',
+        'order'          => 80,
+        'description'    => 'updateRelatedCasesGeocodeInfo',
+        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+        'class'          => 'AccountsJjwg_MapsLogicHook',
+        'function'       => 'updateRelatedCasesGeocodeInfo',
+     ),
+     array(
+        'module'         => 'Accounts',
+        'hook'           => 'after_relationship_add',
+        'order'          => 77,
+        'description'    => 'addRelationship',
+        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+        'class'          => 'AccountsJjwg_MapsLogicHook',
+        'function'       => 'addRelationship',
+     ),
+     array(
+        'module'         => 'Accounts',
+        'hook'           => 'after_relationship_delete',
+        'order'          => 77,
+        'description'    => 'deleteRelationship',
+        'file'           => 'custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+        'class'          => 'AccountsJjwg_MapsLogicHook',
+        'function'       => 'deleteRelationship',
+     ),
+
    ), 
 
 );
-
-
-
-
 
