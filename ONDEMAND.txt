@@ -1,0 +1,11 @@
+
+Version 2.0 Changes: 08/21/2012
+
+Changes Specifically for SugarCRM On-Demand Users
+
+1.) Removed instances of is_dir()
+2.) Removed instanced of is_file()
+3.) Removed any not acceptable file types
+4.) Changed Google API Request from file_get_contents() to use PHP cURL.
+
+
