@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Hello
+ * 
+ * 
+ */
+
 $manifest = array (
      'acceptable_sugar_versions' => 
 	  array (
