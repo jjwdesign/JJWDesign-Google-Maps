@@ -6,6 +6,7 @@ if (!defined('sugarEntry') || !sugarEntry)
 // modules/jjwg_Maps/controller.php
 
 require_once('include/utils.php');
+require_once('include/export_utils.php');
 require_once('include/JSON.php');
 require_once("include/Sugar_Smarty.php");
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
@@ -659,7 +660,7 @@ class jjwg_MapsController extends SugarController {
                 $records_where = $this->display_object->table_name . ".id IN('" . implode("','", $records) . "')";
             } elseif (@!empty($_REQUEST['current_post'])) {
                 if (!empty($display_module) && !empty($_REQUEST['current_post'])) {
-                    $ret_array = generateSearchWhere($display_module, $_REQUEST['current_post']);
+                    @$ret_array = generateSearchWhere($display_module, $_REQUEST['current_post']);
                     $records_where = $ret_array['where'];
                 }
             }
