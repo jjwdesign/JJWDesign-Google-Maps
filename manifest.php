@@ -9,12 +9,12 @@ $manifest = array (
       ),
       'acceptable_sugar_flavors' =>
       array(
-        'CE','PRO','ENT','CORP','ULT'
+        'OS','CE','PRO','ENT','CORP','ULT'
       ),
       'key'=>'jjwg',
       'author' => 'Jeff Walters',
       'description' => 'JJWDesign Google Maps v2.0 for SugarCRM v6.2+',
-      'icon' => 'images/icon_jjwg_Maps.gif',
+      'icon' => 'images/default/images/icon_jjwg_Maps.gif',
       'is_uninstallable' => true,
       'name' => 'JJWDesign_Google_Maps',
       'published_date' => '2012-08-23 19:02:02',

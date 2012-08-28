@@ -100,7 +100,7 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
   </style>
 
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-  <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
+  <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.4.2.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/polygon.js"></script>
   
   <script type="text/javascript">
