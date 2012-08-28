@@ -316,7 +316,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['map_default_center_latitude']) && is_numeric(trim($data['map_default_center_latitude']))) {
                 $admin->saveSetting($category, 'map_default_center_latitude', (float) trim($data['map_default_center_latitude']));
             }
-            if (!$this->is_valid_lat($data['map_default_center_longitude'])) $data['map_default_center_longitude'] = -99.5;
+            if (!$this->is_valid_lng($data['map_default_center_longitude'])) $data['map_default_center_longitude'] = -99.5;
             if (isset($data['map_default_center_longitude']) && is_numeric(trim($data['map_default_center_longitude']))) {
                 $admin->saveSetting($category, 'map_default_center_longitude', (float) trim($data['map_default_center_longitude']));
             }

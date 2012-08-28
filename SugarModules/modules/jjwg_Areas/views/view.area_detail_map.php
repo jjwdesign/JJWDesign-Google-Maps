@@ -23,7 +23,7 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView {
  
 <html xmlns="http://www.w3.org/1999/xhtml"> 
   <head> 
-  <title><?php echo $mod_strings['LBL_AREA_DISPLAY']; ?></title> 
+  <title><?php echo $mod_strings['LBL_AREA_MAP']; ?></title> 
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/> 
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $theme; ?>/css/style.css ?>" />
