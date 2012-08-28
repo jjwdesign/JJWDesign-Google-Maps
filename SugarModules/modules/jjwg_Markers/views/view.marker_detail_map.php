@@ -17,7 +17,7 @@ class Jjwg_MarkersViewMarker_Detail_Map extends SugarView {
     global $mod_strings;
     global $loc;
     
-    $custom_markers_dir = 'modules/jjwg_Markers/images/icons/';
+    $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 

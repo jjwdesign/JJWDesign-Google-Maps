@@ -103,7 +103,7 @@ var custom_areas = <?php echo (!empty($custom_areas)) ? $jsonObj->encode($custom
         }
     }
     // Define Dir of Group Icons
-    $icons_dir_base = 'custom/themes/default/images/jjwg_Maps/images/icons/';
+    $icons_dir_base = 'custom/themes/default/images/jjwg_Maps/';
     if ($num_groups <= 10) {
       $icons_dir = $icons_dir_base.'0-10/';
     } elseif ($num_groups <= 25) {
@@ -117,7 +117,7 @@ var custom_areas = <?php echo (!empty($custom_areas)) ? $jsonObj->encode($custom
     }
     
     // Define Custom Markers Dir and Common Icons
-    $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/images/icons/';
+    $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
     $custom_markers_icons = array();
     foreach($custom_markers as $marker) {
       $custom_markers_icons[] = $marker['image'];
@@ -130,9 +130,9 @@ var custom_areas = <?php echo (!empty($custom_areas)) ? $jsonObj->encode($custom
 var num_markers = <?php echo (!empty($num_markers)) ? $jsonObj->encode($num_markers) : '0'; ?>;
 var num_groups = <?php echo (!empty($num_groups)) ? $jsonObj->encode($num_groups) : '0'; ?>;
 var group_name_to_num = <?php echo (!empty($group_name_to_num)) ? $jsonObj->encode($group_name_to_num) : '[]'; ?>;
-var icons_dir = <?php echo (!empty($icons_dir)) ? $jsonObj->encode($icons_dir) : "'custom/themes/default/images/jjwg_Maps/images/icons/0-10/'"; ?>;
+var icons_dir = <?php echo (!empty($icons_dir)) ? $jsonObj->encode($icons_dir) : "'custom/themes/default/images/jjwg_Maps/0-10/'"; ?>;
 var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? $jsonObj->encode($num_custom_markers) : '0'; ?>;
-var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? $jsonObj->encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/images/icons/'"; ?>;
+var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? $jsonObj->encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/'"; ?>;
 var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? $jsonObj->encode($custom_markers_icons) : '[]'; ?>;
 
 function initialize() {
