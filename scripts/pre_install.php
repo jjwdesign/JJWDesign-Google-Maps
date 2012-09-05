@@ -67,8 +67,25 @@ function pre_install() {
   $db->query($query, false);
   $query = "ALTER TABLE project_cstm DROP jjwg_maps_address_c;";
   $db->query($query, false);
+
+  $query = "ALTER TABLE meetings_cstm DROP jjwg_maps_lng_c;";
+  $db->query($query, false);
+  $query = "ALTER TABLE meetings_cstm DROP jjwg_maps_lat_c;";
+  $db->query($query, false);
+  $query = "ALTER TABLE meetings_cstm DROP jjwg_maps_geocode_status_c;";
+  $db->query($query, false);
+  $query = "ALTER TABLE meetings_cstm DROP jjwg_maps_address_c;";
+  $db->query($query, false);
+
+  $query = "ALTER TABLE prospects_cstm DROP jjwg_maps_lng_c;";
+  $db->query($query, false);
+  $query = "ALTER TABLE prospects_cstm DROP jjwg_maps_lat_c;";
+  $db->query($query, false);
+  $query = "ALTER TABLE prospects_cstm DROP jjwg_maps_geocode_status_c;";
+  $db->query($query, false);
+  $query = "ALTER TABLE prospects_cstm DROP jjwg_maps_address_c;";
+  $db->query($query, false);
   */
 
 }
 
-?>
