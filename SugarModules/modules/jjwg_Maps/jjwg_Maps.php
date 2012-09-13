@@ -350,6 +350,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     function updateGeocodeInfo(&$bean, $after_save = false) {
         
         $GLOBALS['log']->info(__METHOD__.' START');
+        if (empty($bean->id) || empty($bean->object_name) || empty($bean->module_name)) {
+            return false;
+        }
         $GLOBALS['log']->info(__METHOD__.' $bean->object_name: '.$bean->object_name);
         
         // Make sure we have the custom fields in our $bean
@@ -365,7 +368,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.print_r($aInfo, true));
         
         // If the related Account address has changed then reset the geocode values
-        if ($aInfo['address'] != $bean->fetched_row['jjwg_maps_address_c']) {
+        if (isset($aInfo['address']) && $aInfo['address'] != $bean->fetched_row['jjwg_maps_address_c']) {
 
             // If needed, check the Address Cache Module for Geocode Info
             if (!is_object($this->jjwg_Address_Cache)) {
@@ -410,6 +413,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     function updateRelatedMeetingsGeocodeInfo(&$bean) {
 
         $GLOBALS['log']->info(__METHOD__.' START');
+        if (empty($bean->id) || empty($bean->object_name) || empty($bean->module_name)) {
+            return false;
+        }
         $GLOBALS['log']->info(__METHOD__.' $bean->object_name: '.$bean->object_name);
         
         // Check to see if address info is already set, or redefine
@@ -483,6 +489,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     function updateMeetingGeocodeInfo(&$bean) {
         
         $GLOBALS['log']->info(__METHOD__.' START');
+        if (empty($bean->object_name)) {
+            return false;
+        }
         $GLOBALS['log']->info(__METHOD__.' $bean->object_name: '.$bean->object_name);
         
         // Make sure we have the custom fields in our $bean
@@ -496,7 +505,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.print_r($aInfo, true));
         
         // If the related Account address has changed then reset the geocode values
-        if ($aInfo['address'] != $bean->fetched_row['jjwg_maps_address_c']) {
+        if (isset($aInfo['address']) && $aInfo['address'] != $bean->fetched_row['jjwg_maps_address_c']) {
 
             // If needed, check the Address Cache Module for Geocode Info
             if (!is_object($this->jjwg_Address_Cache)) {
@@ -529,6 +538,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     function updateGeocodeInfoByAssocQuery($table_name, $display, $aInfo = array()) {
         
         $GLOBALS['log']->info(__METHOD__.' START');
+        if (empty($display['id']) || empty($table_name)) {
+            return false;
+        }
         $GLOBALS['log']->info(__METHOD__.' $display[\'id\']: '.$display['id']);
         
         if (!(in_array($table_name, $this->settings['valid_geocode_tables']))) {
@@ -577,6 +589,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     function updateGeocodeInfoByBeanQuery(&$bean, $aInfo = array()) {
         
         $GLOBALS['log']->info(__METHOD__.' START');
+        if (empty($bean->id) || empty($bean->object_name) || empty($bean->table_name)) {
+            return false;
+        }
         $GLOBALS['log']->info(__METHOD__.' $bean->object_name: '.$bean->object_name);
         $GLOBALS['log']->info(__METHOD__.' $aInfo: '.print_r($aInfo, true));
         
