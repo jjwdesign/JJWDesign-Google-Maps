@@ -129,8 +129,13 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          * method to save data to cache table: jjwg_Address_Cache
          * @var boolean 1/0
          */
-        'address_cache_save_enabled' => true
+        'address_cache_save_enabled' => true,
         
+        /**
+         * 'logic_hooks_enabled' allows admins to disable the logic hooks functionality
+         * which is very useful during upgrading processes
+         */
+        'logic_hooks_enabled' => false
     );
     
     /**
@@ -245,7 +250,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             // Address Cache Settings: true/false or 1/0
             $this->settings['address_cache_get_enabled'] = (!empty($rev['address_cache_get_enabled'])) ? true : false;
             $this->settings['address_cache_save_enabled'] = (!empty($rev['address_cache_save_enabled'])) ? true : false;
-            
+            // Logic Hooks: true/false or 1/0
+            $this->settings['logic_hooks_enabled'] = (!empty($rev['logic_hooks_enabled'])) ? true : false;
+
         }
         
         // Set for Global Use
@@ -297,7 +304,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $int_settings = array('geocoding_limit', 'google_geocoding_limit',
                 'map_markers_limit', 'map_default_distance', 'export_addresses_limit',
                 'map_clusterer_grid_size', 'map_clusterer_max_zoom',
-                'address_cache_get_enabled', 'address_cache_save_enabled');
+                'address_cache_get_enabled', 'address_cache_save_enabled', 'logic_hooks_enabled');
             foreach ($int_settings as $setting) {
                 if (isset($data[$setting]) && is_numeric(trim($data[$setting]))) {
                     $admin->saveSetting($category, $setting, (int) trim($data[$setting]));
