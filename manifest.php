@@ -257,7 +257,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -265,9 +264,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Accountsjjwg_maps_lat_c' => 
     array (
@@ -283,7 +279,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -291,9 +286,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Accountsjjwg_maps_geocode_status_c' => 
     array (
@@ -309,16 +301,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Accountsjjwg_maps_address_c' => 
     array (
@@ -334,16 +322,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Casesjjwg_maps_lng_c' => 
     array (
@@ -359,7 +343,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -367,9 +350,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Casesjjwg_maps_lat_c' => 
     array (
@@ -385,7 +365,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -393,9 +372,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Casesjjwg_maps_geocode_status_c' => 
     array (
@@ -411,16 +387,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Casesjjwg_maps_address_c' => 
     array (
@@ -436,16 +408,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Contactsjjwg_maps_lng_c' => 
     array (
@@ -461,7 +429,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -469,9 +436,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Contactsjjwg_maps_lat_c' => 
     array (
@@ -487,7 +451,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -495,9 +458,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Contactsjjwg_maps_geocode_status_c' => 
     array (
@@ -513,16 +473,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Contactsjjwg_maps_address_c' => 
     array (
@@ -538,16 +494,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Leadsjjwg_maps_lng_c' => 
     array (
@@ -563,7 +515,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -571,9 +522,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Leadsjjwg_maps_lat_c' => 
     array (
@@ -589,7 +537,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -597,9 +544,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Leadsjjwg_maps_geocode_status_c' => 
     array (
@@ -615,16 +559,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Leadsjjwg_maps_address_c' => 
     array (
@@ -640,16 +580,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Meetingsjjwg_maps_lng_c' => 
     array (
@@ -665,7 +601,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2012-08-17 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -673,9 +608,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Meetingsjjwg_maps_lat_c' => 
     array (
@@ -691,7 +623,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2012-08-17 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -699,9 +630,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Meetingsjjwg_maps_geocode_status_c' => 
     array (
@@ -714,7 +642,6 @@ $installdefs = array (
       'type' => 'varchar',
       'max_size' => '255',
       'require_option' => '0',
-      'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2012-08-17 22:06:01',
       'deleted' => '0',
@@ -724,9 +651,6 @@ $installdefs = array (
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Meetingsjjwg_maps_address_c' => 
     array (
@@ -742,16 +666,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2012-08-17 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Opportunitiesjjwg_maps_lng_c' => 
     array (
@@ -767,7 +687,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -775,9 +694,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Opportunitiesjjwg_maps_lat_c' => 
     array (
@@ -793,7 +709,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -801,9 +716,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Opportunitiesjjwg_maps_geocode_status_c' => 
     array (
@@ -819,16 +731,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Opportunitiesjjwg_maps_address_c' => 
     array (
@@ -844,16 +752,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Projectjjwg_maps_lng_c' => 
     array (
@@ -869,7 +773,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -877,9 +780,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Projectjjwg_maps_lat_c' => 
     array (
@@ -895,7 +795,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -903,9 +802,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Projectjjwg_maps_geocode_status_c' => 
     array (
@@ -921,16 +817,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Projectjjwg_maps_address_c' => 
     array (
@@ -946,16 +838,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2010-09-18 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Prospectsjjwg_maps_lng_c' => 
     array (
@@ -971,7 +859,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2012-08-17 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -979,9 +866,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Prospectsjjwg_maps_lat_c' => 
     array (
@@ -997,7 +881,6 @@ $installdefs = array (
       'default' => '0.00000000',
       'default_value' => '0.00000000',
       'date_modified' => '2012-08-17 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
@@ -1005,9 +888,6 @@ $installdefs = array (
       'importable' => 'true',
       'precision' => '8',
       'ext1' => '8',
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Prospectsjjwg_maps_geocode_status_c' => 
     array (
@@ -1023,16 +903,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2012-08-17 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
     'Prospectsjjwg_maps_address_c' => 
     array (
@@ -1048,16 +924,12 @@ $installdefs = array (
       'default' => NULL,
       'default_value' => NULL,
       'date_modified' => '2012-08-17 22:06:01',
-      'deleted' => '0',
       'audited' => '0',
       'mass_update' => '0',
       'duplicate_merge' => '0',
       'reportable' => '1',
       'importable' => 'true',
       'ext1' => NULL,
-      'ext2' => NULL,
-      'ext3' => NULL,
-      'ext4' => NULL,
     ),
   ),
 
