@@ -877,7 +877,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $GLOBALS['log']->debug(__METHOD__.' Meeting $parent_id: '.$parent_id);
             
             // If the parent_type is valid module to geocode
-            if (in_array($parent_type, array_keys($this->settings['valid_geocode_modules'])) && $parent_type != 'Meeting') {
+            if (in_array($parent_type, array_keys($this->settings['valid_geocode_modules'])) 
+                    && !empty($parent_id) && $parent_type != 'Meeting') {
                 
                 // Define parent object
                 $parent = get_module_info($parent_type);
