@@ -1,75 +1,38 @@
 <?php
-/*********************************************************************************
- * SugarCRM is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2011 SugarCRM Inc.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'User',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Name',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'Markers List',
-  'LBL_MODULE_NAME' => 'Markers',
-  'LBL_MODULE_TITLE' => 'Markers',
-  'LBL_HOMEPAGE_TITLE' => 'My Markers',
-  'LNK_NEW_RECORD' => 'Create Markers',
-  'LNK_LIST' => 'View Markers',
-  'LNK_IMPORT_JJWG_MARKERS' => 'Import Markers',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Markers',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_JJWG_MARKERS_SUBPANEL_TITLE' => 'Markers',
-  'LBL_NEW_FORM_TITLE' => 'New Markers',
-  'LBL_CITY' => 'City',
-  'LBL_STATE' => 'State',
-  'LBL_COUNTRY' => 'Country',
-  'LBL_JJWG_MAPS_LAT' => 'Latitude',
-  'LBL_JJWG_MAPS_LNG' => 'Longitude',
-  'LBL_MARKER_IMAGE' => 'Marker Image Type',
-  'LBL_LIST_ASSIGNED_USER' => 'Assigned To',
-  'LBL_MARKER_MAP' => 'Marker Map',
-);
-?>
+$mod_strings['LBL_ASSIGNED_TO_ID'] = 'Assigned User Id';
+$mod_strings['LBL_ASSIGNED_TO_NAME'] = 'User';
+$mod_strings['LBL_ID'] = 'ID';
+$mod_strings['LBL_DATE_ENTERED'] = 'Date Created';
+$mod_strings['LBL_DATE_MODIFIED'] = 'Date Modified';
+$mod_strings['LBL_MODIFIED'] = 'Modified By';
+$mod_strings['LBL_MODIFIED_ID'] = 'Modified By Id';
+$mod_strings['LBL_MODIFIED_NAME'] = 'Modified By Name';
+$mod_strings['LBL_CREATED'] = 'Created By';
+$mod_strings['LBL_CREATED_ID'] = 'Created By Id';
+$mod_strings['LBL_DESCRIPTION'] = 'Description';
+$mod_strings['LBL_DELETED'] = 'Deleted';
+$mod_strings['LBL_NAME'] = 'Name';
+$mod_strings['LBL_CREATED_USER'] = 'Created by User';
+$mod_strings['LBL_MODIFIED_USER'] = 'Modified by User';
+$mod_strings['LBL_LIST_NAME'] = 'Name';
+$mod_strings['LBL_LIST_FORM_TITLE'] = 'Markers List';
+$mod_strings['LBL_MODULE_NAME'] = 'Markers';
+$mod_strings['LBL_MODULE_TITLE'] = 'Markers';
+$mod_strings['LBL_HOMEPAGE_TITLE'] = 'My Markers';
+$mod_strings['LNK_NEW_RECORD'] = 'Create Markers';
+$mod_strings['LNK_LIST'] = 'View Markers';
+$mod_strings['LNK_IMPORT_JJWG_MARKERS'] = 'Import Markers';
+$mod_strings['LBL_SEARCH_FORM_TITLE'] = 'Search Markers';
+$mod_strings['LBL_HISTORY_SUBPANEL_TITLE'] = 'View History';
+$mod_strings['LBL_ACTIVITIES_SUBPANEL_TITLE'] = 'Activities';
+$mod_strings['LBL_JJWG_MARKERS_SUBPANEL_TITLE'] = 'Markers';
+$mod_strings['LBL_NEW_FORM_TITLE'] = 'New Markers';
+$mod_strings['LBL_CITY'] = 'City';
+$mod_strings['LBL_STATE'] = 'State';
+$mod_strings['LBL_COUNTRY'] = 'Country';
+$mod_strings['LBL_JJWG_MAPS_LAT'] = 'Latitude';
+$mod_strings['LBL_JJWG_MAPS_LNG'] = 'Longitude';
+$mod_strings['LBL_MARKER_IMAGE'] = 'Marker Image Type';
+$mod_strings['LBL_LIST_ASSIGNED_USER'] = 'Assigned To';
+$mod_strings['LBL_MARKER_MAP'] = 'Marker Map';
