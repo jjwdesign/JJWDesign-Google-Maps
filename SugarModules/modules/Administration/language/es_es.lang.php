@@ -1,16 +1,16 @@
 <?php
 
 $mod_strings['LBL_JJWG_MAPS_ADMIN_HEADER'] = 'Google Maps';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_DESC'] = 'Manage your geocoding, testing geocoding, view geocoding result totals and configure advanced settings.';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE'] = 'Google Maps Settings';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_DESC'] = 'Configuration settings to adjust your Google Maps';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE'] = 'Geocoded Counts';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_DESC'] = 'Shows the number of module objects geocoded, grouped by geocoding response.';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_DONATE_TITLE'] = 'Donate to this Project';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_DONATE_DESC'] = 'Please consider donating to this project!';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_TITLE'] = 'Geocode Addresses';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_DESC'] = 'Geocode your object addreses. This process may take a few minutes!';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_TITLE'] = 'Geocoding Test';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_DESC'] = 'Run a single geocoding test with detailed display results.';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE'] = 'Address Cache';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC'] = 'Provides access to Address Cache information. This is only cache.';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_DESC'] = 'Administre su geocodificación, probando geocodificación, ver geocodificación resultados totales y configuración avanzada.';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE'] = 'Configuración de Google Maps';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_DESC'] = 'Configuraties para ajustar su Google Maps';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE'] = 'Cuenta de Geocodificación';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_DESC'] = 'Muestra el número de objetos geocodificados, agrupados por respuesta del sistema.';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_DONATE_TITLE'] = 'Done a este Proyecto';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_DONATE_DESC'] = '¡Por favor, considere realizar una donación a este!';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_TITLE'] = 'Direcciones Geocoficidadas';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_DESC'] = 'Geocodicando sus direcciones. Este proceso tomará unos pocos minutos...';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_TITLE'] = 'Prueba de Geocodificación';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_DESC'] = 'Correr un test de geocodificación con muestra detallada de resultados.';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE'] = 'Cache de Direcciones';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC'] = 'Provee acceso a la información de Caché de Direcciones. Esto es solo caché.';
