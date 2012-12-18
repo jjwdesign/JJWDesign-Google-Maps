@@ -22,9 +22,9 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
     global $geocoded_headings;
     global $geocoded_module_totals;
     
-    echo '<div class="moduleTitle"><h2>'.$mod_strings['LBL_GEOCODED_COUNTS'].'</h2></div>';
-    echo $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'];
+    echo '<div class="moduleTitle"><h2>'.$mod_strings['LBL_GEOCODED_COUNTS'].'</h2><div class="clear"></div></div>';
     echo '<div class="clear"></div>';
+    echo $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'];
     echo '<br /><br />';
 
     // Display last status code, if set.

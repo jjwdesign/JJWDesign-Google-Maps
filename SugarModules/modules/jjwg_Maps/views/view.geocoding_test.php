@@ -18,7 +18,7 @@ class Jjwg_MapsViewGeocoding_Test extends SugarView {
         if (!isset($_REQUEST['geocoding_address'])) $_REQUEST['geocoding_address'] = '';
 ?>
 
-<div class="moduleTitle"><h2><?php echo $mod_strings['LBL_MAP_ADDRESS_TEST']; ?></h2></div>
+<div class="moduleTitle"><h2><?php echo $mod_strings['LBL_MAP_ADDRESS_TEST']; ?></h2><div class="clear"></div></div>
 <div class="clear"></div>
 
 <form name=geocodingtest action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
