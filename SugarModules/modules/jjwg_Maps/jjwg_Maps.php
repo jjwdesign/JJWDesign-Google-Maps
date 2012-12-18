@@ -632,6 +632,35 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     }
 
     /**
+     * Remove All Geocoding Information from Custom Table for Module
+     * Simple Query Approach
+     * 
+     * @param type $bean    object
+     */
+    function deleteAllGeocodeInfoByBeanQuery(&$bean) {
+        
+        $GLOBALS['log']->info(__METHOD__.' START');
+        if (empty($bean->object_name) || empty($bean->table_name)) {
+            return false;
+        }
+        $GLOBALS['log']->info(__METHOD__.' $bean->object_name: '.$bean->object_name);
+        
+        $table_name = $bean->table_name;
+        if (!(in_array($table_name, $this->settings['valid_geocode_tables']))) {
+            return false;
+        }
+        
+        // Update Fields to NULL
+        $query = "UPDATE " . $table_name . "_cstm SET" .
+                " jjwg_maps_lat_c = NULL," .
+                " jjwg_maps_lng_c = NULL," .
+                " jjwg_maps_geocode_status_c = NULL," .
+                " jjwg_maps_address_c = NULL" .
+                " WHERE 1=1";
+        $update_result = $this->db->query($query);
+    }
+
+    /**
      * Get $db result of records (addresses) in need of geocoding
      * @param $table_name string
      * @param $limit integer
@@ -957,8 +986,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         }
         if (strlen(implode('', $address_parts)) > 3) {
             $address = implode(', ', $address_parts);
-            $address = preg_replace('/[\n\r]+/', '', $address);
-            return $address;
+            $address = preg_replace('/[\n\r]+/', ' ', trim($address));
+            $address = preg_replace("/[\t\s]+/", ' ', $address);
+            return trim($address);
         } else {
             return false;
         }

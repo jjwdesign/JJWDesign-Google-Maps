@@ -43,6 +43,7 @@ $mod_strings['LBL_GEOCODED_COUNTS'] = 'Módulo Condes Geocodificadas';
 $mod_strings['LBL_CRON_URL'] = 'Cron URL:';
 $mod_strings['LBL_MODULE_HEADING'] = 'Módulo';
 $mod_strings['LBL_MODULE_TOTAL_HEADING'] = 'Total';
+$mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'La tabla de abajo, muestra el número de objetos de geocodificados, agrupados por respuesta. '. 
 'Tenga en cuenta que las APIS de Google Maps públicas limitan el uso a 2.500 solicitudes de geocodificación por día, y por dirección IP.'.
 'Este módulo de caché de direcciones geocodificadas, tiene por objeto reducir el número total de peticiones necesarias e información durante el proceso de geocoficación.';
@@ -56,6 +57,7 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Utilice los enlaces siguientes para e
 'A continuación, utilice una herramienta geocodificar las direcciones. '.
 'Cuando haya terminado la geocodificación, importe las direcciones al módulo de caché de direcciones para ser utilizado con sus mapas. '.
 'Tenga en cuenta que el módulo de caché de direcciones es opcional. Toda la información de geocodificación se almacena en el módulo de representación.';
+$mod_strings['LBL_ADDRESS_CACHE'] = 'Caché de Direcciones';
 
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configuración';
@@ -64,7 +66,6 @@ $mod_strings['LBL_BILLING_ADDRESS'] = 'Dirección de Facturación';
 $mod_strings['LBL_SHIPPING_ADDRESS'] = 'Dirección de Envío';
 $mod_strings['LBL_PRIMARY_ADDRESS'] = 'Dirección Primaria';
 $mod_strings['LBL_ALTERNATIVE_ADDRESS'] = 'Dirección Alternativa';
-$mod_strings['LBL_FLEX_RELATE'] = 'Flex Relate';
 $mod_strings['LBL_ENABLED'] = 'Habilitada';
 $mod_strings['LBL_DISABLED'] = 'Deshabilitada';
 $mod_strings['LBL_DEFAULT'] = 'Por Defecto:';

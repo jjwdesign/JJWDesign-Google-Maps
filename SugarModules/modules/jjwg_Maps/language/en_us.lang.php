@@ -43,6 +43,7 @@ $mod_strings['LBL_GEOCODED_COUNTS'] = 'Module Geocoded Counts';
 $mod_strings['LBL_CRON_URL'] = 'Cron URL:';
 $mod_strings['LBL_MODULE_HEADING'] = 'Module';
 $mod_strings['LBL_MODULE_TOTAL_HEADING'] = 'Total';
+$mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'The table shown belown shows the number of module objects geocoded, grouped by geocoding response. '. 
 'Keep in mind that the standard Google Maps usage limit is 2500 requests per day. '.
 'This module will cache the addresses geocoding information during processing to reduce the overall number of requests needed.';
@@ -56,7 +57,7 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use the links below to export full ad
 'Then use an online or offline batch geocoding tool to geocode the addresses. '.
 'When you are finished geocoding, import the addresses into the Address Cache module to be used with your maps.'.
 'Note, the Address Cache module is optional. All geocoding information is stored in the representative module.';
-
+$mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configuration Settings';
 $mod_strings['LBL_CONFIG_SAVED'] = 'Settings Saved Successfully!';
@@ -64,7 +65,6 @@ $mod_strings['LBL_BILLING_ADDRESS'] = 'Billing Address';
 $mod_strings['LBL_SHIPPING_ADDRESS'] = 'Shipping Address';
 $mod_strings['LBL_PRIMARY_ADDRESS'] = 'Primary Address';
 $mod_strings['LBL_ALTERNATIVE_ADDRESS'] = 'Alternative Address';
-$mod_strings['LBL_FLEX_RELATE'] = 'Flex Relate';
 $mod_strings['LBL_ENABLED'] = 'Enabled';
 $mod_strings['LBL_DISABLED'] = 'Disabled';
 $mod_strings['LBL_DEFAULT'] = 'Default:';

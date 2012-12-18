@@ -43,6 +43,7 @@ $mod_strings['LBL_GEOCODED_COUNTS'] = 'Modul Statistik Geokodierung';
 $mod_strings['LBL_CRON_URL'] = 'Cron URL:';
 $mod_strings['LBL_MODULE_HEADING'] = 'Modul';
 $mod_strings['LBL_MODULE_TOTAL_HEADING'] = 'Insgesamt';
+$mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'Die Tabelle unten zeigt die Anzahl der geocodiert Objekte gruppiert nach Modul und Geocodierungs-Status. '. 
 'Beachten Sie, dass normalerweise die Google-Geocodierung auf 2500 Zugriffe pro Tag beschränkt ist. '.
 'Dieses Modul speichert die geocodierten Adressen-Informationen während der Verarbeitung, um die Gesamtzahl der Zugriffe zu reduzieren.';
@@ -56,6 +57,7 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Verwenden Sie die folgenden Links, um
 'Dann verwenden Sie eine Online-oder Offline Batch Geocoding-Tool, um die Adressen Geocode. '.
 'Wenn Sie fertig sind Geocodierung, importieren Sie die Adressen in die Adress-Cache-Modul mit Ihren Karten verwendet werden. '.
 'Beachten Sie, dass die Adress-Cache-Modul optional. Alle geocoding Informationen sind in der Vertreter-Modul gespeichert.';
+$mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
 
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configuration Settings';
@@ -64,7 +66,6 @@ $mod_strings['LBL_BILLING_ADDRESS'] = 'Billing Address';
 $mod_strings['LBL_SHIPPING_ADDRESS'] = 'Shipping Address';
 $mod_strings['LBL_PRIMARY_ADDRESS'] = 'Primary Address';
 $mod_strings['LBL_ALTERNATIVE_ADDRESS'] = 'Alternative Address';
-$mod_strings['LBL_FLEX_RELATE'] = 'Flex Relate';
 $mod_strings['LBL_ENABLED'] = 'Enabled';
 $mod_strings['LBL_DISABLED'] = 'Disabled';
 $mod_strings['LBL_DEFAULT'] = 'Default:';

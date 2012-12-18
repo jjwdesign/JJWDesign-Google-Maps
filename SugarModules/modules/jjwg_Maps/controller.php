@@ -305,15 +305,13 @@ class jjwg_MapsController extends SugarController {
         SugarApplication::redirect($url);
     }
 
-// end function action_geocode_addresses
-
-
     /**
      * export addresses in need of geocoding
      */
     function action_export_geocoding_addresses() {
 
         $address_data = array();
+        $addresses = array();
 
         if (!empty($_REQUEST['display_module']) && in_array($_REQUEST['display_module'], $this->settings['valid_geocode_modules'])) {
             $module_type = $_REQUEST['display_module'];
@@ -334,8 +332,16 @@ class jjwg_MapsController extends SugarController {
             // This will provide a related address & optionally a status, lat and lng from an account or other object
             $aInfo = $this->jjwg_Maps->defineMapsAddress($this->display_object->object_name, $display);
             //var_dump($aInfo);
-            $address_data[] = $aInfo;
+            if (!empty($aInfo['address'])) {
+                $addresses[] = trim($aInfo['address'], ' ,;."\'');
         }
+        }
+        
+        $addresses = array_unique($addresses);
+        foreach ($addresses as $address) {
+            $address_data[] = array($address, '', '');
+        }
+        
         $filename = $module_type . '_Addresses_' . date("Ymd") . ".csv";
         $this->do_list_csv_output($address_data, $filename);
         exit;
@@ -406,7 +412,6 @@ class jjwg_MapsController extends SugarController {
      */
     function action_config() {
 
-        $this->view = 'config';
         global $current_user;
         
         // Admin Only
@@ -416,15 +421,63 @@ class jjwg_MapsController extends SugarController {
                 $save_result = $this->jjwg_Maps->saveConfiguration($_REQUEST);
                 $config_save_notice = ($save_result == true) ? '1' : '0';
                 SugarApplication::redirect('index.php?module=jjwg_Maps&action=config&config_save_notice='.$config_save_notice);
-                sugar_die();
+            } else {
+                $this->view = 'config';
             }
         } else {
-            SugarApplication::redirect('index.php?module=jjwg_Maps&action=config&config_save_notice='.$config_save_notice);
-            sugar_die();
+            SugarApplication::redirect('index.php?module=jjwg_Maps&action=index');
         }
     }
     
+    /**
+     * action reset module geocode info
+     * Google Maps - geocoded_counts
+     */
+    function action_reset_geocoding() {
 
+        global $current_user;
+        $display_module = $_REQUEST['display_module'];
+        
+        // Define display object from the necessary classes (utils.php)
+        $this->display_object = get_module_info($display_module);
+
+        // Admin Only
+        if (!empty($current_user->is_admin)) {
+            if (is_object($this->display_object)) {
+                $delete_result = $this->jjwg_Maps->deleteAllGeocodeInfoByBeanQuery($this->display_object);
+                SugarApplication::redirect('index.php?module=jjwg_Maps&action=geocoded_counts');
+            } else {
+                $this->view = 'geocoded_counts';
+            }
+        } else {
+            SugarApplication::redirect('index.php?module=jjwg_Maps&action=index');
+        }
+    }
+    
+    /**
+     * delete all address cache
+     * Google Maps - geocoded_counts
+     */
+    function action_delete_all_address_cache() {
+
+        global $current_user;
+        // Define Address Cache Object
+        $this->jjwg_Address_Cache = get_module_info('jjwg_Address_Cache');
+        
+        // Admin Only
+        if (!empty($current_user->is_admin)) {
+            if (is_object($this->jjwg_Address_Cache)) {
+                // Post-Get-Redirect
+                $delete_result = $this->jjwg_Address_Cache->deleteAllAddressCache();
+                SugarApplication::redirect('index.php?module=jjwg_Maps&action=geocoded_counts');
+            } else {
+                $this->view = 'geocoded_counts';
+            }
+        } else {
+            SugarApplication::redirect('index.php?module=jjwg_Maps&action=index');
+        }
+    }
+    
     /**
      * action quick_radius
      * Google Maps - Quick Radius Map
@@ -597,10 +650,16 @@ class jjwg_MapsController extends SugarController {
                     "(" . $this->display_object->table_name . "_cstm.jjwg_maps_geocode_status_c = 'OK')" .
                     " AND " .
                     "(" . $calc_distance_expression . " < " . $map_distance . ")";
-            // Old Order By: "".$this->display_object->table_name.".assigned_user_id"
             $query = $this->display_object->create_new_list_query('display_object_distance', $where_conds, array(), array(), 0, '', false, $this->display_object, false);
             // Add the disply_object_distance into SELECT list
             $query = str_replace('SELECT ', 'SELECT (' . $calc_distance_expression . ') AS display_object_distance, ', $query);
+            if ($map_module_type == 'Contacts') { // Contacts - Account Name
+                $query = str_replace(' FROM contacts ', ' ,accounts.name AS account_name, accounts.id AS account_id  FROM contacts  ', $query);
+                $query = str_replace(' FROM contacts ', ' FROM contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id and accounts_contacts.deleted = 0 LEFT JOIN accounts ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 ', $query);
+            } elseif ($map_module_type == 'Opportunities') { // Opps - Account Name
+                $query = str_replace(' FROM opportunities ', ' ,accounts.name AS account_name, accounts.id AS account_id  FROM opportunities  ', $query);
+                $query = str_replace(' FROM opportunities ', ' FROM opportunities LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id and accounts_opportunities.deleted = 0 LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id AND accounts.deleted=0 ', $query);
+            }
             //var_dump($query);
             $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
             while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
@@ -664,7 +723,7 @@ class jjwg_MapsController extends SugarController {
                     $records_where = $ret_array['where'];
                 }
             }
-            //var_dump($ret_array);
+            //var_dump($records_where);
             $map_markers = array();
 
             // Find the Items to Display
@@ -677,6 +736,13 @@ class jjwg_MapsController extends SugarController {
                 $where_conds .= " AND " . $records_where;
             }
             $query = $this->display_object->create_new_list_query('', $where_conds, array(), array(), 0, '', false, $this->display_object, false);
+            if ($display_module == 'Contacts') { // Contacts - Account Name
+                $query = str_replace(' FROM contacts ', ' ,accounts.name AS account_name, accounts.id AS account_id  FROM contacts  ', $query);
+                $query = str_replace(' FROM contacts ', ' FROM contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id and accounts_contacts.deleted = 0 LEFT JOIN accounts ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 ', $query);
+            } elseif ($display_module == 'Opportunities') { // Opps - Account Name
+                $query = str_replace(' FROM opportunities ', ' ,accounts.name AS account_name, accounts.id AS account_id  FROM opportunities  ', $query);
+                $query = str_replace(' FROM opportunities ', ' FROM opportunities LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id and accounts_opportunities.deleted = 0 LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id AND accounts.deleted=0 ', $query);
+            }
             //var_dump($query);
             $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
             while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
@@ -737,6 +803,12 @@ class jjwg_MapsController extends SugarController {
             // Set Marker Point as Used (true)
             $this->map_marker_data_points[(string) $marker['lat']][(string) $marker['lng']] = true;
 
+            if (isset($display['account_name'])) {
+                $marker['account_name'] = $display['account_name'];
+            }
+            if (isset($display['account_id'])) {
+                $marker['account_id'] = $display['account_id'];
+            }
             if (isset($display['assigned_user_name'])) {
                 $marker['assigned_user_name'] = $display['assigned_user_name'];
             }

@@ -43,6 +43,7 @@ $mod_strings['LBL_GEOCODED_COUNTS'] = 'Módulo Geocodificadas Condes';
 $mod_strings['LBL_CRON_URL'] = 'Cron URL:';
 $mod_strings['LBL_MODULE_HEADING'] = 'Módulo';
 $mod_strings['LBL_MODULE_TOTAL_HEADING'] = 'Total';
+$mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'A tabela mostra belown mostra o número de objetos do módulo geocodificados, agrupados por geocoding resposta. '. 
 'Tenha em mente que o padrão Google Maps limite de utilização é de 2500 pedidos por dia. '.
 'Este módulo irá armazenar em cache os endereços de geocodificação de informações durante o processamento para reduzir o número total de pedidos necessários.';
@@ -56,6 +57,7 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use os links abaixo para exportar end
 'Em seguida, use um lote online ou offline geocoding ferramenta para o georreferenciamento dos endereços. '.
 'Quando você terminar de geocodificação, importar os endereços para o módulo de cache de endereços para ser usado com os seus mapas. '.
 'Note, o endereço do módulo de cache é opcional. Todas as informações geocodificação é armazenado no módulo representativo.';
+$mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
 
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configuration Settings';
@@ -64,7 +66,6 @@ $mod_strings['LBL_BILLING_ADDRESS'] = 'Billing Address';
 $mod_strings['LBL_SHIPPING_ADDRESS'] = 'Shipping Address';
 $mod_strings['LBL_PRIMARY_ADDRESS'] = 'Primary Address';
 $mod_strings['LBL_ALTERNATIVE_ADDRESS'] = 'Alternative Address';
-$mod_strings['LBL_FLEX_RELATE'] = 'Flex Relate';
 $mod_strings['LBL_ENABLED'] = 'Enabled';
 $mod_strings['LBL_DISABLED'] = 'Disabled';
 $mod_strings['LBL_DEFAULT'] = 'Default:';

@@ -24,6 +24,7 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
     
     echo '<div class="moduleTitle"><h2>'.$mod_strings['LBL_GEOCODED_COUNTS'].'</h2></div>';
     echo $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'];
+    echo '<div class="clear"></div>';
     echo '<br /><br />';
 
     // Display last status code, if set.
@@ -32,20 +33,27 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
       echo '<br /><br />';
     }
 
-    echo '<table width="25%" cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 25% !important;"><tbody>';
+    echo '<table cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 50% !important;"><tbody>';
     echo '<tr><th>'.$mod_strings['LBL_MODULE_HEADING'].'</th>';
     foreach ($geocoded_headings as $heading) {
       echo '<th>'.$heading.'</th>';
     }
     echo '<th>'.$mod_strings['LBL_MODULE_TOTAL_HEADING'].'</th>';
+    echo '<th>'.$mod_strings['LBL_MODULE_RESET_HEADING'].'</th>';
     echo '</tr>'."\n";
+    
     foreach ($geocoded_modules as $module) {
+        
+      $geocode_url = $sugar_config['site_url'].'/index.php?module=jjwg_Maps&action=geocode_addresses&display_module='.$module;
+      $reset_url = $sugar_config['site_url'].'/index.php?module=jjwg_Maps&action=reset_geocoding&display_module='.$module;
+      
       echo '<tr>';
-      echo '<td><strong>'.$app_list_strings['moduleList'][$module].'</strong></td>';
+      echo '<td><strong><a href="'.htmlspecialchars($geocode_url).'">'.$app_list_strings['moduleList'][$module].'</a></strong></td>';
       foreach ($geocoded_headings as $heading) {
         echo '<td>'.$geocoded_counts[$module][$heading].'</td>';
       }
       echo '<td><strong>'.$geocoded_module_totals[$module].'</strong></td>';
+      echo '<td><strong><a href="'.htmlspecialchars($reset_url).'">'.$mod_strings['LBL_MODULE_RESET_HEADING'].'</a.</strong></td>';
       echo '</tr>'."\n";
     }
 
@@ -75,17 +83,22 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
 
     $export_url = $sugar_config['site_url'].'/index.php?module=jjwg_Maps&action=export_geocoding_addresses&display_module=';
 
-    echo '<a target="_blank" href="'.$export_url.'Leads">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_LEADS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Accounts">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_ACCOUNTS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.$export_url.'Accounts">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_ACCOUNTS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Contacts">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_CONTACTS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.$export_url.'Contacts">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_CONTACTS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Leads">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_LEADS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.$export_url.'Prospects">'.$app_strings['LBL_EXPORT'].' Prospects'.'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Prospects">'.$app_strings['LBL_EXPORT'].' Prospects'.'</a>';
     echo '<br /><br />';
     
     echo '<br /><br />';
+    echo '<br /><br />';
+    echo '<br /><br />';
 
+    $delete_url = $sugar_config['site_url'].'/index.php?module=jjwg_Maps&action=delete_all_address_cache';
+    echo '<a href="'.htmlspecialchars($delete_url).'">'.$app_strings['LBL_DELETE'].' - '.$mod_strings['LBL_ADDRESS_CACHE'].'</a>';
+    
   }
 }
 

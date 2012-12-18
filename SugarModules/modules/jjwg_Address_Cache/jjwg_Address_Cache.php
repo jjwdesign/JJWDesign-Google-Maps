@@ -117,6 +117,21 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
 
     /**
      * 
+     * Delete all Address Cache records
+     * Complete delete, not a soft delete 
+     */
+    function deleteAllAddressCache() {
+        
+        // Delete all from jjwg_address_cache
+        $query = "TRUNCATE TABLE jjwg_address_cache;";
+        $delete_result = $this->db->query($query);
+        $query = "TRUNCATE TABLE jjwg_address_cache_audit;";
+        $delete_audit_result = $this->db->query($query);
+        
+    }
+    
+    /**
+     * 
      * Check for valid longitude
      * @param $lng float
      */
