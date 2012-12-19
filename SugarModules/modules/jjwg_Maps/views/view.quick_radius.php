@@ -20,7 +20,8 @@ class Jjwg_MapsViewQuick_Radius extends SugarView {
         if (!isset($_REQUEST['quick_address'])) $_REQUEST['quick_address'] = '';
 ?>
 
-<div class="moduleTitle"><h2><?php echo $mod_strings['LBL_MAP_QUICK_RADIUS']; ?></h2></div>
+<div class="moduleTitle"><h2><?php echo $mod_strings['LBL_MAP_QUICK_RADIUS']; ?><div class="clear"></div></h2></div>
+<div class="clear"></div>
 
 <form name="quickradius" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 <input type="hidden" name="module" value="<?php echo $currentModule; ?>">

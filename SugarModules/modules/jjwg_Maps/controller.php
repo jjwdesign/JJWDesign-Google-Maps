@@ -625,7 +625,12 @@ class jjwg_MapsController extends SugarController {
             else {
                 // Geocode 'quick_address'
                 $aInfo = $this->jjwg_Maps->getGoogleMapsGeocode($_REQUEST['quick_address']);
-                //var_dump($_REQUEST['quick_address']);
+                // If not status 'OK', then fail here and exit. Note: Inside of iFrame
+                if (!empty($aInfo['status']) && $aInfo['status'] != 'OK' && preg_match('/[A-Z\_]/', $aInfo['status'])) {
+                    echo '<br /><br /><div><b>'.$mod_strings['LBL_MAP_LAST_STATUS'].': '.$aInfo['status'].'</b></div><br /><br />';
+                    exit;
+                }
+                //var_dump($aInfo);
                 // Define Marker Data
                 $aInfo['name'] = $_REQUEST['quick_address'];
                 $aInfo['id'] = 0;
