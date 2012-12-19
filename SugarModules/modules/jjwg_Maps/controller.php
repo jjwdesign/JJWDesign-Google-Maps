@@ -840,10 +840,12 @@ class jjwg_MapsController extends SugarController {
                 }
                 $display['date_start'] = $meetingTimeDate->to_display_date_time($display['date_start'], true, true, $current_user);
                 $display['date_end'] = $meetingTimeDate->to_display_date_time($display['date_end'], true, true, $current_user);
-                $mod_strings_meetings = return_module_language($current_language, 'Meetings');
-                $mod_strings = array_merge($mod_strings_meetings, $mod_strings);
-                $this->sugarSmarty->assign("mod_strings", $mod_strings);
             }
+            
+            // Use return_module_language() to get the module language from cache
+            $mod_strings_display = return_module_language($current_language, $module_type);
+            $mod_strings = array_merge($mod_strings_display, $mod_strings);
+            $this->sugarSmarty->assign("mod_strings", $mod_strings);
             
             // Define Maps Info Window HTML by Sugar Smarty Template
             $this->sugarSmarty->assign("module_type", $module_type);
