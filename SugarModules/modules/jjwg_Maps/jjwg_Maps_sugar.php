@@ -6,7 +6,7 @@ class jjwg_Maps_sugar extends Basic {
     var $module_dir = 'jjwg_Maps';
     var $object_name = 'jjwg_Maps';
     var $table_name = 'jjwg_maps';
-    var $importable = false;
+    var $importable = true;
     var $disable_row_level_security = true;
     var $id;
     var $name;

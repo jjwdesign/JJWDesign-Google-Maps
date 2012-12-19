@@ -6,7 +6,7 @@ class jjwg_Areas_sugar extends Basic {
     var $module_dir = 'jjwg_Areas';
     var $object_name = 'jjwg_Areas';
     var $table_name = 'jjwg_areas';
-    var $importable = false;
+    var $importable = true;
     var $disable_row_level_security = true;
     var $id;
     var $name;

@@ -6,7 +6,7 @@ class jjwg_Markers_sugar extends Basic {
     var $module_dir = 'jjwg_Markers';
     var $object_name = 'jjwg_Markers';
     var $table_name = 'jjwg_markers';
-    var $importable = false;
+    var $importable = true;
     var $disable_row_level_security = true;
     var $id;
     var $name;
