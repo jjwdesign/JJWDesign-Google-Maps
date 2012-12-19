@@ -534,6 +534,7 @@ class jjwg_MapsController extends SugarController {
 
         $this->view = 'map_markers';
         global $currentModule;
+        global $current_language;
 
         // Define globals for use in the view.
         global $map_center;
@@ -596,6 +597,8 @@ class jjwg_MapsController extends SugarController {
 
             // Define display object
             $this->display_object = get_module_info($map_module_type);
+            $mod_strings_display = return_module_language($current_language, $this->display_object->module_name);
+            $mod_strings_display = array_merge($mod_strings_display, $mod_strings);
 
             // If relate module/id object
             if (!empty($map_parent_type) && !empty($map_parent_id)) {
@@ -603,6 +606,9 @@ class jjwg_MapsController extends SugarController {
                 // Define relate objects
                 $this->relate_object = get_module_info($map_parent_type);
                 $this->relate_object->retrieve($map_parent_id);
+                $mod_strings_related = return_module_language($current_language, $this->relate_object->module_name);
+                $mod_strings_related = array_merge($mod_strings_related, $mod_strings);
+                
                 // Get the Relate object Assoc Data
                 $where_conds = $this->relate_object->table_name . ".id = '" . $map_parent_id . "'";
                 $query = $this->relate_object->create_new_list_query("" . $this->relate_object->table_name . ".assigned_user_id", $where_conds, array(), array(), 0, '', false, $this->relate_object, false);
@@ -610,7 +616,7 @@ class jjwg_MapsController extends SugarController {
                 $relate_result = $this->jjwg_Maps->db->query($query);
                 $relate = $this->jjwg_Maps->db->fetchByAssoc($relate_result);
                 // Add Relate (Center Point) Marker
-                $map_center = $this->getMarkerData($map_parent_type, $relate, true);
+                $map_center = $this->getMarkerData($map_parent_type, $relate, true, $mod_strings_related);
                 // Define Center Point
                 $center_lat = $this->relate_object->jjwg_maps_lat_c;
                 $center_lng = $this->relate_object->jjwg_maps_lng_c;
@@ -664,7 +670,7 @@ class jjwg_MapsController extends SugarController {
             $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
             while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
                 if (!empty($map_distance) && !empty($display['id'])) {
-                    $marker_data = $this->getMarkerData($map_module_type, $display);
+                    $marker_data = $this->getMarkerData($map_module_type, $display, false, $mod_strings_display);
                     if (!empty($marker_data)) {
                         $map_markers[] = $marker_data;
                     }
@@ -713,6 +719,8 @@ class jjwg_MapsController extends SugarController {
                 $display_module = 'Accounts';
             }
             $this->display_object = get_module_info($display_module);
+            $mod_strings_display = return_module_language($current_language, $this->display_object->module_name);
+            $mod_strings_display = array_merge($mod_strings_display, $mod_strings);
 
             if (@!empty($_REQUEST['uid'])) {
                 $records = explode(',', $_REQUEST['uid']);
@@ -746,7 +754,7 @@ class jjwg_MapsController extends SugarController {
             //var_dump($query);
             $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
             while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
-                $map_markers[] = $this->getMarkerData($display_module, $display);
+                $map_markers[] = $this->getMarkerData($display_module, $display, false, $mod_strings_display);
             } // end while
         }
 
@@ -760,15 +768,17 @@ class jjwg_MapsController extends SugarController {
      * Define marker data for marker display view
      * @param $module_type bean name
      * @param $display bean fields array
+     * $param $mod_strings_display mod_strings from display module
      * TODO: Use a custom defined field for the $marker['group']
      */
-    function getMarkerData($module_type, $display, $center_marker = false) {
+    function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array()) {
 
         global $mod_strings;
         global $current_user;
         global $current_language;
 //        echo "<pre>";
 //        print_r($display);
+//        print_r($mod_strings_display);
 //        echo "</pre>";
         
         // Define Marker
@@ -841,12 +851,7 @@ class jjwg_MapsController extends SugarController {
                 $display['date_start'] = $meetingTimeDate->to_display_date_time($display['date_start'], true, true, $current_user);
                 $display['date_end'] = $meetingTimeDate->to_display_date_time($display['date_end'], true, true, $current_user);
             }
-            
-            // Use return_module_language() to get the module language from cache
-            $mod_strings_display = return_module_language($current_language, $module_type);
-            $mod_strings = array_merge($mod_strings_display, $mod_strings);
-            $this->sugarSmarty->assign("mod_strings", $mod_strings);
-            
+            $this->sugarSmarty->assign("mod_strings", $mod_strings_display);
             // Define Maps Info Window HTML by Sugar Smarty Template
             $this->sugarSmarty->assign("module_type", $module_type);
             $this->sugarSmarty->assign("address", $display['jjwg_maps_address_c']);
