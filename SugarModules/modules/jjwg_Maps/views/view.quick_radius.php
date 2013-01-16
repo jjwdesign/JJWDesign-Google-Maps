@@ -52,7 +52,7 @@ class Jjwg_MapsViewQuick_Radius extends SugarView {
                     <option value="<?php echo htmlspecialchars($module); ?>" <?php 
                     if (!empty($_REQUEST['display_module']) && $module == $_REQUEST['display_module']) echo 'selected="selected"';
                     ?>><?php echo htmlspecialchars($app_list_strings['moduleList'][$module]); ?>
-                <? } ?>
+                <?php } ?>
             </select>
         </td>
     </tr>
@@ -68,7 +68,7 @@ class Jjwg_MapsViewQuick_Radius extends SugarView {
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $_REQUEST['unit_type']) echo 'selected="selected"';
                     ?>><?php echo htmlspecialchars($value); ?>
-                <? } ?>
+                <?php } ?>
             </select>
         </td>
     </tr>
