@@ -17,9 +17,9 @@ $manifest = array (
       'icon' => 'images/default/images/icon_jjwg_Maps.gif',
       'is_uninstallable' => true,
       'name' => 'JJWDesign_Google_Maps',
-      'published_date' => '2012-12-18 17:01:01',
+      'published_date' => '2013-02-03 12:01:01',
       'type' => 'module',
-      'version' => '2.0-6.2+',
+      'version' => '2.0.1-6.2+',
       'remove_tables' => 'prompt'
 );
 
