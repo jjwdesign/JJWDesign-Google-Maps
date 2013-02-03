@@ -521,7 +521,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 }
             }
             // Update/Reset the Geocode fields using Queries (not save() bean method)
-            $update_result = $this->updateGeocodeInfoByBeanQuery(&$bean, $aInfo);
+            $update_result = $this->updateGeocodeInfoByBeanQuery($bean, $aInfo);
             $GLOBALS['log']->info(__METHOD__.' $update_result: '.print_r($update_result, true));
         }
 

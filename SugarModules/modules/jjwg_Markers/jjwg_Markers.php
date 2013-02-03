@@ -38,7 +38,7 @@ class jjwg_Markers extends jjwg_Markers_sugar {
     function define_loc($marker = array()) {
 
         if (empty($marker)) {
-            $marker = &$this;
+            $marker = $this;
         }
         $loc = array();
         if (is_object($marker)) {
