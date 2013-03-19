@@ -716,7 +716,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
 
         // Google Maps v3 - The new v3 Google Maps API no longer requires a Maps API Key!
-        $base_url = "http://maps.google.com/maps/api/geocode/json?sensor=false&";
+        $base_url = "https://maps.google.com/maps/api/geocode/json?sensor=false&";
         $request_url = $base_url . "&address=" . urlencode($address);
         $GLOBALS['log']->info(__METHOD__.' cURL Request URL: '.$request_url);
 
