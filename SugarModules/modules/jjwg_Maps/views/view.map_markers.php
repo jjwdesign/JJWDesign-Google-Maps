@@ -57,7 +57,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
     }
   </style>
   <script src="http://www.google.com/jsapi"></script>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer.js"></script>
   <script type="text/javascript">
 <?php
