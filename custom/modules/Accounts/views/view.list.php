@@ -13,6 +13,9 @@ class AccountsViewList extends ViewList {
 	
 	function preDisplay(){
 		$this->lv = new AccountsListViewSmarty();
+                
+                // Bug: Missing "add to target list" entry in the action menu
+                $this->lv->targetList = true;
 	}
 }
 
