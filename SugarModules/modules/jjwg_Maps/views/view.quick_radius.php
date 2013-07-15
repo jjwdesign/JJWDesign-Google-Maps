@@ -27,10 +27,12 @@ class Jjwg_MapsViewQuick_Radius extends SugarView {
 <input type="hidden" name="module" value="<?php echo $currentModule; ?>">
 <input type="hidden" name="action" value="quick_radius_display" />
 
-<pre>
-<?php //var_dump($mod_strings); ?>
-<?php //var_dump($app_list_strings); ?>
-</pre>
+<?php
+//echo '<pre>';
+//var_dump($mod_strings);
+//var_dump($app_list_strings);
+//echo '</pre>';
+?>
 
 <table border="0">
     <tr>

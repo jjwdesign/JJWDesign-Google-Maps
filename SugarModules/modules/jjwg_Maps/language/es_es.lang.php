@@ -71,7 +71,10 @@ $mod_strings['LBL_DISABLED'] = 'Deshabilitada';
 $mod_strings['LBL_DEFAULT'] = 'Por Defecto:';
 $mod_strings['LBL_CONFIG_DEFAULT'] = 'Por Defecto:';
 
+$mod_strings['LBL_CONFIG_VALID_GEOCODE_MODULES'] = 'Valid Geocode Modules:';
+$mod_strings['LBL_CONFIG_VALID_GEOCODE_TABLES'] = 'Valid Geocode Tables:';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_SETTINGS_TITLE'] = "Configuración de tipo de Dirección: Esto define los tipos de direcciones en los módulos que se desean utilizar como dirección a geocodificar. Valores aceptables: 'billing'; 'shipping'; 'primary'; 'alt'; 'flex_relate'";
+$mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR'] = 'Address Type for ';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_ACCOUNTS'] = 'Tipos de direcciones para Cuentas:';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_CONTACTS'] = 'Tipos de direcciones para Contacts:';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_LEADS'] = 'Tipos de direcciones para Clientes Potenciales:';
@@ -85,6 +88,7 @@ $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_PROSPECTS'] = 'Tipos de direcciones pa
 $mod_strings['LBL_CONFIG_RELATED_OBJECT_THRU_FLEX_RELATE'] = 'Objetos relacionados a través de campo de relación flexible';
 
 $mod_strings['LBL_CONFIG_MARKER_GROUP_FIELD_SETTINGS_TITLE'] = "Seteo de Marcador de Campo de Agrupamiento: Este define el 'campo' a ser uytilizado como parámetro de grupo cuando se muestran marcadores en un mapa. Ejemplos: assigned_user_name, industry, status, sales_stage, priority";
+$mod_strings['LBL_CONFIG_GROUP_FIELD_FOR'] = 'Group Field for ';
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_ACCOUNTS'] = 'Campo de Agrupamiento para Cuentas:';
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_CONTACTS'] = 'Campo de Agrupamiento para Contactos:';
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_LEADS'] = 'Campo de Agrupamiento para Clientes Potenciales:';

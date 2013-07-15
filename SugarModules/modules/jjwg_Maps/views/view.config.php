@@ -33,6 +33,14 @@ class Jjwg_MapsViewConfig extends SugarView {
             'primary' => $mod_strings['LBL_PRIMARY_ADDRESS'],
             'alt' => $mod_strings['LBL_ALTERNATIVE_ADDRESS']
         );
+        $address_types_all = array(
+            'billing' => $mod_strings['LBL_BILLING_ADDRESS'],
+            'shipping' => $mod_strings['LBL_SHIPPING_ADDRESS'],
+            'primary' => $mod_strings['LBL_PRIMARY_ADDRESS'],
+            'alt' => $mod_strings['LBL_ALTERNATIVE_ADDRESS'],
+            'flex_relate' => 'Flex Relate',
+            'custom' => 'Custom'
+        );
         $address_types_flex_relate = array(
             'flex_relate' => 'Flex Relate'
         );
@@ -75,6 +83,28 @@ class Jjwg_MapsViewConfig extends SugarView {
 
 <table class="edit view" cellpadding="0" cellspacing="12" border="0">
     <tr>
+        <td><strong><?php echo $mod_strings['LBL_CONFIG_VALID_GEOCODE_MODULES']; ?> </strong></td>
+        <td><input type="text" name="valid_geocode_modules" id="valid_geocode_modules" 
+            value="<?php echo (isset($jjwg_config['valid_geocode_modules'])) ? 
+                htmlspecialchars(implode(', ', $jjwg_config['valid_geocode_modules'])) : 
+                htmlspecialchars(implode(', ', $jjwg_config_defaults['valid_geocode_modules'])); ?>" 
+            title='' tabindex='107' size="100" maxlength="999"><br />
+            &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
+                <?php echo htmlspecialchars(implode(', ', $jjwg_config_defaults['valid_geocode_modules'])); ?>
+        </td>
+    </tr>
+    <tr>
+        <td><strong><?php echo $mod_strings['LBL_CONFIG_VALID_GEOCODE_TABLES']; ?> </strong></td>
+        <td><input type="text" name="valid_geocode_tables" id="valid_geocode_tables" 
+            value="<?php echo (isset($jjwg_config['valid_geocode_tables'])) ? 
+                htmlspecialchars(implode(', ', $jjwg_config['valid_geocode_tables'])) : 
+                htmlspecialchars(implode(', ', $jjwg_config_defaults['valid_geocode_tables'])); ?>" 
+            title='' tabindex='108' size="100" maxlength="999"><br />
+            &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
+                <?php echo htmlspecialchars(implode(', ', $jjwg_config_defaults['valid_geocode_tables'])); ?>
+        </td>
+    </tr>
+    <tr>
         <td colspan="2">
             <?php echo $mod_strings['LBL_CONFIG_ADDRESS_TYPE_SETTINGS_TITLE']; ?>
         </td>
@@ -89,7 +119,7 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_billing_or_shipping as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Accounts']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
@@ -106,7 +136,7 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_primary_or_alt as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Contacts']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
@@ -123,7 +153,7 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_primary_or_alt as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Leads']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
@@ -140,7 +170,7 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_billing_or_shipping as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Opportunities']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
@@ -158,7 +188,7 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_billing_or_shipping as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Cases']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
@@ -176,7 +206,7 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_billing_or_shipping as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Project']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
@@ -194,7 +224,7 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_flex_relate as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Meetings']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_RELATED_OBJECT_THRU_FLEX_RELATE']; ?>
@@ -210,13 +240,37 @@ class Jjwg_MapsViewConfig extends SugarView {
                 <?php foreach ($address_types_primary_or_alt as $key=>$value) { ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php 
                     if ($key == $jjwg_config['geocode_modules_to_address_type']['Prospects']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
+                    ?>><?php echo htmlspecialchars($value); ?></option>
                 <?php } ?>
             </select>
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
                 <?php echo htmlspecialchars($address_types_primary_or_alt[$jjwg_config_defaults['geocode_modules_to_address_type']['Prospects']]); ?>
         </td>
     </tr>
+    <?php
+    $custom_modules = array_diff($jjwg_config['valid_geocode_modules'], $jjwg_config_defaults['valid_geocode_modules']);
+    foreach ($custom_modules as $module) {
+    ?>
+    <tr>
+        <td width="20%" nowrap="nowrap">
+            <strong><?php echo $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR'].' '.$module.':'; ?> </strong>
+        </td>
+        <td>
+            <select id="address_type_<?php echo $module; ?>" tabindex="118" 
+                name="address_type_<?php echo $module; ?>" title="">
+                <?php foreach ($address_types_all as $key=>$value) { ?>
+                    <option value="<?php echo htmlspecialchars($key); ?>" <?php 
+                    if ($key == $jjwg_config['geocode_modules_to_address_type'][$module]) echo 'selected="selected"';
+                    ?>><?php echo htmlspecialchars($value); ?></option>
+                <?php } ?>
+            </select>
+            &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
+                <?php echo htmlspecialchars($address_types_all[$jjwg_config_defaults['geocode_modules_to_address_type']['Contacts']]); ?>
+        </td>
+    </tr>
+    <?php
+    }
+    ?>
     <tr>
         <td colspan="2">&nbsp;</td>
     </tr>
@@ -308,6 +362,24 @@ class Jjwg_MapsViewConfig extends SugarView {
             &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> <?php echo htmlspecialchars($jjwg_config_defaults['map_markers_grouping_field']['Prospects']); ?>
         </td>
     </tr>
+    <?php
+    $custom_modules = array_diff($jjwg_config['valid_geocode_modules'], $jjwg_config_defaults['valid_geocode_modules']);
+    foreach ($custom_modules as $module) {
+    ?>
+        <tr>
+            <td><strong><?php echo $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR'].' '.$module.':'; ?> </strong></td>
+            <td><input type="text" name="grouping_field_<?php echo $module; ?>" id="grouping_field_<?php echo $module; ?>" 
+                value="<?php echo (isset($jjwg_config['map_markers_grouping_field'][$module])) ? 
+                    htmlspecialchars($jjwg_config['map_markers_grouping_field'][$module]) : 
+                    htmlspecialchars($jjwg_config_defaults['map_markers_grouping_field']['Contacts']); ?>" 
+                title='' tabindex='128' size="25" maxlength="32">
+                &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
+                    <?php echo htmlspecialchars($jjwg_config_defaults['map_markers_grouping_field']['Contacts']); ?>
+            </td>
+        </tr>
+    <?php
+    }
+    ?>
     <tr>
         <td colspan="2">&nbsp;</td>
     </tr>
@@ -576,8 +648,8 @@ class Jjwg_MapsViewConfig extends SugarView {
         <p>&nbsp;</p>
         <br />
         
-<pre>
 <?php
+//echo '<pre>';
 //var_dump($sugar_config);
 //var_dump($jjwg_config_defaults);
 //var_dump($jjwg_config);
@@ -585,8 +657,8 @@ class Jjwg_MapsViewConfig extends SugarView {
 //var_dump($mod_strings);
 //var_dump($app_strings);
 //var_dump($app_list_strings);
+//echo '</pre>';
 ?>
-</pre>
 
         <?php
 

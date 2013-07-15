@@ -212,6 +212,10 @@ class jjwg_MapsController extends SugarController {
                 $aInfo = $this->jjwg_Maps->defineMapsAddress($this->display_object->object_name, $display);
                 //var_dump($aInfo);
                 
+                // Call Controller Method to Define Custom Address Logic
+                $aInfo = $this->defineMapsAddressCustom($aInfo, $this->display_object->object_name, $display);
+                //var_dump($aInfo);
+                
                 // If needed, check the Address Cache Module for Geocode Info
                 if (!empty($aInfo['address']) && is_object($this->jjwg_Address_Cache)) {
                     $aInfoCache = $this->jjwg_Address_Cache->getAddressCacheInfo($aInfo);
@@ -332,6 +336,11 @@ class jjwg_MapsController extends SugarController {
             // This will provide a related address & optionally a status, lat and lng from an account or other object
             $aInfo = $this->jjwg_Maps->defineMapsAddress($this->display_object->object_name, $display);
             //var_dump($aInfo);
+            
+            // Call Method to Define Custom Address Logic
+            $aInfo = $this->defineMapsAddressCustom($aInfo, $this->display_object->object_name, $display);
+            //var_dump($aInfo);
+            
             if (!empty($aInfo['address'])) {
                 $addresses[] = trim($aInfo['address'], ' ,;."\'');
         }
@@ -346,7 +355,20 @@ class jjwg_MapsController extends SugarController {
         $this->do_list_csv_output($address_data, $filename);
         exit;
     }
-
+    
+    /**
+     * Custom Override for Defining Maps Address
+     *
+     * @param $aInfo        address info array(address, status, lat, lng)
+     * @param $object_name  signular object name
+     * @param $display      fetched row array
+     */
+    function defineMapsAddressCustom($aInfo, $object_name, $display) {
+        
+        // Use custom contoller.php with custom logic
+        return $aInfo;
+    }
+    
     /**
      * 
      * Export rows of data as a CSV file

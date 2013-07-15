@@ -24,7 +24,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             'Accounts', 'Contacts', 'Leads', 'Opportunities', 'Cases', 'Project', 'Meetings', 'Prospects'
         ),
         /**
-         * 'valid_geocode_tables' defines the valid module names used with geocoding.
+         * 'valid_geocode_tables' defines the valid table names used with geocoding.
          * @var array
          */
         'valid_geocode_tables' => array(
@@ -32,7 +32,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         ),
         /**
          * 'geocode_modules_to_address_type' defines the modules address types to be used with geocoding.
-         * Acceptable Values: 'billing', 'shipping', 'primary', 'alt', 'flex_relate'
+         * Acceptable Values: 'billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom'
          * @var array
          */
         'geocode_modules_to_address_type' => array(
@@ -204,23 +204,30 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 // Set geocode_modules_to_address_type
                 if (substr($name, 0, 13) == 'address_type_') {
                     $module = substr($name, 13);
-                    if (in_array($module, $this->settings['valid_geocode_modules'])) {
-                        if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate'))) {
-                            $this->settings['geocode_modules_to_address_type'][$module] = $value;
-                        }
+                    if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom'))) {
+                        $this->settings['geocode_modules_to_address_type'][$module] = $value;
                     }
                 }
                 
                 // Set map_markers_grouping_field
                 if (substr($name, 0, 15) == 'grouping_field_') {
                     $module = substr($name, 15);
-                    if (in_array($module, $this->settings['valid_geocode_modules'])) {
-                        if (!empty($value)) {
-                            $this->settings['map_markers_grouping_field'][$module] = $value;
-                        }
+                    if (!empty($value)) {
+                        $this->settings['map_markers_grouping_field'][$module] = $value;
                     }
                 }
                 
+            }
+            
+            if (!empty($rev['valid_geocode_modules'])) {
+                if (!is_array($rev['valid_geocode_modules'])) {
+                    $this->settings['valid_geocode_modules'] = preg_split('/[\s,]+/', $rev['valid_geocode_modules']);
+                }
+            }
+            if (!empty($rev['valid_geocode_tables'])) {
+                if (!is_array($rev['valid_geocode_tables'])) {
+                    $this->settings['valid_geocode_tables'] = preg_split('/[\s,]+/', $rev['valid_geocode_tables']);
+                }
             }
             
             // Integer Settings
@@ -273,6 +280,19 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         
         if (!empty($data) && count($data) > 0) {
             
+            if (isset($data['valid_geocode_modules'])) {
+                if (is_array($data['valid_geocode_modules'])) {
+                    $data['valid_geocode_modules'] = join(', ', $data['valid_geocode_modules']);
+                }
+                $admin->saveSetting($category, 'valid_geocode_modules', $data['valid_geocode_modules']);
+            }
+            if (isset($data['valid_geocode_tables'])) {
+                if (is_array($data['valid_geocode_tables'])) {
+                    $data['valid_geocode_tables'] = join(', ', $data['valid_geocode_tables']);
+                }
+                $admin->saveSetting($category, 'valid_geocode_tables', $data['valid_geocode_tables']);
+            }
+            
             foreach ($data as $name => $value) {
                 
                 // Trim white space on each
@@ -282,7 +302,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 if (substr($name, 0, 13) == 'address_type_') {
                     $module = substr($name, 13);
                     if (in_array($module, $this->settings['valid_geocode_modules'])) {
-                        if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate'))) {
+                        if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom'))) {
                             $admin->saveSetting($category, $name, $value);
                         }
                     }
@@ -697,7 +717,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 " LEFT JOIN " . $table_name . "_cstm " .
                 " ON " . $table_name . ".id = " . $table_name . "_cstm.id_c " .
                 " WHERE " . $table_name . ".deleted = 0 AND " . $where_conds;
-        //var_dump($query);
         $display_result = $this->db->limitQuery($query, 0, $limit);
 
         return $display_result;
@@ -955,12 +974,12 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     /**
      * Define the formatted address line based on address type and field names
      * @param $display bean fields array
-     * @param $type type of address: 'billing', 'shipping', 'primary', 'alt'
+     * @param $type type of address: 'billing', 'shipping', 'primary', 'alt', 'custom'
      */
     function defineMapsFormattedAddress($display, $type = 'billing') {
 
         $type = strtolower($type);
-        if (!in_array($type, array('billing', 'shipping', 'primary', 'alt')))
+        if (!in_array($type, array('billing', 'shipping', 'primary', 'alt', 'custom')))
             $type = 'billing';
         $address_fields = array('billing_address_street', 'billing_address_city', 'billing_address_state', 'billing_address_postalcode', 'billing_address_country');
         $address_parts = array();

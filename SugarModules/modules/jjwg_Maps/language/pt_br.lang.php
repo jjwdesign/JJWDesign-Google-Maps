@@ -71,7 +71,10 @@ $mod_strings['LBL_DISABLED'] = 'Disabled';
 $mod_strings['LBL_DEFAULT'] = 'Default:';
 $mod_strings['LBL_CONFIG_DEFAULT'] = 'Default:';
 
+$mod_strings['LBL_CONFIG_VALID_GEOCODE_MODULES'] = 'Valid Geocode Modules:';
+$mod_strings['LBL_CONFIG_VALID_GEOCODE_TABLES'] = 'Valid Geocode Tables:';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_SETTINGS_TITLE'] = "Address Type Settings: This defines the modules' address types used when geocoding addresses. Acceptable Values: 'billing'; 'shipping'; 'primary'; 'alt'; 'flex_relate'";
+$mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR'] = 'Address Type for ';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_ACCOUNTS'] = 'Address Type for Accounts:';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_CONTACTS'] = 'Address Type for Contacts:';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_LEADS'] = 'Address Type for Leads:';
@@ -85,6 +88,7 @@ $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_PROSPECTS'] = 'Address Type for Prospe
 $mod_strings['LBL_CONFIG_RELATED_OBJECT_THRU_FLEX_RELATE'] = 'Related Object thru Flex Relate Field';
 
 $mod_strings['LBL_CONFIG_MARKER_GROUP_FIELD_SETTINGS_TITLE'] = "Marker Group Field Settings: This defines the 'field' to be used as the group parameter when displaying markers on a map. Examples: assigned_user_name, industry, status, sales_stage, priority";
+$mod_strings['LBL_CONFIG_GROUP_FIELD_FOR'] = 'Group Field for ';
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_ACCOUNTS'] = 'Group Field for Accounts:';
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_CONTACTS'] = 'Group Field for Contacts:';
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_LEADS'] = 'Group Field for Leads:';
