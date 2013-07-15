@@ -32,7 +32,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         ),
         /**
          * 'geocode_modules_to_address_type' defines the modules address types to be used with geocoding.
-         * Acceptable Values: 'billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom'
+         * Acceptable Values: 'billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom', 'address'
          * @var array
          */
         'geocode_modules_to_address_type' => array(
@@ -43,7 +43,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             'Cases' => 'billing',
             'Project' => 'billing',
             'Meetings' => 'flex_relate',
-            'Prospects' => 'primary'
+            'Prospects' => 'primary',
+            'Users' => 'address'
         ),
         /**
          * 'geocoding_limit' sets the query limit when selecting records to geocode.
@@ -95,7 +96,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             'Cases' => 'priority',
             'Project' => 'assigned_user_name',
             'Meetings' => 'assigned_user_name',
-            'Prospects' => 'assigned_user_name'
+            'Prospects' => 'assigned_user_name',
+            'Users' => 'user_name'
         ),
         /**
          * 'map_clusterer_grid_size' is used to set the grid size for calculating map clusterers.
@@ -204,7 +206,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 // Set geocode_modules_to_address_type
                 if (substr($name, 0, 13) == 'address_type_') {
                     $module = substr($name, 13);
-                    if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom'))) {
+                    if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom', 'address'))) {
                         $this->settings['geocode_modules_to_address_type'][$module] = $value;
                     }
                 }
@@ -302,7 +304,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 if (substr($name, 0, 13) == 'address_type_') {
                     $module = substr($name, 13);
                     if (in_array($module, $this->settings['valid_geocode_modules'])) {
-                        if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom'))) {
+                        if (in_array($value, array('billing', 'shipping', 'primary', 'alt', 'flex_relate', 'custom', 'address'))) {
                             $admin->saveSetting($category, $name, $value);
                         }
                     }
@@ -842,6 +844,10 @@ class jjwg_Maps extends jjwg_Maps_sugar {
 
             $address = $this->defineMapsFormattedAddress($display, $this->settings['geocode_modules_to_address_type']['Prospects']);
             
+        } elseif ($object_name == 'User') {
+
+            $address = $this->defineMapsFormattedAddress($display, $this->settings['geocode_modules_to_address_type']['Users']);
+            
         } elseif ($object_name == 'Opportunity') {
 
             // Find Account - Assume only one related Account
@@ -974,13 +980,14 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     /**
      * Define the formatted address line based on address type and field names
      * @param $display bean fields array
-     * @param $type type of address: 'billing', 'shipping', 'primary', 'alt', 'custom'
+     * @param $type type of address: 'billing', 'shipping', 'primary', 'alt', 'custom', 'address'
      */
     function defineMapsFormattedAddress($display, $type = 'billing') {
 
         $type = strtolower($type);
-        if (!in_array($type, array('billing', 'shipping', 'primary', 'alt', 'custom')))
+        if (!in_array($type, array('billing', 'shipping', 'primary', 'alt', 'custom', 'address')))
             $type = 'billing';
+        $GLOBALS['log']->debug(__METHOD__.' $type: '.print_r($type, true));
         $address_fields = array('billing_address_street', 'billing_address_city', 'billing_address_state', 'billing_address_postalcode', 'billing_address_country');
         $address_parts = array();
         switch ($type) {
@@ -996,7 +1003,11 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             case 'alt':
                 $address_fields = array('alt_address_street', 'alt_address_city', 'alt_address_state', 'alt_address_postalcode', 'alt_address_country');
                 break;
+            case 'address':
+                $address_fields = array('address_street', 'address_city', 'address_state', 'address_postalcode', 'address_country');
+                break;
         }
+        $GLOBALS['log']->debug(__METHOD__.' $address_fields: '.print_r($address_fields, true));
         foreach ($address_fields as $field) {
             if (!isset($display[$field]))
                 $display[$field] = '';
@@ -1007,6 +1018,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $address = implode(', ', $address_parts);
             $address = preg_replace('/[\n\r]+/', ' ', trim($address));
             $address = preg_replace("/[\t\s]+/", ' ', $address);
+            $GLOBALS['log']->debug(__METHOD__.' $address: '.print_r($address, true));
             return trim($address);
         } else {
             return false;

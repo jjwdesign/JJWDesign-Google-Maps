@@ -38,11 +38,12 @@ class Jjwg_MapsViewConfig extends SugarView {
             'shipping' => $mod_strings['LBL_SHIPPING_ADDRESS'],
             'primary' => $mod_strings['LBL_PRIMARY_ADDRESS'],
             'alt' => $mod_strings['LBL_ALTERNATIVE_ADDRESS'],
-            'flex_relate' => 'Flex Relate',
-            'custom' => 'Custom'
+            'flex_relate' => $mod_strings['LBL_ADDRESS_FLEX_RELATE'],
+            'address' => $mod_strings['LBL_ADDRESS_ADDRESS'],
+            'custom' => $mod_strings['LBL_ADDRESS_CUSTOM'],
         );
         $address_types_flex_relate = array(
-            'flex_relate' => 'Flex Relate'
+            'flex_relate' => $mod_strings['LBL_FLEX_RELATE']
         );
         $enabled_disabled = array(
             '0' => $mod_strings['LBL_DISABLED'],
@@ -80,6 +81,14 @@ class Jjwg_MapsViewConfig extends SugarView {
 <form name="settings" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <input type="hidden" name="module" value="<?php echo $currentModule; ?>">
 <input type="hidden" name="action" value="config" />
+
+
+<input type="submit" class="button" tabindex="101" name="submit" value="  <?php echo $app_strings['LBL_SAVE_BUTTON_LABEL']; ?>  " align="bottom">
+&nbsp;
+<input type="button" class="button" tabindex="102" name="cancel" value="  <?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']; ?>  " align="bottom"
+        onclick="document.location.href='index.php?module=Administration&amp;action=index'" title="">
+
+<br /><br />
 
 <table class="edit view" cellpadding="0" cellspacing="12" border="0">
     <tr>
