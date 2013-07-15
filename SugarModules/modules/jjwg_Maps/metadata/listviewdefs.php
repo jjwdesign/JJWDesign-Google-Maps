@@ -34,6 +34,16 @@ array (
     'type' => 'parent',
     'studio' => 'visible',
     'label' => 'LBL_FLEX_RELATE',
+    'link' => true,
+    'sortable' => false,
+    'ACLTag' => 'PARENT',
+    'dynamic_module' => 'PARENT_TYPE',
+    'id' => 'PARENT_ID',
+    'related_fields' => 
+    array (
+      0 => 'parent_id',
+      1 => 'parent_type',
+    ),
     'width' => '25%',
     'default' => true,
   ),
