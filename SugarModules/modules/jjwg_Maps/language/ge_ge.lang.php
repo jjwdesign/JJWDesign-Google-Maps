@@ -21,6 +21,7 @@ $mod_strings['LBL_MAP_LEGEND'] = 'Legende:';
 $mod_strings['LBL_MAP_USERS'] = 'Benutzer:';
 $mod_strings['LBL_MAP_USER_GROUPS'] = 'Benutzer-Gruppen:';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'zugeordnet zu:';
+$mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
 
 $mod_strings['LNK_NEW_MAP'] = 'neue Karte';
 $mod_strings['LNK_NEW_RECORD'] = 'neue Karte';

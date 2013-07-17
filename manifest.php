@@ -4,7 +4,7 @@ $manifest = array (
     'acceptable_sugar_versions' => 
         array (
             'regex_matches' => array (
-                '6\.[2-9].*',
+                '6\.[2-9].*, 7\..*',
             ),
         ),
     'acceptable_sugar_flavors' =>
@@ -13,13 +13,13 @@ $manifest = array (
         ),
     'key'=>'jjwg',
     'author' => 'Jeff Walters',
-    'description' => 'JJWDesign Google Maps v2.0.4 for SugarCRM v6.2+',
+    'description' => 'JJWDesign Google Maps v2.0.5 for SugarCRM v6.2+',
     'icon' => 'images/default/images/icon_jjwg_Maps.gif',
     'is_uninstallable' => true,
     'name' => 'JJWDesign_Google_Maps',
-    'published_date' => '2013-07-16 12:12:12',
+    'published_date' => '2013-07-17 12:12:12',
     'type' => 'module',
-    'version' => '2.0.4-6.2+',
+    'version' => '2.0.5-6.2+',
     'remove_tables' => 'prompt'
 );
 

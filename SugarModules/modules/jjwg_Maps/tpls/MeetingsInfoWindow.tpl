@@ -8,4 +8,7 @@ href="index.php?module={$module_type}&action=DetailView&record={$fields.id}">{$f
 {if $fields.duration_hours != 0}{$fields.duration_hours}{$mod_strings.LBL_HOURS_ABBREV} {/if}
 {if $fields.duration_minutes != 0}{$fields.duration_minutes}{$mod_strings.LBL_MINSS_ABBREV}{/if}<br />
 {$address}<br />
-<i>{$mod_strings.LBL_MAP_ASSIGNED_TO} {$fields.assigned_user_name}</i></div>
+<i>{$mod_strings.LBL_MAP_ASSIGNED_TO} {$fields.assigned_user_name}</i>
+<br /><br />
+<a href="http://maps.google.com/maps?saddr={$current_user_address|escape:'url'}&daddr={$address|escape:'url'}">{$mod_strings.LBL_MAP_GET_DIRECTIONS}</a>
+</div>

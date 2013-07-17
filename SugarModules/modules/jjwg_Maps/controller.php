@@ -878,6 +878,9 @@ class jjwg_MapsController extends SugarController {
                 $display['date_start'] = $meetingTimeDate->to_display_date_time($display['date_start'], true, true, $current_user);
                 $display['date_end'] = $meetingTimeDate->to_display_date_time($display['date_end'], true, true, $current_user);
             }
+            $current_user_data = get_object_vars($current_user);
+            $this->sugarSmarty->assign('current_user', $current_user_data);
+            $this->sugarSmarty->assign('current_user_address', $this->jjwg_Maps->defineMapsFormattedAddress($current_user_data, 'address'));
             $this->sugarSmarty->assign("mod_strings", $mod_strings_display);
             // Define Maps Info Window HTML by Sugar Smarty Template
             $this->sugarSmarty->assign("module_type", $module_type);

@@ -5,4 +5,7 @@ href="index.php?module={$module_type}&action=DetailView&record={$fields.id}">{$f
 <br />{$moduleListSingular.Accounts}: <a target="_blank" 
 href="index.php?module=Accounts&action=DetailView&record={$fields.account_id}">{$fields.account_name}</a>
 <br />{$address}<br />
-<i>{$mod_strings.LBL_MAP_ASSIGNED_TO} {$fields.assigned_user_name}</i></div>
+<i>{$mod_strings.LBL_MAP_ASSIGNED_TO} {$fields.assigned_user_name}</i>
+<br /><br />
+<a href="http://maps.google.com/maps?saddr={$current_user_address|escape:'url'}&daddr={$address|escape:'url'}">{$mod_strings.LBL_MAP_GET_DIRECTIONS}</a>
+</div>
