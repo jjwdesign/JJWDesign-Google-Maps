@@ -17,14 +17,14 @@ $manifest = array (
     'icon' => 'images/default/images/icon_jjwg_Maps.gif',
     'is_uninstallable' => true,
     'name' => 'JJWDesign_Google_Maps',
-    'published_date' => '2013-07-17 12:12:12',
+    'published_date' => '2013-08-06 10:10:10',
     'type' => 'module',
     'version' => '2.0.5-6.2+',
     'remove_tables' => 'prompt'
 );
 
 $installdefs = array (
-  'id' => 'Google_Maps_20130716',
+  'id' => 'Google_Maps_20130806',
 
   'beans' => 
   array (
