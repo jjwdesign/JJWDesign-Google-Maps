@@ -12,11 +12,11 @@ Package Scanner and Known Issues:
 
 $GLOBALS[‘sugar_config’][‘moduleInstaller’][‘packageScan’] = true;
 
-SugarCRM OnDemand installer runs with package scanner turned on. This causes 
+SugarCRM OnDemand installer runs with package scanner turned on. This can cause 
 known problems when installing this package. There are several PNG files within 
-this package that are mistaken as PHP code. The are not PHP code and are needed
-by the maps. In order to bypass the package scanner restrictions you will need 
-to open a Case with SugarCRM Support to install this package.
+this package that may be mistaken as PHP code. They are not PHP code and are 
+needed by the maps. In order to bypass the package scanner restrictions you will 
+need to open a Case with SugarCRM Support in order to install this package.
 
 Google Maps API - Request Limits:
 
