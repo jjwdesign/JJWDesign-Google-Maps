@@ -4,7 +4,7 @@ $manifest = array (
     'acceptable_sugar_versions' => 
         array (
             'regex_matches' => array (
-                '6\.[2-9].*, 7\..*',
+                '6\.[2-9].*', '7\..*',
             ),
         ),
     'acceptable_sugar_flavors' =>
