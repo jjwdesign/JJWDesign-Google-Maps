@@ -10,7 +10,7 @@ issues please report them as soon as possible.
 
 Package Scanner and Known Issues:
 
-$GLOBALS[‘sugar_config’][‘moduleInstaller’][‘packageScan’] = true;
+$GLOBALS['sugar_config']['moduleInstaller']['packageScan'] = true;
 
 SugarCRM OnDemand installer runs with package scanner turned on. This can cause 
 known problems when installing this package. There are several PNG files within 
