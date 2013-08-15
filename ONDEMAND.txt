@@ -1,11 +1,25 @@
+Notes Specifically for SugarCRM On-Demand Users
 
-Version 2.0 Changes: 08/21/2012
+Support:
 
-Changes Specifically for SugarCRM On-Demand Users
+This projects tries to support all version of SugarCRM, including SugarCRM 
+OnDemand. This package is only tested on SugarCRM CE versions, but it has been 
+developed to work with all versions. There may be moments when the SugarCRM 
+OnDemand version is ahead of the Community Edition (CE). If you experience any 
+issues please report them as soon as possible.
 
-1.) Removed instances of is_dir()
-2.) Removed instanced of is_file()
-3.) Removed any not acceptable file types
-4.) Changed Google API Request from file_get_contents() to use PHP cURL.
+Package Scanner and Known Issues:
 
+$GLOBALS[‘sugar_config’][‘moduleInstaller’][‘packageScan’] = true;
 
+SugarCRM OnDemand installer runs with package scanner turned on. This causes 
+known problems when installing this package. There are several PNG files within 
+this package that are mistaken as PHP code. The are not PHP code and are needed
+by the maps. In order to bypass the package scanner restrictions you will need 
+to open a Case with SugarCRM Support to install this package.
+
+Google Maps API - Request Limits:
+
+Also note that SugarCRM On-Demand is a share hosting environment. The Google 
+Maps API is limited by requests per IP address. Therefor, the Google Maps API 
+request limits may be exceeded more often than expected.

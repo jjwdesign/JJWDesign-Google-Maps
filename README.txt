@@ -2,13 +2,7 @@ JJWDesign Google Maps
 Project hosted on SugarForge
 Created by Jeffrey J. Walters
 http://www.jjwdesign.com/
-Copyright (C) 2010-2012 Jeffrey J. Walters
-
-Install/Uninstall Notes:
-
-If you wish in remove all custom fields see packaged scripts 
-(scripts folder), pre_install.php and/or post_uninstall.php. 
-Uncomment code if you wish to remove all custom fields and data.
+Copyright (C) 2010-2014 Jeffrey J. Walters
 
 GNU Affero General Public License:
 
@@ -24,5 +18,3 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
