@@ -290,10 +290,10 @@ function initialize() {
         
         // coordinates: space separated lng,lat,elv points
         myCoords = [];
-        polygon = custom_areas[i].coordinates.split(" ");
+        polygon = custom_areas[i].coordinates.split(/[\n\r ]+/);
         for (var j=0; j<polygon.length; j++) {
             p = polygon[j].split(",");
-            myCoords[j] = new google.maps.LatLng(p[1], p[0]); // lat, lng
+            myCoords[j] = new google.maps.LatLng(parseFloat(p[1]), parseFloat(p[0])); // lat, lng
             bounds.extend(myCoords[j]);
         }
         myAreaPolygon[i] = new google.maps.Polygon({
