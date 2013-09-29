@@ -1,9 +1,9 @@
 <?php
 
-$mod_strings['LBL_JJWG_MAPS_ADMIN_HEADER'] = 'Google Maps';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_HEADER'] = 'Google Mapas';
 $mod_strings['LBL_JJWG_MAPS_ADMIN_DESC'] = 'Administre su geocodificación, probando geocodificación, ver geocodificación resultados totales y configuración avanzada.';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE'] = 'Configuración de Google Maps';
-$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_DESC'] = 'Configuraties para ajustar su Google Maps';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE'] = 'Configuración de Google Mapas';
+$mod_strings['LBL_JJWG_MAPS_ADMIN_CONFIG_DESC'] = 'Configuraties para ajustar su Google Mapas';
 $mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE'] = 'Cuenta de Geocodificación';
 $mod_strings['LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_DESC'] = 'Muestra el número de objetos geocodificados, agrupados por respuesta del sistema.';
 $mod_strings['LBL_JJWG_MAPS_ADMIN_DONATE_TITLE'] = 'Done a este Proyecto';
