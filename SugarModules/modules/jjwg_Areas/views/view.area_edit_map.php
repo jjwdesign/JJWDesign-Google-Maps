@@ -100,9 +100,8 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
     .error { background-color: #ffcdd1; border-top: 2px solid #e10c0c; border-bottom: 2px solid #e10c0c; }
   </style>
 
-  <script src="//www.google.com/jsapi"></script>
   <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
-  <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
 
   <script type="text/javascript">
 
@@ -220,7 +219,10 @@ $(function(){
                     for (var j=0; j<myCoords.length; j++) {
                         var myCoord = myCoords[j];
                         // Return format: lng,lat,elv
-                        myDataString += myCoord.lng() + ',' + myCoord.lat() + ',0 ';
+                        // Reduce percision to 8 after decimal and trim zeros
+                        var lng = myCoord.lng().toFixed(8).replace(/0+$/g, "");
+                        var lat = myCoord.lat().toFixed(8).replace(/0+$/g, "");
+                        myDataString += lng + ',' + lat + ',0 ';
                     }
                     myDataString = myDataString.replace(/^\s+|\s+$/g,"");
                     myDataString += "\n\n";
@@ -246,7 +248,7 @@ $(function(){
   </div>
   <div id="side">
     <div id="header"><b>Area Creation Instructions:</b><br />
-    Left click on the map, in a clockwise motion, to create marker points for the area.
+    Left click on the map, in a clockwise motion, to create marker points for the area.<br />
     Click on the first marker point to close the polygon area.<br />
     <input id="reset" value="Reset" type="button" class="navi"/>
     <input id="showData" value="Use Area Coordinates" type="button" class="navi"/>

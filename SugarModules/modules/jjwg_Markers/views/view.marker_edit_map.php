@@ -77,9 +77,9 @@ function updateMarkerStatus(str) {
 
 function updateMarkerPosition(latLng) {
   document.getElementById('info').innerHTML = [
-    latLng.lat(),
-    latLng.lng()
-  ].join(', ');
+    latLng.lat().toFixed(8).replace(/0+$/g, ""),
+    latLng.lng().toFixed(8).replace(/0+$/g, "")
+  ].join(',');
 }
 
 function updateMarkerAddress(str) {
@@ -88,8 +88,8 @@ function updateMarkerAddress(str) {
 }
 
 function updateEditFormLatLng(latLng) {
-  parent.document.getElementById('jjwg_maps_lat').value = latLng.lat();
-  parent.document.getElementById('jjwg_maps_lng').value = latLng.lng();
+  parent.document.getElementById('jjwg_maps_lat').value = latLng.lat().toFixed(8).replace(/0+$/g, "");
+  parent.document.getElementById('jjwg_maps_lng').value = latLng.lng().toFixed(8).replace(/0+$/g, "");
 }
 
 function initialize() {
