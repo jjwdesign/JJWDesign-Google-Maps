@@ -162,12 +162,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
   
   <div id="mapCanvas"></div>
   <div id="infoPanel">
-    <b>Marker status:</b>
-
-    <div id="markerStatus"><i>Click and drag the marker.</i></div>
-    <b>Marker Position (Latitude, Longitude):</b>
+    <b><?php echo $mod_strings['LBL_MARKER_MARKER_STATUS']; ?></b>
+    <div id="markerStatus"><i><?php echo $mod_strings['LBL_MARKER_EDIT_DESCRIPTION']; ?></i></div>
+    <b><?php echo $mod_strings['LBL_MARKER_MARKER_POSITION']; ?></b>
     <div id="info"></div>
-    <b>Closest Matching Address:</b>
+    <b><?php echo $mod_strings['LBL_MARKER_CLOSEST_MATCHING_ADDRESS']; ?>!!!</b>
     <div id="address"></div>
   </div>
 

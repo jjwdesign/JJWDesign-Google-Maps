@@ -247,14 +247,13 @@ $(function(){
   <div id="main-map">
   </div>
   <div id="side">
-    <div id="header"><b>Area Creation Instructions:</b><br />
-    Left click on the map, in a clockwise motion, to create marker points for the area.<br />
-    Click on the first marker point to close the polygon area.<br />
-    <input id="reset" value="Reset" type="button" class="navi"/>
-    <input id="showData" value="Use Area Coordinates" type="button" class="navi"/>
+    <div id="header"><b><?php echo $mod_strings['LBL_AREA_EDIT_TITLE']; ?></b><br />
+        <?php echo $mod_strings['LBL_AREA_EDIT_DESC_1']; ?><br />
+        <?php echo $mod_strings['LBL_AREA_EDIT_DESC_2']; ?><br />
+    <input id="reset" value="<?php echo $mod_strings['LBL_AREA_EDIT_RESET']; ?>" type="button" class="navi"/>
+    <input id="showData" value="<?php echo $mod_strings['LBL_AREA_EDIT_USE_AREA_COORDINATES']; ?>" type="button" class="navi"/>
     <br />
-    Coordinate Results (lng,lat,elv):
-    <br />
+        <?php echo $mod_strings['LBL_AREA_EDIT_COORDINATE_RESULTS']; ?><br />
     </div>
     <div id="dataPanel">
     </div>
