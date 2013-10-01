@@ -289,7 +289,7 @@ function initialize() {
         
         // coordinates: space separated lng,lat,elv points
         myCoords = [];
-        polygon = custom_areas[i].coordinates.split(/[\n\r ]+/);
+        polygon = custom_areas[i].coordinates.replace(/^[\s\n\r]+|[\s\n\r]+$/g,"").split(/[\n\r ]+/);
         for (var j=0; j<polygon.length; j++) {
             p = polygon[j].split(",");
             myCoords[j] = new google.maps.LatLng(parseFloat(p[1]), parseFloat(p[0])); // lat, lng
