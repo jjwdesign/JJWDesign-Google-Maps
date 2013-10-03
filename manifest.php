@@ -13,18 +13,18 @@ $manifest = array (
         ),
     'key'=>'jjwg',
     'author' => 'Jeff Walters',
-    'description' => 'JJWDesign Google Maps v2.1 for SugarCRM v6.2+',
+    'description' => 'JJWDesign Google Maps v2.1.1 for SugarCRM v6.2+',
     'icon' => 'images/default/images/icon_jjwg_Maps.gif',
     'is_uninstallable' => true,
     'name' => 'JJWDesign_Google_Maps',
-    'published_date' => '2013-10-02 12:12:12',
+    'published_date' => '2013-10-03 14:14:14',
     'type' => 'module',
-    'version' => '2.1-6.2+',
+    'version' => '2.1.1-6.2+',
     'remove_tables' => 'prompt'
 );
 
 $installdefs = array (
-  'id' => 'Google_Maps_20131002',
+  'id' => 'Google_Maps_20131003',
 
   'beans' => 
   array (
@@ -87,7 +87,6 @@ $installdefs = array (
   array(
     array(
       'from' => '<basepath>/SugarModules/modules/Administration/jjwg_Mapsadmin.php',
-      'to' => 'modules/Administration/jjwg_Mapsadmin.php',
     ),
   ),
 
@@ -960,7 +959,7 @@ $installdefs = array (
 
     // Relationships Language
     array (
-      'from' => '<basepath>/SugarModules/relationships/language/jjwg_Areas.php',
+      'from' => '<basepath>/SugarModules/relationships/language/en_us.jjwg_Areas.php',
       'to_module' => 'jjwg_Areas',
       'language' => 'en_us',
     ),
@@ -981,44 +980,44 @@ $installdefs = array (
     ),
     
     array (
-      'from' => '<basepath>/SugarModules/relationships/language/jjwg_Markers.php',
+      'from' => '<basepath>/SugarModules/relationships/language/en_us.jjwg_Markers.php',
       'to_module' => 'jjwg_Markers',
       'language' => 'en_us',
     ),
     array (
       'from' => '<basepath>/SugarModules/relationships/language/es_es.jjwg_Markers.php',
-      'to_module' => 'jjwg_Areas',
+      'to_module' => 'jjwg_Markers',
       'language' => 'es_es',
     ),
     array (
       'from' => '<basepath>/SugarModules/relationships/language/ge_ge.jjwg_Markers.php',
-      'to_module' => 'jjwg_Areas',
+      'to_module' => 'jjwg_Markers',
       'language' => 'ge_ge',
     ),
     array (
       'from' => '<basepath>/SugarModules/relationships/language/pt_br.jjwg_Markers.php',
-      'to_module' => 'jjwg_Areas',
+      'to_module' => 'jjwg_Markers',
       'language' => 'pt_br',
     ),
     
     array (
-      'from' => '<basepath>/SugarModules/relationships/language/jjwg_Maps.php',
+      'from' => '<basepath>/SugarModules/relationships/language/en_us.jjwg_Maps.php',
       'to_module' => 'jjwg_Maps',
       'language' => 'en_us',
     ),
     array (
       'from' => '<basepath>/SugarModules/relationships/language/es_es.jjwg_Maps.php',
-      'to_module' => 'jjwg_Areas',
+      'to_module' => 'jjwg_Maps',
       'language' => 'es_es',
     ),
     array (
       'from' => '<basepath>/SugarModules/relationships/language/ge_ge.jjwg_Maps.php',
-      'to_module' => 'jjwg_Areas',
+      'to_module' => 'jjwg_Maps',
       'language' => 'ge_ge',
     ),
     array (
       'from' => '<basepath>/SugarModules/relationships/language/pt_br.jjwg_Maps.php',
-      'to_module' => 'jjwg_Areas',
+      'to_module' => 'jjwg_Maps',
       'language' => 'pt_br',
     ),
 
