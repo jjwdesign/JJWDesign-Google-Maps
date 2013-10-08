@@ -287,6 +287,10 @@ class jjwg_MapsController extends SugarController {
                     $geocoding_inc = $this->settings['geocoding_limit'] + 1;
                 } // end if/else
                 
+                // Wait 1 Second to Throttle Requests: Rate limit of 10 geocodings per second
+                if ($geocoding_inc % 10 == 0)
+                    sleep(1);
+                
                 if ($geocoding_inc > $this->settings['geocoding_limit'])
                     break;
             } // while
