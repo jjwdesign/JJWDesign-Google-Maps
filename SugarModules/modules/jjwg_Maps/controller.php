@@ -298,19 +298,18 @@ class jjwg_MapsController extends SugarController {
             if ($geocoding_inc > $this->settings['geocoding_limit'])
                 break;
         } // end each module type
-        // If Cron processing, then do not redirect.
-        if (isset($_REQUEST['cron'])) {
-            exit;
+        
+        // If not cron processing, then redirect.
+        if (!isset($_REQUEST['cron'])) {
+            // Redirect to the Geocoded Counts Display
+            // contains header and exit
+            $url = 'index.php?module=jjwg_Maps&action=geocoded_counts';
+            if (!empty($this->last_status)) {
+                $url .= '&last_status=' . urlencode($this->last_status);
+            }
+            SugarApplication::redirect($url);
         }
-
-
-        // Redirect to the Geocoded Counts Display
-        // contains header and exit
-        $url = 'index.php?module=jjwg_Maps&action=geocoded_counts';
-        if (!empty($this->last_status)) {
-            $url .= '&last_status=' . urlencode($this->last_status);
-        }
-        SugarApplication::redirect($url);
+        
     }
 
     /**

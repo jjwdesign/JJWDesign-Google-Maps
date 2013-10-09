@@ -73,13 +73,16 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
 var jjwg_config_defaults = <?php echo (!empty($jjwg_config_defaults)) ? $jsonObj->encode($jjwg_config_defaults) : '[]'; ?>;
 var jjwg_config = <?php echo (!empty($jjwg_config)) ? $jsonObj->encode($jjwg_config) : '[]'; ?>;
 <?php
-if (empty($map_center)) {
-    $map_center = array(
-        'lat' => $jjwg_config['map_default_center_latitude'],
-        'lng' => $jjwg_config['map_default_center_longitude'],
-        'name' => '',
-        'html' => ''
-    );
+// Check to see if map center is empty of lng,lat of 0,0
+if (empty($map_center) || (empty($map_center['lat']) && empty($map_center['lng']))) {
+    // Ensure something shows on the map
+    if (empty($map_markers) && empty($custom_markers) && empty($custom_areas)) {
+        // Define default point as map center
+        $map_center['lat'] = $jjwg_config['map_default_center_latitude'];
+        $map_center['lat'] = $jjwg_config['map_default_center_longitude'];
+        if (!isset($map_center['html'])) $map_center['html'] = $mod_strings['LBL_DEFAULT'];
+        if (!isset($map_center['html'])) $map_center['name'] = $mod_strings['LBL_DEFAULT'];
+    }
 }
 ?>
 var map_center = <?php echo (!empty($map_center)) ? $jsonObj->encode($map_center) : 'null'; ?>;
@@ -322,9 +325,11 @@ function initialize() {
   }
 ?>
 
-
-  // Lastly
+  // Set a maximum zoom Level only on initial zoom
   map.fitBounds(bounds);
+  google.maps.event.addListenerOnce(map, "idle", function() { 
+    if (map.getZoom() > 15) map.setZoom(15);
+  });
 
 }
 
