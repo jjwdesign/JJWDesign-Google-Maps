@@ -13,9 +13,19 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView {
     global $sugar_config;
     global $jjwg_config;
     global $currentModule;
+    global $current_user;
     global $theme;
     global $mod_strings;
     global $loc;
+
+    // Users local settings for decimal seperator and number grouping seperator
+    $dec_sep = $sugar_config['default_decimal_seperator'];
+    $user_dec_sep = $current_user->getPreference('dec_sep');
+    $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep);
+
+    $num_grp_sep = $sugar_config['default_number_grouping_seperator'];
+    $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
+    $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
 
     $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
 
@@ -88,8 +98,13 @@ function updateMarkerAddress(str) {
 }
 
 function updateEditFormLatLng(latLng) {
-  parent.document.getElementById('jjwg_maps_lat').value = latLng.lat().toFixed(8).replace(/0+$/g, "");
-  parent.document.getElementById('jjwg_maps_lng').value = latLng.lng().toFixed(8).replace(/0+$/g, "");
+    // For Users Locale Conversion
+    var dec_sep = '<?php echo $dec_sep; ?>';
+    var num_grp_sep = '<?php echo $num_grp_sep; ?>';
+    var local_lat = latLng.lat().toFixed(8).replace(/0+$/g, "").replace(/\,/, num_grp_sep).replace(/\./, dec_sep);
+    var local_lng = latLng.lng().toFixed(8).replace(/0+$/g, "").replace(/\,/, num_grp_sep).replace(/\./, dec_sep);
+    parent.document.getElementById('jjwg_maps_lat').value = local_lat;
+    parent.document.getElementById('jjwg_maps_lng').value = local_lng;
 }
 
 function initialize() {
