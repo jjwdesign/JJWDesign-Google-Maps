@@ -1,5 +1,16 @@
 Notes Specifically for SugarCRM On-Demand Users
 
+Google Maps v2.0.7+ - Installs on SugarCRM On-Demand
+
+August 22, 2013 - by Jeff Walters - JJWDesign Google Maps
+
+I'm happy to announce that the JJWDesign Google Maps Package v2.0.7+ now 
+installs effortlessly on SugarCRM On-Demand. The project package now passes the 
+Package Scanner and File Scanner requirements to allow it to install on SugarCRM 
+On-Demand. You no longer need the assistance of SugarCRM Support to install this 
+package, yet you will still need SugarCRM Support assistance to uninstall older 
+versions of this package.
+
 Support:
 
 This projects tries to support all version of SugarCRM, including SugarCRM 
@@ -7,16 +18,6 @@ OnDemand. This package is only tested on SugarCRM CE versions, but it has been
 developed to work with all versions. There may be moments when the SugarCRM 
 OnDemand version is ahead of the Community Edition (CE). If you experience any 
 issues please report them as soon as possible.
-
-Package Scanner and Known Issues:
-
-$GLOBALS['sugar_config']['moduleInstaller']['packageScan'] = true;
-
-SugarCRM OnDemand installer runs with package scanner turned on. This can cause 
-known problems when installing this package. There are several PNG files within 
-this package that may be mistaken as PHP code. They are not PHP code and are 
-needed by the maps. In order to bypass the package scanner restrictions you will 
-need to open a Case with SugarCRM Support in order to install this package.
 
 Google Maps API - Request Limits:
 

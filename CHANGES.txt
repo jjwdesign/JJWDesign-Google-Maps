@@ -1,3 +1,15 @@
+Version 2.1.3 Changes 10/11/2013
+
+Improvements:
+
+1.) Language Added for Administration Links
+2.) Added logic support for "Accounts_Members" display type
+3.) Map Areas: Right Click to Remove Vertex
+4.) Corrected Maps Center Point Bugs
+5.) Added Max Zoom Restriction to Maps
+6.) Improved Throttle Control of Google Maps API Requests
+7.) Map Markers: Corrected Marker Locale Bug - Edit View
+
 
 Version 2.1 Changes 10/02/2013
 
