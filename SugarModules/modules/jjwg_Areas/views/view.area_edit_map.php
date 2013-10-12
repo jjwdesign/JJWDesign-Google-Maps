@@ -179,6 +179,15 @@ $(function(){
         // Set to global array for later reference and destroy
         myAreaPolygon[0].setMap(map);
         
+        
+        // Right click to remove vertex
+        myAreaPolygon[0].addListener('rightclick', function(mev){
+            if (mev.vertex != null && this.getPath().getLength() > 2) {
+                this.getPath().removeAt(mev.vertex);
+            }
+        });
+        
+        
         map.fitBounds(bounds);
 
     <?php
