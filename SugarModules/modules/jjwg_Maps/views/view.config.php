@@ -399,6 +399,35 @@ class Jjwg_MapsViewConfig extends SugarView {
         </td>
     </tr>
     <tr>
+        <td><strong><?php echo $mod_strings['LBL_CONFIG_GEOCODING_API_URL_TITLE']; ?> </strong></td>
+        <td><input type="text" name="geocoding_api_url" id="geocoding_api_url" 
+            value="<?php echo (isset($jjwg_config['geocoding_api_url'])) ? 
+                htmlspecialchars($jjwg_config['geocoding_api_url']) : 
+                htmlspecialchars($jjwg_config_defaults['geocoding_api_url']); ?>" 
+            title='' tabindex='139' size="70" maxlength="255">
+            <br />
+            <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
+                <?php echo htmlspecialchars($jjwg_config_defaults['geocoding_api_url']) ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><?php echo $mod_strings['LBL_CONFIG_GEOCODING_API_URL_DESC']; ?></td>
+    </tr>
+    <tr>
+        <td><strong><?php echo $mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_TITLE']; ?> </strong></td>
+        <td><input type="text" name="geocoding_api_secret" id="geocoding_api_secret" 
+            value="<?php echo (isset($jjwg_config['geocoding_api_secret'])) ? 
+                htmlspecialchars($jjwg_config['geocoding_api_secret']) : 
+                htmlspecialchars($jjwg_config_defaults['geocoding_api_secret']); ?>" 
+            title='' tabindex='140' size="25" maxlength="32">
+            &nbsp; <?php echo $mod_strings['LBL_CONFIG_DEFAULT']; ?> 
+                <?php echo htmlspecialchars($jjwg_config_defaults['geocoding_api_secret']) ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><?php echo $mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_DESC']; ?></td>
+    </tr>
+    <tr>
         <td><strong><?php echo $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_TITLE']; ?> </strong></td>
         <td><input type="text" name="geocoding_limit" id="geocoding_limit" 
             value="<?php echo (isset($jjwg_config['geocoding_limit'])) ? 

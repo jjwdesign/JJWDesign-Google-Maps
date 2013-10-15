@@ -102,6 +102,10 @@ $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_MEETINGS'] = 'Gruppe Feld für Meetings
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_PROSPECTS'] = 'Gruppe Feld für Perspektiven / Ziele:';
 
 $mod_strings['LBL_CONFIG_GEOCODING_SETTINGS_TITLE'] = 'Geocoding / Google Einstellungen:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_TITLE'] = 'Geocoding API URL:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_DESC'] = 'Die URL der Google Maps API V3 oder Proxy';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_TITLE'] = 'Passphrase für Proxy:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_DESC'] = 'The Secret Phrase mit dem Proxy MD5 Vergleich herangezogen werden.';
 $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_TITLE'] = 'Geocoding Limit:';
 $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_DESC'] = "'geocoding_limit' setzt die Abfrage Grenze, wenn die Datensätze auszuwählen geocode.";
 $mod_strings['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_TITLE'] = 'Google Geocoding Limit:';

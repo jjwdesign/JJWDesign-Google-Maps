@@ -47,6 +47,17 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             'Users' => 'address'
         ),
         /**
+         * 'geocoding_api_url' sets the URL used for geocoding (Google or Proxy)
+         * @var string
+         */
+        'geocoding_api_url' => 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false',
+        /**
+         * 'geocoding_api_secret' sets a secret phrase to be used by a Proxy for hash comparison
+         * @var string
+         * 'hash' is added to the URL parameters as a MD5 of the Concatenation of the Address and the Secret
+         */
+        'geocoding_api_secret' => '',
+        /**
          * 'geocoding_limit' sets the query limit when selecting records to geocode.
          * @var integer
          */
@@ -261,7 +272,16 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $this->settings['address_cache_save_enabled'] = (!empty($rev['address_cache_save_enabled'])) ? true : false;
             // Logic Hooks: true/false or 1/0
             $this->settings['logic_hooks_enabled'] = (!empty($rev['logic_hooks_enabled'])) ? true : false;
-
+            
+            // Set Geocoding API URL or Proxy URL
+            if (isset($rev['geocoding_api_url'])) {
+                $this->settings['geocoding_api_url'] = $rev['geocoding_api_url'];
+            }
+            // Set Google Maps API Secret
+            if (isset($rev['geocoding_api_secret'])) {
+                $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
+            }
+            
         }
         
         // Set for Global Use
@@ -348,6 +368,17 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (!$this->is_valid_lng($data['map_default_center_longitude'])) $data['map_default_center_longitude'] = -99.5;
             if (isset($data['map_default_center_longitude']) && is_numeric(trim($data['map_default_center_longitude']))) {
                 $admin->saveSetting($category, 'map_default_center_longitude', (float) trim($data['map_default_center_longitude']));
+            }
+            
+            // Set Geocoding API URL or Proxy URL
+            if (substr($data['geocoding_api_url'], 0, 4) != 'http') $data['geocoding_api_url'] = 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false';
+            if (isset($data['geocoding_api_url'])) {
+                $admin->saveSetting($category, 'geocoding_api_url', trim($data['geocoding_api_url']));
+            }
+            // Set Google Maps API Secret
+            if (empty($data['geocoding_api_secret'])) $data['geocoding_api_secret'] = '';
+            if (isset($data['geocoding_api_secret'])) {
+                $admin->saveSetting($category, 'geocoding_api_secret', trim($data['geocoding_api_secret']));
             }
             
             return true;
@@ -736,9 +767,19 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         
         $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
 
-        // Google Maps v3 - The new v3 Google Maps API no longer requires a Maps API Key!
-        $base_url = "https://maps.google.com/maps/api/geocode/json?sensor=false&";
+        // Google Maps API v3 - The new v3 Google Maps API no longer requires a Maps API Key!
+        // Old Default: https://maps.google.com/maps/api/geocode/json?sensor=false
+        // New Default: https://maps.googleapis.com/maps/api/geocode/json?sensor=false
+        $base_url = $this->settings['geocoding_api_url'];
+        if (!(strpos($base_url, '?') > 0)) $base_url .= '?';
+        // Add Address Parameter
         $request_url = $base_url . "&address=" . urlencode($address);
+        // Add Hash Parameter as MD5 of Concatenation of Address and Secret
+        if (!empty($this->settings['geocoding_api_secret'])) {
+            $hash = md5($address.$this->settings['geocoding_api_secret']);
+            $request_url .= '&hash='.urlencode($hash);
+        }
+        
         $GLOBALS['log']->info(__METHOD__.' cURL Request URL: '.$request_url);
 
         $ch = curl_init();
