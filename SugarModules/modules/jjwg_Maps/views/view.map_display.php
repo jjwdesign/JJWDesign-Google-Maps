@@ -12,6 +12,8 @@ class Jjwg_MapsViewMap_Display extends SugarView {
     
     global $sugar_config;
     global $currentModule;
+    global $theme;
+    global $mod_strings;
     
     $url = 'index.php?module='.$currentModule.'&action=map_markers';
     foreach (array_keys($_REQUEST) as $key) {
@@ -28,7 +30,7 @@ class Jjwg_MapsViewMap_Display extends SugarView {
 <?php
     if (empty($_REQUEST['uid']) && empty($_REQUEST['current_post'])) {
 ?>
-<p>iframe: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $url; ?></a></p>
+<p>IFrame: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $mod_strings['LBL_MAP']; ?> URL</a></p>
 <?php 
     }
 ?>
