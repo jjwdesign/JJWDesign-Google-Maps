@@ -24,7 +24,7 @@ class Jjwg_MapsViewMap_Display extends SugarView {
     
 ?>
 <iframe src="<?php echo $url; ?>" 
-	width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"><p>Sorry, 
+	width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"><p>Sorry, 
     your browser does not support iframes.</p></iframe>
 
 <?php

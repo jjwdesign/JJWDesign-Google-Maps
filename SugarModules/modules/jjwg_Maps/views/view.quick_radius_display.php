@@ -26,9 +26,10 @@ class Jjwg_MapsViewQuick_Radius_Display extends SugarView {
 <div class="clear"></div>
 
 <iframe src="<?php echo $url; ?>" 
-	width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"><p>Sorry, 
+	width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"><p>Sorry, 
     your browser does not support iframes.</p></iframe>
-<p>iframe: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $url; ?></a></p>
+
+<p>IFrame: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $mod_strings['LBL_MAP']; ?> URL</a></p>
 
 <?php
 
