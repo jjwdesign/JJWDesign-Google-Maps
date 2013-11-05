@@ -56,8 +56,11 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       color: #000000;
     }
   </style>
+  <link rel="stylesheet" type="text/css" href="modules/jjwg_Maps/DataTables/media/css/jquery.dataTables.css" />
   <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer.js"></script>
+  <script type="text/javascript" src="modules/jjwg_Maps/DataTables/media/js/jquery.dataTables.js"></script>
   <script type="text/javascript">
 <?php
     // Define globals for use in the view.
@@ -333,6 +336,43 @@ function initialize() {
 
 }
 
+<?php
+  if ($num_markers > 0) {
+?>
+  // Define DataTable Data
+  $(document).ready(function(){
+    var oDataTable = $('#displayDataTable').dataTable({
+        "bPaginate": true,
+        "bFilter": true,
+        "bStateSave": true,
+        "bProcessing": true,
+        "oLanguage": { "sProcessing": "..." },
+        "aaData": map_markers,
+        "aoColumns": [
+            {
+                "sWidth": "30%", 
+                "mDataProp": "name",
+                "mRender": function (data, type, row) {
+                    if (type == 'display') {
+                        return '<a target="_blank" href="./index.php?module=' + row.module + 
+                            '&amp;action=DetailView&amp;record=' + row.id + 
+                            '" class="link target_blank">' + data + '</a>';
+                    } else {
+                        return data;
+                    }
+                }
+            },
+            { "mData": "address" },
+            { "mData": "assigned_user_name" },
+            { "mData": "group" },
+            { "mData": "module" }
+        ]
+    });
+  });
+<?php
+  }
+?>
+
 </script>
 
 </head>
@@ -364,6 +404,28 @@ function initialize() {
 ?>   
   </div>
   
+<?php
+  if ($num_markers > 0) {
+?>
+    <div id="DataTable">
+        <table cellpadding="3" cellspacing="0" border="1" width="100%" class="list view" id="displayDataTable">
+            <thead>
+                <tr>
+                    <th width="30%" scope="col"><?php echo $mod_strings['LBL_NAME']; ?></th>
+                    <th width="30%" scope="col"><?php echo $mod_strings['LBL_MAP_ADDRESS']; ?></th>
+                    <th width="15%" scope="col"><?php echo $mod_strings['LBL_ASSIGNED_TO_NAME']; ?></th>
+                    <th width="15%" scope="col"><?php echo $mod_strings['LBL_MAP_USER_GROUPS']; ?></th>
+                    <th width="10%" scope="col"><?php echo $mod_strings['LBL_MODULE_NAME']; ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+<?php
+  }
+?>
+
 </body> 
 </html>
 <?php
