@@ -34,6 +34,8 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
     #map_canvas {
       width: 100%;
       height: 500px;
+      margin:0;
+      padding:0;
       border: 0;
     }
     div.marker {
@@ -42,13 +44,31 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       overflow: hidden;
     }
     #legend {
-      width: 100%;
+      background: rgba(100%, 100%, 100%, 0.65);
+      padding: 5px;
+      margin: 5px;
+      border: 1px solid #999999;
+      max-height: 445px;
+      min-width: 130px;
+      overflow-x: auto;
+      overflow-y: auto;
+      white-space: nowrap;
       font-size: 12px;
       line-height: 16px;
       font-family:Arial,Verdana,Helvetica,sans-serif;
-      color: #444444;
-      font-weight: normal;  
+      color: #333333;
     }
+    #legend b {
+      font-weight: bold;
+      font-family:Arial,Verdana,Helvetica,sans-serif;
+      color: #333333;
+    }
+    #legend img {
+      vertical-align: middle;
+      margin: 1px;
+      border: none;
+    }
+    
     b {
       font-size: 12px;
       line-height: 16px;
@@ -334,6 +354,10 @@ function initialize() {
     if (map.getZoom() > 15) map.setZoom(15);
   });
 
+  // Position Legend
+  var legend = document.getElementById('legend');
+  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
 }
 
 <?php
@@ -380,29 +404,35 @@ function initialize() {
 <body onload="initialize()">
   
   <div id="map_canvas"></div>
+  
   <br clear="all" />
+  
+<?php
+  if (!empty($map_center) || $num_markers > 0) {
+?>
   <div id="legend">
-  <b><?php echo $mod_strings['LBL_MAP_LEGEND']; ?> </b>
+  <b><?php echo $mod_strings['LBL_MAP_LEGEND']; ?></b><br/>
 <?php
   if (!empty($map_center)) {
 ?>
     <img src="<?php echo $sugar_config['site_url'].'/'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
-    <?php echo $map_center['name']; ?>, 
+    <?php echo $map_center['name']; ?><br/>
 <?php
   }
 ?>
-  &nbsp; <b><?php echo $mod_strings['LBL_MAP_USER_GROUPS']; ?> </b>
+  <!-- <b><?php echo $mod_strings['LBL_MAP_USER_GROUPS']; ?> </b><br/> -->
 <?php
-  $i = 1;
   foreach($group_name_to_num as $group_name => $group_number) {
 ?>
     <img src="<?php echo $sugar_config['site_url'].'/'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" align="middle" />
-    <?php echo htmlentities($group_name, ENT_COMPAT, "UTF-8", false); ?><?php if ($i != $num_groups) echo ','; ?>
+    <?php echo htmlentities($group_name, ENT_COMPAT, "UTF-8", false); ?><br/>
 <?php
-    $i++;
   }
 ?>   
   </div>
+<?php
+  }
+?>
   
 <?php
   if ($num_markers > 0) {
