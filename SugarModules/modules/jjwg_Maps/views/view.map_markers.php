@@ -12,7 +12,11 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
     
     global $sugar_config;
     global $currentModule;
+    global $current_language;
     global $theme;
+    global $dictionary;
+    global $app_strings;
+    global $app_list_strings;
     global $mod_strings;
     $jsonObj = new JSON(JSON_LOOSE_TYPE);
     
@@ -44,13 +48,14 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       overflow: hidden;
     }
     #legend {
-      background: rgba(100%, 100%, 100%, 0.65);
+      background: rgba(100%, 100%, 100%, 0.60);
       padding: 5px;
       margin: 5px;
       border: 1px solid #999999;
-      max-height: 445px;
-      min-width: 130px;
+      width: 140px;
+      min-width: 140px;
       overflow-x: auto;
+      max-height: 440px;
       overflow-y: auto;
       white-space: nowrap;
       font-size: 12px;
@@ -82,6 +87,11 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
+// Define SugarCRM App data for Javascript
+var dictionary = <?php echo (!empty($dictionary)) ? $jsonObj->encode($dictionary) : '[]'; ?>;
+var app_strings = <?php echo (!empty($app_strings)) ? $jsonObj->encode($app_strings) : '[]'; ?>;
+var app_list_strings = <?php echo (!empty($app_list_strings)) ? $jsonObj->encode($app_list_strings) : '[]'; ?>;
+var mod_strings = <?php echo (!empty($mod_strings)) ? $jsonObj->encode($mod_strings) : '[]'; ?>;
 <?php
     // Define globals for use in the view.
     global $jjwg_config_defaults;
@@ -89,6 +99,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
     global $map_center; // center marker
     global $map_markers; // grouped markers
     global $map_markers_groups; // array of grouping names
+    sort($map_markers_groups);
     global $custom_markers;
     global $custom_areas;
 ?>
@@ -406,17 +417,20 @@ function initialize() {
 
 }
 
+
+
 <?php
   if ($num_markers > 0) {
 ?>
   // Define DataTable Data
   $(document).ready(function(){
+    
     var oDataTable = $('#displayDataTable').dataTable({
         "bPaginate": true,
         "bFilter": true,
         "bStateSave": true,
         "bProcessing": true,
-        "oLanguage": { "sProcessing": "..." },
+        "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo $current_language; ?>.lang.txt" },
         "aaData": map_markers,
         "aoColumns": [
             {
@@ -434,8 +448,28 @@ function initialize() {
             },
             { "mData": "address" },
             { "mData": "assigned_user_name" },
-            { "mData": "group" },
-            { "mData": "module" }
+            {
+                "sWidth": "8%",
+                "mDataProp": "group",
+                "mRender": function (data, type, row) {
+                    if (data !== null && data !== '') {
+                        return data;
+                    } else {
+                        return "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}";
+                    }
+                }
+            },
+            {
+                "sWidth": "7%",
+                "mDataProp": "module",
+                "mRender": function (data, type, row) {
+                    if (app_list_strings['moduleListSingular'][data] !== '') {
+                        return app_list_strings['moduleListSingular'][data];
+                    } else {
+                        return data;
+                    }
+                }
+            }
         ]
     });
   });
@@ -471,7 +505,13 @@ function initialize() {
   foreach($group_name_to_num as $group_name => $group_number) {
 ?>
     <img src="<?php echo $sugar_config['site_url'].'/'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" align="middle" />
-    <?php echo htmlentities($group_name, ENT_COMPAT, "UTF-8", false); ?><br/>
+<?php
+    if (empty($group_name)) {
+        echo '{'.$mod_strings['LBL_MAP_NULL_GROUP_NAME'].'}';
+    } else {
+        echo htmlentities($group_name, ENT_COMPAT, "UTF-8", false);
+    }
+    ?><br/>
 <?php
   }
 ?>   
@@ -488,13 +528,20 @@ function initialize() {
             <thead>
                 <tr>
                     <th width="30%" scope="col"><?php echo $mod_strings['LBL_NAME']; ?></th>
-                    <th width="30%" scope="col"><?php echo $mod_strings['LBL_MAP_ADDRESS']; ?></th>
+                    <th width="35%" scope="col"><?php echo $mod_strings['LBL_MAP_ADDRESS']; ?></th>
                     <th width="15%" scope="col"><?php echo $mod_strings['LBL_ASSIGNED_TO_NAME']; ?></th>
-                    <th width="15%" scope="col"><?php echo $mod_strings['LBL_MAP_USER_GROUPS']; ?></th>
-                    <th width="10%" scope="col"><?php echo $mod_strings['LBL_MODULE_NAME']; ?></th>
+                    <th width="8%" scope="col"><?php echo $mod_strings['LBL_MAP_GROUP']; ?></th>
+                    <th width="7%" scope="col"><?php echo $mod_strings['LBL_MAP_TYPE']; ?></th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </div>

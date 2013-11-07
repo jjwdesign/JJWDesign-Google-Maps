@@ -20,6 +20,8 @@ $mod_strings['LBL_MAP_DISPLAY'] = 'Karte anzeigen';
 $mod_strings['LBL_MAP_LEGEND'] = 'Legende:';
 $mod_strings['LBL_MAP_USERS'] = 'Benutzer:';
 $mod_strings['LBL_MAP_USER_GROUPS'] = 'Benutzer-Gruppen:';
+$mod_strings['LBL_MAP_GROUP'] = 'Gruppe';
+$mod_strings['LBL_MAP_TYPE'] = 'Typ';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'zugeordnet zu:';
 $mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
 

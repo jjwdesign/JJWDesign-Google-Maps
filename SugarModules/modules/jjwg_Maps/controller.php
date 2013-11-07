@@ -807,6 +807,8 @@ class jjwg_MapsController extends SugarController {
     function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array()) {
 
         global $mod_strings;
+        global $app_strings;
+        global $app_list_strings;
         global $current_user;
         global $current_language;
 //        echo "<pre>";
@@ -816,7 +818,6 @@ class jjwg_MapsController extends SugarController {
         
         // Define Marker
         $marker = array();
-        
         // Set only partial display data for efficiency
         $marker['name'] = $display['name'];
         // Or, Set all display data for flexibility
@@ -865,10 +866,18 @@ class jjwg_MapsController extends SugarController {
             }
             // Define Marker Group
             if (!$center_marker) {
-                if (empty($display[$this->settings['map_markers_grouping_field'][$module_type]])) {
-                    $marker['group'] = $mod_strings['LBL_MAP_NULL_GROUP_NAME']; // null group
+                // Group Field for the Display Module
+                $group_field_name = $this->settings['map_markers_grouping_field'][$module_type];
+                $group_field_value = $display[$group_field_name];
+                // Check for DOM field types (enum type)
+                if (isset($this->display_object->field_name_map[$group_field_name]['type']) && 
+                        $this->display_object->field_name_map[$group_field_name]['type'] == 'enum') {
+                    $group_field_dom = $this->display_object->field_name_map[$group_field_name]['options'];
+                    $marker['group'] = $app_list_strings[$group_field_dom][$group_field_value];
+                } elseif (!empty($display[$group_field_name])) {
+                    $marker['group'] = $display[$group_field_name];
                 } else {
-                    $marker['group'] = $display[$this->settings['map_markers_grouping_field'][$module_type]];
+                    $marker['group'] = $mod_strings['LBL_MAP_NULL_GROUP_NAME']; // null group
                 }
                 if (!in_array($marker['group'], $this->map_markers_groups)) {
                     $this->map_markers_groups[] = $marker['group'];
