@@ -79,8 +79,8 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
   <link rel="stylesheet" type="text/css" href="modules/jjwg_Maps/DataTables/media/css/jquery.dataTables.css" />
   <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
-  <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer.js"></script>
-  <script type="text/javascript" src="modules/jjwg_Maps/DataTables/media/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
+  <script type="text/javascript" src="modules/jjwg_Maps/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
 <?php
     // Define globals for use in the view.
@@ -242,9 +242,55 @@ function initialize() {
 
     } // end for
 
+
+    // Now using MarkerClustererPlus v2.1.1
     var markerClusterer = new MarkerClusterer(map, markers, { 
         maxZoom: <?php echo (isset($jjwg_config['map_clusterer_max_zoom'])) ? $jjwg_config['map_clusterer_max_zoom'] : $jjwg_config_defaults['map_clusterer_max_zoom']; ?>,
         gridSize: <?php echo (isset($jjwg_config['map_clusterer_grid_size'])) ? $jjwg_config['map_clusterer_grid_size'] : $jjwg_config_defaults['map_clusterer_grid_size']; ?>
+    });
+    var markerClustererToggle = true;
+
+    // Controls for Clusters
+    var clusterControlDiv = document.createElement('div');
+    // Set CSS styles for the DIV containing the control
+    // Setting padding to 5 px will offset the control
+    // from the edge of the map
+    clusterControlDiv.style.padding = '6px';
+
+    // Set CSS for the control border
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#ffffff';
+    controlUI.style.borderStyle = 'solid';
+    controlUI.style.borderColor = '#a9a9a9';
+    controlUI.style.borderWidth = '1px';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'Click to Toggle Clustering';
+    clusterControlDiv.appendChild(controlUI);
+    
+    // Set CSS for the control interior
+    var controlText = document.createElement('div');
+    controlText.style.fontFamily = 'Arial,Verdana,Helvetica,sans-serif';
+    controlText.style.fontSize = '12px';
+    controlText.style.paddingLeft = '4px';
+    controlText.style.paddingRight = '4px';
+    controlText.style.paddingTop = '1px';
+    controlText.style.paddingBottom = '1px';
+    controlText.innerHTML = 'Toggle Clustering';
+    controlUI.appendChild(controlText);
+
+    clusterControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(clusterControlDiv);
+
+    // http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.1.1/examples/advanced_example.html?
+    google.maps.event.addDomListener(controlUI, 'click', function() {
+        if (markerClustererToggle !== true) {
+            markerClusterer.setOptions({map:map});//restores the clusterIcons
+            markerClustererToggle = true;
+        } else {
+            markerClusterer.setOptions({map:null});//hides the clusterIcons
+            markerClustererToggle = false;
+        }
     });
 
 <?php
