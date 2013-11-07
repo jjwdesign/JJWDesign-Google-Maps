@@ -23,6 +23,7 @@ $manifest = array (
     'remove_tables' => 'prompt'
 );
 
+
 $installdefs = array (
   'id' => 'Google_Maps_20131107',
 

@@ -1,3 +1,20 @@
+Version 2.1.7 Changes 11/07/2013
+
+Improvements:
+
+1.) Configuration: Gecoding API URL and Support for Proxy Script
+2.) Popupdef Link Correction
+3.) Added DataTables Listing with Sort, Filter and Page Functionality
+4.) View/IFrame URL Update
+5.) Updating Logic Hooks: TODO Static Methods
+6.) Improved Legend Display now as Maps Overlay
+7.) Upgraded Clustering to use MarkerClustererPlus
+8.) Added Map Clusterer Control Toggle
+9.) Improved Language Support for Datatables
+10.) Group by Field now supports enum types with DOM
+11.) Corrected .json SugarOnDemand Package Scanner Issues
+
+
 Version 2.1.3 Changes 10/11/2013
 
 Improvements:
