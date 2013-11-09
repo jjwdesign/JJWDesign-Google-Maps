@@ -113,7 +113,7 @@ if (empty($map_center) || (empty($map_center['lat']) && empty($map_center['lng']
     if (empty($map_markers) && empty($custom_markers) && empty($custom_areas)) {
         // Define default point as map center
         $map_center['lat'] = $jjwg_config['map_default_center_latitude'];
-        $map_center['lat'] = $jjwg_config['map_default_center_longitude'];
+        $map_center['lng'] = $jjwg_config['map_default_center_longitude'];
         if (!isset($map_center['html'])) $map_center['html'] = $mod_strings['LBL_DEFAULT'];
         if (!isset($map_center['html'])) $map_center['name'] = $mod_strings['LBL_DEFAULT'];
     }
@@ -171,35 +171,42 @@ var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? $jsonObj->en
 var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? $jsonObj->encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/'"; ?>;
 var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? $jsonObj->encode($custom_markers_icons) : '[]'; ?>;
 
-function initialize() {
 
-    var myOptions = {
-        zoom: 4,
-        center: new google.maps.LatLng(
-            <?php echo (!empty($loc['lat'])) ? $loc['lat'] : $jjwg_config['map_default_center_latitude']; ?>,
-            <?php echo (!empty($loc['lng'])) ? $loc['lng'] : $jjwg_config['map_default_center_longitude']; ?>
-        ),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    var bounds = new google.maps.LatLngBounds();
+/******************************************************************************/
 
-    var loc = [];
-    var myLatLng = [];
-    var marker = [];
-    // infowindow: array of InfoWindow objects used for all markers, custom markers and custom areas
-    var infowindow = [];
-    var markers = [];
 
-    // Define the Marker Images
-    var markerImage = [];
-    for (var i=0; i<=map_markers_groups.length; i++) {
-        markerImage[i] = new google.maps.MarkerImage(icons_dir+'/marker_'+i+'.png',
-        new google.maps.Size(20,34), new google.maps.Point(0,0), new google.maps.Point(10,34));
-    }
+// Define map vars
+var map = null;
+var bounds = null;
+var loc = [];
+var myLatLng = [];
 
-    var shape = {coord: [1, 1, 1, 34, 20, 34, 20, 1],type: 'poly'};
+// MarkerImage objects
+var markerImage = [];
+var shape = null;
 
+// Marker objects
+var marker = [];
+var markerGroupVisible = [];
+
+// Legend and Clusterer Control
+var legend = null;
+var markerClusterer = null;
+var markerClustererToggle = null;
+var clusterControlDiv = null;
+
+// InfoWindow objects: array of InfoWindow objects used for all markers, custom markers and custom areas
+var infowindow = [];
+
+// All types of Marker objects
+var markers = [];
+
+// Areas/Polygons objects
+var myAreaPolygon = null;
+
+
+function setCenterMarker() {
+  
     // Center Marker - marker[0]
     if (map_center !== null) {
         loc[0] = map_center;
@@ -210,6 +217,8 @@ function initialize() {
             icon: markerImage[0],
             shape: shape,
             title: loc[0].name,
+            group_name: '',
+            group_num: '',
             infoHtml: loc[0].html,
             zIndex: 99
         });
@@ -221,11 +230,12 @@ function initialize() {
         });
         bounds.extend(myLatLng[0]);
     }
+}
 
-    // Marker Locations
-<?php
-  if ($num_markers > 0) {
-?>
+
+function setMarkers() {
+  
+    // Markers and InfoWindows
     for (var i=1; i<=map_markers.length; i++) {
         loc[i] = map_markers[i-1];
         if (loc[i].group == '') loc[i].group = map_markers_groups[0];
@@ -236,6 +246,8 @@ function initialize() {
             icon: markerImage[group_name_to_num[loc[i].group]],
             shape: shape,
             title: loc[i].name,
+            group_name: loc[i].group,
+            group_num: group_name_to_num[loc[i].group],
             infoHtml: loc[i].html,
             infoI: i,
             zIndex: 5
@@ -248,21 +260,46 @@ function initialize() {
             infowindow[this.infoI].open(map, this);
             infowindow[this.infoI].setContent(this.infoHtml);
         });
+        //console.log(marker[i]);
         bounds.extend(myLatLng[i]);
         markers.push(marker[i]);
-
     } // end for
 
+}
 
-    // Now using MarkerClustererPlus v2.1.1
-    var markerClusterer = new MarkerClusterer(map, markers, { 
-        maxZoom: <?php echo (isset($jjwg_config['map_clusterer_max_zoom'])) ? $jjwg_config['map_clusterer_max_zoom'] : $jjwg_config_defaults['map_clusterer_max_zoom']; ?>,
-        gridSize: <?php echo (isset($jjwg_config['map_clusterer_grid_size'])) ? $jjwg_config['map_clusterer_grid_size'] : $jjwg_config_defaults['map_clusterer_grid_size']; ?>
-    });
-    var markerClustererToggle = true;
+
+function toggleMarkerGroupVisibility(group_num) {
+    
+    // Check markerGroupVisible
+    visibility = markerGroupVisible[group_num];
+    
+    if (typeof group_num !== 'undefined' && group_num !== '') {
+        // Markers
+        var toggled = false;
+        for (var i=0; i<=marker.length-1; i++) {
+            if (typeof marker[i] === 'object') {
+                if (marker[i].group_num == group_num) {
+                    // Change Marker Visibility
+                    marker[i].setVisible(!visibility);
+                    toggled = true;
+                }
+            }
+        }
+        if (toggled === true) {
+            markerGroupVisible[group_num] = !visibility;
+            markerClusterer.repaint();
+        }
+    }
+    
+    return markerGroupVisible[group_num];
+    
+}
+
+
+function setClusterControl() {
 
     // Controls for Clusters
-    var clusterControlDiv = document.createElement('div');
+    clusterControlDiv = document.createElement('div');
     // Set CSS styles for the DIV containing the control
     // Setting padding to 5 px will offset the control
     // from the edge of the map
@@ -302,13 +339,13 @@ function initialize() {
             markerClusterer.setOptions({map:null});//hides the clusterIcons
             markerClustererToggle = false;
         }
+        markerClusterer.repaint();
     });
 
-<?php
-  } // end if
-?>
+}
     
     
+function setCustomMarkers() {
     
     // Define the Custom Marker Images (jjwg_Markers Module)
     var customImage = [];
@@ -322,9 +359,6 @@ function initialize() {
     }
     var custom_shape = {coord: [1, 1, 1, 37, 32, 37, 32, 1],type: 'poly'};
 
-<?php
-    if ($num_custom_markers > 0) {
-?>
     for (var i=num_markers+1; i<=num_markers+num_custom_markers; i++) {
         
         loc[i] = custom_markers[i-num_markers-1];
@@ -352,21 +386,14 @@ function initialize() {
         
     } // end for
     
-<?php
-    } // end if $custom_markers
-?>
+}
 
-
-  
-  
+function setCustomAreas() {
 
   // Define the Custom Area Polygons (jjwg_Areas Module)
-<?php
-  if (count($custom_areas) > 0) {
-?>
     var polygon = [];
     var p = [];
-    var myAreaPolygon = [];
+    myAreaPolygon = [];
     
     for (var i=0; i<custom_areas.length; i++) {
         
@@ -401,9 +428,49 @@ function initialize() {
             infowindow[this.infoI].open(map);
         });
     }
-<?php
+
   }
-?>
+
+
+
+function initialize() {
+
+    map = new google.maps.Map(document.getElementById("map_canvas"), {
+        zoom: 4,
+        center: new google.maps.LatLng(
+            jjwg_config['map_default_center_latitude'], jjwg_config['map_default_center_longitude']
+        ),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    bounds = new google.maps.LatLngBounds();
+    
+    // Define the Marker Images
+    for (var i=0; i<=map_markers_groups.length; i++) {
+        markerImage[i] = new google.maps.MarkerImage(icons_dir+'/marker_'+i+'.png',
+        new google.maps.Size(20,34), new google.maps.Point(0,0), new google.maps.Point(10,34));
+        // Set initial visibility toggle to true for legend groups
+        markerGroupVisible[group_name_to_num[map_markers_groups[i]]] = true;
+        //markerGroupVisible[i] = true;
+    }
+    shape = {coord: [1, 1, 1, 34, 20, 34, 20, 1],type: 'poly'};
+    
+    setCenterMarker();
+    setMarkers();
+    setCustomMarkers();
+    setCustomAreas();
+    
+    // Position Legend
+    legend = document.getElementById('legend');
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+    
+    // Now using MarkerClustererPlus v2.1.1
+    markerClusterer = new MarkerClusterer(map, markers, {
+        maxZoom: (typeof jjwg_config['map_clusterer_max_zoom'] === 'undefined') ? jjwg_config_defaults['map_clusterer_max_zoom'] : jjwg_config['map_clusterer_max_zoom'],
+        gridSize: (typeof jjwg_config['map_clusterer_grid_size'] === 'undefined') ? jjwg_config_defaults['map_clusterer_max_zoom'] : jjwg_config['map_clusterer_grid_size'],
+        ignoreHidden: true
+    });
+    markerClustererToggle = true;
+    setClusterControl();
 
   // Set a maximum zoom Level only on initial zoom
   map.fitBounds(bounds);
@@ -411,11 +478,9 @@ function initialize() {
     if (map.getZoom() > 15) map.setZoom(15);
   });
 
-  // Position Legend
-  var legend = document.getElementById('legend');
-  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-
 }
+
+
 
 
 
@@ -472,6 +537,20 @@ function initialize() {
             }
         ]
     });
+    
+    // Toogle Marker Group Visibility on Click of Image
+    $('#legend img').click(function(){
+        var rel_group_num = $(this).attr('rel');
+        visibile_result = toggleMarkerGroupVisibility(rel_group_num);
+        if (!visibile_result) {
+            $(this).css({ opacity: 0.55 });
+        } else {
+            $(this).css({ opacity: 1.0 });
+        }
+        
+  });
+    
+    
   });
 <?php
   }
@@ -504,7 +583,8 @@ function initialize() {
 <?php
   foreach($group_name_to_num as $group_name => $group_number) {
 ?>
-    <img src="<?php echo $sugar_config['site_url'].'/'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" align="middle" />
+    <img src="<?php echo $sugar_config['site_url'].'/'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" 
+         rel="<?php echo $group_number; ?>" align="middle" />
 <?php
     if (empty($group_name)) {
         echo '{'.$mod_strings['LBL_MAP_NULL_GROUP_NAME'].'}';
