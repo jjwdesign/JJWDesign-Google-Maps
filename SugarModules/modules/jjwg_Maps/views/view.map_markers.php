@@ -10,23 +10,15 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
 
   function display() {
     
-    global $sugar_config;
-    global $currentModule;
-    global $current_language;
-    global $theme;
-    global $dictionary;
-    global $app_strings;
-    global $app_list_strings;
-    global $mod_strings;
     $jsonObj = new JSON(JSON_LOOSE_TYPE);
     
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
  
 <html xmlns="http://www.w3.org/1999/xhtml"> 
   <head> 
-  <title><?php echo $mod_strings['LBL_MAP_DISPLAY']; ?></title> 
+  <title><?php echo $GLOBALS['mod_strings']['LBL_MAP_DISPLAY']; ?></title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $theme; ?>/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
   <style type="text/css">
     html,body{
       margin:0;
@@ -88,52 +80,42 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
   <script type="text/javascript" src="modules/jjwg_Maps/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
 // Define SugarCRM App data for Javascript
-var dictionary = <?php echo (!empty($dictionary)) ? $jsonObj->encode($dictionary) : '[]'; ?>;
-var app_strings = <?php echo (!empty($app_strings)) ? $jsonObj->encode($app_strings) : '[]'; ?>;
-var app_list_strings = <?php echo (!empty($app_list_strings)) ? $jsonObj->encode($app_list_strings) : '[]'; ?>;
-var mod_strings = <?php echo (!empty($mod_strings)) ? $jsonObj->encode($mod_strings) : '[]'; ?>;
-<?php
-    // Define globals for use in the view.
-    global $jjwg_config_defaults;
-    global $jjwg_config;
-    global $map_center; // center marker
-    global $map_markers; // grouped markers
-    global $map_markers_groups; // array of grouping names
-    sort($map_markers_groups);
-    global $custom_markers;
-    global $custom_areas;
-?>
+var dictionary = <?php echo (!empty($GLOBALS['dictionary'])) ? $jsonObj->encode($GLOBALS['dictionary']) : '[]'; ?>;
+var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? $jsonObj->encode($GLOBALS['app_strings']) : '[]'; ?>;
+var app_list_strings = <?php echo (!empty($GLOBALS['app_list_strings'])) ? $jsonObj->encode($GLOBALS['app_list_strings']) : '[]'; ?>;
+var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? $jsonObj->encode($GLOBALS['mod_strings']) : '[]'; ?>;
 // Define Map Data for Javascript
-var jjwg_config_defaults = <?php echo (!empty($jjwg_config_defaults)) ? $jsonObj->encode($jjwg_config_defaults) : '[]'; ?>;
-var jjwg_config = <?php echo (!empty($jjwg_config)) ? $jsonObj->encode($jjwg_config) : '[]'; ?>;
+var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? $jsonObj->encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
+var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? $jsonObj->encode($GLOBALS['jjwg_config']) : '[]'; ?>;
 <?php
+sort($GLOBALS['map_markers_groups']);
 // Check to see if map center is empty of lng,lat of 0,0
-if (empty($map_center) || (empty($map_center['lat']) && empty($map_center['lng']))) {
+if (empty($GLOBALS['map_center']) || (empty($GLOBALS['map_center']['lat']) && empty($GLOBALS['map_center']['lng']))) {
     // Ensure something shows on the map
-    if (empty($map_markers) && empty($custom_markers) && empty($custom_areas)) {
+    if (empty($GLOBALS['map_markers']) && empty($GLOBALS['custom_markers']) && empty($GLOBALS['custom_areas'])) {
         // Define default point as map center
-        $map_center['lat'] = $jjwg_config['map_default_center_latitude'];
-        $map_center['lng'] = $jjwg_config['map_default_center_longitude'];
-        if (!isset($map_center['html'])) $map_center['html'] = $mod_strings['LBL_DEFAULT'];
-        if (!isset($map_center['html'])) $map_center['name'] = $mod_strings['LBL_DEFAULT'];
+        $GLOBALS['map_center']['lat'] = $GLOBALS['jjwg_config']['map_default_center_latitude'];
+        $GLOBALS['map_center']['lng'] = $GLOBALS['jjwg_config']['map_default_center_longitude'];
+        if (!isset($GLOBALS['map_center']['html'])) $GLOBALS['map_center']['html'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
+        if (!isset($GLOBALS['map_center']['html'])) $GLOBALS['map_center']['name'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
     }
 }
 ?>
-var map_center = <?php echo (!empty($map_center)) ? $jsonObj->encode($map_center) : 'null'; ?>;
-var map_markers = <?php echo (!empty($map_markers)) ? $jsonObj->encode($map_markers) : '[]'; ?>;
-var map_markers_groups = <?php echo (!empty($map_markers_groups)) ? $jsonObj->encode($map_markers_groups) : '[]'; ?>;
-var custom_markers = <?php echo (!empty($custom_markers)) ? $jsonObj->encode($custom_markers) : '[]'; ?>;
-var custom_areas = <?php echo (!empty($custom_areas)) ? $jsonObj->encode($custom_areas) : '[]'; ?>;
+var map_center = <?php echo (!empty($GLOBALS['map_center'])) ? $jsonObj->encode($GLOBALS['map_center']) : 'null'; ?>;
+var map_markers = <?php echo (!empty($GLOBALS['map_markers'])) ? $jsonObj->encode($GLOBALS['map_markers']) : '[]'; ?>;
+var map_markers_groups = <?php echo (!empty($GLOBALS['map_markers_groups'])) ? $jsonObj->encode($GLOBALS['map_markers_groups']) : '[]'; ?>;
+var custom_markers = <?php echo (!empty($GLOBALS['custom_markers'])) ? $jsonObj->encode($GLOBALS['custom_markers']) : '[]'; ?>;
+var custom_areas = <?php echo (!empty($GLOBALS['custom_areas'])) ? $jsonObj->encode($GLOBALS['custom_areas']) : '[]'; ?>;
 <?php
     // Define Map Data
-    $num_markers = count($map_markers);
-    $num_groups = count($map_markers_groups);
+    $num_markers = count($GLOBALS['map_markers']);
+    $num_groups = count($GLOBALS['map_markers_groups']);
     if ($num_groups > 216) $num_groups = 216;
     $group_name_to_num = array();
     $i = 1;
     // Define Group Name to Icon Number Mapping 1-216(max)
-    if (!empty($map_markers_groups)) {
-        foreach ($map_markers_groups as $name) {
+    if (!empty($GLOBALS['map_markers_groups'])) {
+        foreach ($GLOBALS['map_markers_groups'] as $name) {
             $group_name_to_num[$name] = $i;
             $i++;
         }
@@ -155,10 +137,10 @@ var custom_areas = <?php echo (!empty($custom_areas)) ? $jsonObj->encode($custom
     // Define Custom Markers Dir and Common Icons
     $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
     $custom_markers_icons = array();
-    foreach($custom_markers as $marker) {
+    foreach($GLOBALS['custom_markers'] as $marker) {
       $custom_markers_icons[] = $marker['image'];
     }
-    $num_custom_markers = count($custom_markers);
+    $num_custom_markers = count($GLOBALS['custom_markers']);
     $custom_markers_icons = array_unique($custom_markers_icons);
 ?>
 
@@ -495,7 +477,7 @@ function initialize() {
         "bFilter": true,
         "bStateSave": true,
         "bProcessing": true,
-        "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo $current_language; ?>.lang.txt" },
+        "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo $GLOBALS['current_language']; ?>.lang.txt" },
         "aaData": map_markers,
         "aoColumns": [
             {
@@ -567,27 +549,27 @@ function initialize() {
   <br clear="all" />
   
 <?php
-  if (!empty($map_center) || $num_markers > 0) {
+  if (!empty($GLOBALS['map_center']) || $num_markers > 0) {
 ?>
   <div id="legend">
-  <b><?php echo $mod_strings['LBL_MAP_LEGEND']; ?></b><br/>
+  <b><?php echo $GLOBALS['mod_strings']['LBL_MAP_LEGEND']; ?></b><br/>
 <?php
-  if (!empty($map_center)) {
+  if (!empty($GLOBALS['map_center'])) {
 ?>
-    <img src="<?php echo $sugar_config['site_url'].'/'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
-    <?php echo $map_center['name']; ?><br/>
+    <img src="<?php echo $GLOBALS['sugar_config']['site_url'].'/'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
+    <?php echo $GLOBALS['map_center']['name']; ?><br/>
 <?php
   }
 ?>
-  <!-- <b><?php echo $mod_strings['LBL_MAP_USER_GROUPS']; ?> </b><br/> -->
+  <!-- <b><?php echo $GLOBALS['mod_strings']['LBL_MAP_USER_GROUPS']; ?> </b><br/> -->
 <?php
   foreach($group_name_to_num as $group_name => $group_number) {
 ?>
-    <img src="<?php echo $sugar_config['site_url'].'/'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" 
+    <img src="<?php echo $GLOBALS['sugar_config']['site_url'].'/'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" 
          rel="<?php echo $group_number; ?>" align="middle" />
 <?php
     if (empty($group_name)) {
-        echo '{'.$mod_strings['LBL_MAP_NULL_GROUP_NAME'].'}';
+        echo '{'.$GLOBALS['mod_strings']['LBL_MAP_NULL_GROUP_NAME'].'}';
     } else {
         echo htmlentities($group_name, ENT_COMPAT, "UTF-8", false);
     }
@@ -607,11 +589,11 @@ function initialize() {
         <table cellpadding="3" cellspacing="0" border="1" width="100%" class="list view" id="displayDataTable">
             <thead>
                 <tr>
-                    <th width="30%" scope="col"><?php echo $mod_strings['LBL_NAME']; ?></th>
-                    <th width="35%" scope="col"><?php echo $mod_strings['LBL_MAP_ADDRESS']; ?></th>
-                    <th width="15%" scope="col"><?php echo $mod_strings['LBL_ASSIGNED_TO_NAME']; ?></th>
-                    <th width="8%" scope="col"><?php echo $mod_strings['LBL_MAP_GROUP']; ?></th>
-                    <th width="7%" scope="col"><?php echo $mod_strings['LBL_MAP_TYPE']; ?></th>
+                    <th width="30%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_NAME']; ?></th>
+                    <th width="35%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS']; ?></th>
+                    <th width="15%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_ASSIGNED_TO_NAME']; ?></th>
+                    <th width="8%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_GROUP']; ?></th>
+                    <th width="7%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_TYPE']; ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -629,11 +611,21 @@ function initialize() {
   }
 ?>
 
+<?php
+// Testing Dump
+//echo "<pre>";
+//var_dump($this);
+//var_dump($GLOBALS['current_language']);
+//var_dump($GLOBALS['dictionary']);
+//var_dump($GLOBALS['app_list_strings']);
+//var_dump($GLOBALS['app_strings']);
+//var_dump($GLOBALS['mod_strings']);
+//echo "</pre>";
+?>
+  
 </body> 
 </html>
 <?php
 
    }
 }
-
-?>

@@ -10,10 +10,7 @@ class Jjwg_MapsViewQuick_Radius_Display extends SugarView {
   
   function display() {
     
-    global $sugar_config;
-    global $currentModule;
-    
-    $url = 'index.php?module='.$currentModule.'&action=map_markers';
+    $url = 'index.php?module='.$GLOBALS['currentModule'].'&action=map_markers';
     foreach (array_keys($_REQUEST) as $key) {
       // Exclude certain request parameters
       if (!in_array($key, array('action', 'module', 'entryPoint', 'record', 'relate_id'))) {
@@ -35,5 +32,3 @@ class Jjwg_MapsViewQuick_Radius_Display extends SugarView {
 
  	}
 }
-
-?>

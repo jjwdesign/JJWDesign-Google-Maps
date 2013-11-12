@@ -10,12 +10,7 @@ class Jjwg_MapsViewMap_Display extends SugarView {
   
   function display() {
     
-    global $sugar_config;
-    global $currentModule;
-    global $theme;
-    global $mod_strings;
-    
-    $url = 'index.php?module='.$currentModule.'&action=map_markers';
+    $url = 'index.php?module='.$GLOBALS['currentModule'].'&action=map_markers';
     foreach (array_keys($_REQUEST) as $key) {
       if (!in_array($key, array('action', 'module', 'entryPoint'))) {
         $url .= '&'.$key.'='.urlencode($_REQUEST[$key]);
@@ -30,7 +25,7 @@ class Jjwg_MapsViewMap_Display extends SugarView {
 <?php
     if (empty($_REQUEST['uid']) && empty($_REQUEST['current_post'])) {
 ?>
-<p>IFrame: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $mod_strings['LBL_MAP']; ?> URL</a></p>
+<p>IFrame: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $GLOBALS['mod_strings']['LBL_MAP']; ?> URL</a></p>
 <?php 
     }
 ?>
@@ -40,5 +35,3 @@ class Jjwg_MapsViewMap_Display extends SugarView {
 
   }
 }
-
-?>

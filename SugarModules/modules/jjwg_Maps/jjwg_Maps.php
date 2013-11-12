@@ -855,7 +855,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      */
     function defineMapsAddress($object_name, $display) {
 
-        global $app_list_strings;
         $address = false;
         $fields = false;
         $parent = null;
