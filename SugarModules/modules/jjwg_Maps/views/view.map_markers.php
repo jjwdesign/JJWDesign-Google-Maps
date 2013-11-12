@@ -493,10 +493,16 @@ function initialize() {
                     }
                 }
             },
-            { "mData": "address" },
-            { "mData": "assigned_user_name" },
             {
-                "sWidth": "8%",
+                "sWidth": "28%", 
+                "mDataProp": "address"
+            },
+            {
+                "sWidth": "10%", 
+                "mDataProp": "phone"
+            },
+            {
+                "sWidth": "10%",
                 "mDataProp": "group",
                 "mRender": function (data, type, row) {
                     if (data !== null && data !== '') {
@@ -505,6 +511,10 @@ function initialize() {
                         return "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}";
                     }
                 }
+            },
+            {
+                "sWidth": "8%",
+                "mDataProp": "assigned_user_name"
             },
             {
                 "sWidth": "7%",
@@ -520,6 +530,20 @@ function initialize() {
         ]
     });
     
+    // Filter by Legend Toggle
+    $.fn.dataTableExt.afnFiltering.push(
+        function( oSettings, aData, iDataIndex ) {
+            // Check the marker group visibility
+            var group_name = aData[3];
+            if (group_name == "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}") {
+                var group_num = 1;
+            } else {
+                var group_num = group_name_to_num[group_name];
+            }
+            return markerGroupVisible[group_num];
+        }
+    );    
+    
     // Toogle Marker Group Visibility on Click of Image
     $('#legend img').click(function(){
         var rel_group_num = $(this).attr('rel');
@@ -529,6 +553,8 @@ function initialize() {
         } else {
             $(this).css({ opacity: 1.0 });
         }
+        // Redraw DataTable
+        oDataTable.fnDraw();
         
   });
     
@@ -589,20 +615,16 @@ function initialize() {
         <table cellpadding="3" cellspacing="0" border="1" width="100%" class="list view" id="displayDataTable">
             <thead>
                 <tr>
-                    <th width="30%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_NAME']; ?></th>
-                    <th width="35%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS']; ?></th>
-                    <th width="15%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_ASSIGNED_TO_NAME']; ?></th>
-                    <th width="8%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_GROUP']; ?></th>
-                    <th width="7%" scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_TYPE']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_NAME']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['app_strings']['LBL_LIST_PHONE']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_GROUP']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_ASSIGNED_TO_NAME']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_TYPE']; ?></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                 </tr>
             </tbody>
         </table>

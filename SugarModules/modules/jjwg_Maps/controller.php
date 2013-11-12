@@ -796,7 +796,6 @@ class jjwg_MapsController extends SugarController {
         $marker['name'] = $display['name'];
         // Or, Set all display data for flexibility
         //$marker = $display;
-        
         if (empty($marker['name'])) {
             $marker['name'] = 'N/A';
         }
@@ -810,6 +809,16 @@ class jjwg_MapsController extends SugarController {
         $marker['lng'] = $display['jjwg_maps_lng_c'];
         if (!$this->is_valid_lng($marker['lng'])) {
             $marker['lng'] = '0';
+        }
+        // Define a phone field: phone_office, phone_work, phone_mobile
+        if (!empty($display['phone_office'])) {
+            $marker['phone'] = $display['phone_office'];
+        } elseif (!empty($display['phone_work'])) {
+            $marker['phone'] = $display['phone_work'];
+        } elseif (!empty($display['phone_mobile'])) {
+            $marker['phone'] = $display['phone_mobile'];
+        } else {
+            $marker['phone'] = '';
         }
 
         if ($marker['lat'] != '0' && $marker['lng'] != '0') {
