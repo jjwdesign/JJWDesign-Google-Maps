@@ -147,9 +147,9 @@ $(function(){
     var p = [];
     var myAreaPolygon = [];
 
-    <?php
-    if (!empty($polygon)) {
-    ?>
+  
+    if (polygonPoints.length > 0) {
+        
         // Define coordinates from objects
         myCoords = [];
         for (var j=0; j<polygonPoints.length; j++) {
@@ -183,9 +183,7 @@ $(function(){
         
         map.fitBounds(bounds);
 
-    <?php
     }
-    ?>
     
     
     // Event listener on add new polygon
@@ -262,7 +260,6 @@ $(function(){
   </div>
 </body>
 </html>
-
 <?php
 
   }

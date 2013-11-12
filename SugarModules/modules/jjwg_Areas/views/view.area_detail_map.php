@@ -77,9 +77,8 @@ function initialize() {
   var p = [];
   var myAreaPolygon = [];
   
-<?php
-  if (!empty($polygon)) {
-?>
+  if (polygonPoints.length > 0) {
+    
     // Define coordinates from objects
     myCoords = [];
     for (var j=0; j<polygonPoints.length; j++) {
@@ -102,10 +101,7 @@ function initialize() {
 
     map.fitBounds(bounds);
     
-<?php
   }
-?>
-
 
 }
 
@@ -114,17 +110,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body>
-  
   <div id="mapCanvas"></div>
   <div id="infoPanel"><b></b>
     <div id="markerStatus"><i></i></div>
     <div id="info"></div>
     <div id="address"></div>
   </div>
-
 </body>
 </html>
-
 <?php
 
   }
