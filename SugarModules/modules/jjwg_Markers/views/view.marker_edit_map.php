@@ -34,11 +34,12 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView {
     html { height: 100% }
     body { height: 100%; margin: 0px; padding: 0px }
     #mapCanvas {
-      width: 500px;
-      height: 300px;
+      width: 700px;
+      height: 500px;
       float: left;
     }
     #infoPanel {
+      width: 450px;
       float: left;
       margin-left: 10px;
     }

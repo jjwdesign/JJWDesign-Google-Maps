@@ -29,13 +29,9 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
       height:100%;
       font-family:Arial, Helvetica, sans-serif;
     }
-      
-    #header{ 
-      vertical-align: top;
-    }
     #main-map{
-      width: 500px;
-      height: 300px;
+      width: 700px;
+      height: 500px;
       float: left;
     }
     #side{
@@ -74,7 +70,7 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
       font-weight: normal;  
       margin-bottom:10px;
     }
-    #header p{
+    p{
       font-size: 12px;
       line-height: 16px;
       font-family:Arial,Verdana,Helvetica,sans-serif;
@@ -247,14 +243,13 @@ $(function(){
   <div id="main-map">
   </div>
   <div id="side">
-    <div id="header"><b><?php echo $GLOBALS['mod_strings']['LBL_AREA_EDIT_TITLE']; ?></b><br />
+    <b><?php echo $GLOBALS['mod_strings']['LBL_AREA_EDIT_TITLE']; ?></b><br />
         <?php echo $GLOBALS['mod_strings']['LBL_AREA_EDIT_DESC_1']; ?><br />
         <?php echo $GLOBALS['mod_strings']['LBL_AREA_EDIT_DESC_2']; ?><br />
     <input id="reset" value="<?php echo $GLOBALS['mod_strings']['LBL_AREA_EDIT_RESET']; ?>" type="button" class="navi"/>
     <input id="showData" value="<?php echo $GLOBALS['mod_strings']['LBL_AREA_EDIT_USE_AREA_COORDINATES']; ?>" type="button" class="navi"/>
     <br />
         <?php echo $GLOBALS['mod_strings']['LBL_AREA_EDIT_COORDINATE_RESULTS']; ?><br />
-    </div>
     <div id="dataPanel">
     </div>
   </div>
