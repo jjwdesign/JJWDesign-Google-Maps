@@ -24,7 +24,6 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       margin:0;
       padding:0;
       width:100%;
-      height:100%;
       font-family:Arial, Helvetica, sans-serif;
     }
     #map_canvas {
@@ -76,11 +75,11 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
   <link rel="stylesheet" type="text/css" href="modules/jjwg_Maps/DataTables/media/css/jquery.dataTables.css" />
   <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
+  <script type="text/javascript" src="modules/jjwg_Maps/javascript/jquery.iframe-auto-height.plugin.1.9.3.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
 // Define SugarCRM App data for Javascript
-var dictionary = <?php echo (!empty($GLOBALS['dictionary'])) ? $jsonObj->encode($GLOBALS['dictionary']) : '[]'; ?>;
 var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? $jsonObj->encode($GLOBALS['app_strings']) : '[]'; ?>;
 var app_list_strings = <?php echo (!empty($GLOBALS['app_list_strings'])) ? $jsonObj->encode($GLOBALS['app_list_strings']) : '[]'; ?>;
 var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? $jsonObj->encode($GLOBALS['mod_strings']) : '[]'; ?>;
@@ -464,24 +463,27 @@ function initialize() {
 
 
 
-
-
-<?php
-  if ($num_markers > 0) {
-?>
+if (num_markers > 0) {
+    
   // Define DataTable Data
   $(document).ready(function(){
+    
     
     var oDataTable = $('#displayDataTable').dataTable({
         "bPaginate": true,
         "bFilter": true,
         "bStateSave": true,
         "bProcessing": true,
+        "fnDrawCallback": function(oSettings) {
+            if (typeof window.parent.resizeDataTables == 'function') {
+                window.parent.resizeDataTables();
+            }
+        },
         "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo $GLOBALS['current_language']; ?>.lang.txt" },
         "aaData": map_markers,
         "aoColumns": [
             {
-                "sWidth": "30%", 
+                "sWidth": "28%", 
                 "mDataProp": "name",
                 "mRender": function (data, type, row) {
                     if (type == 'display') {
@@ -513,7 +515,7 @@ function initialize() {
                 }
             },
             {
-                "sWidth": "8%",
+                "sWidth": "10%",
                 "mDataProp": "assigned_user_name"
             },
             {
@@ -560,9 +562,8 @@ function initialize() {
     
     
   });
-<?php
-  }
-?>
+  
+}
 
 </script>
 
@@ -638,7 +639,6 @@ function initialize() {
 //echo "<pre>";
 //var_dump($this);
 //var_dump($GLOBALS['current_language']);
-//var_dump($GLOBALS['dictionary']);
 //var_dump($GLOBALS['app_list_strings']);
 //var_dump($GLOBALS['app_strings']);
 //var_dump($GLOBALS['mod_strings']);
