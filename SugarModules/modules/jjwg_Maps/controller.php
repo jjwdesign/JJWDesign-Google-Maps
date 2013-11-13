@@ -719,6 +719,71 @@ class jjwg_MapsController extends SugarController {
             }
 
 
+            // Map Target List (ProspectLists)
+        } elseif (@(!empty($_REQUEST['list_id']))) {    
+
+            $GLOBALS['map_markers'] = array();
+            $this->display_object = get_module_info('ProspectLists');
+            // Use the Export Query
+            if (@!empty($_REQUEST['list_id'])) {
+                $this->display_object->retrieve($_REQUEST['list_id']);
+                if ($this->display_object->id == $_REQUEST['list_id']) {
+                    $prospect_list_object = $this->display_object;
+                    $list_id = $this->display_object->id;
+                }
+            }
+            
+            if (!empty($list_id)) {
+                
+                $list_modules = array('Accounts', 'Contacts', 'Leads', 'Users', 'Prospects');
+                $temp_marker_groups = array();
+                
+                foreach ($list_modules as $display_module) {
+                    
+                    $this->display_object = get_module_info($display_module);
+                    $mod_strings_display = return_module_language($GLOBALS['current_language'], $this->display_object->module_name);
+                    $mod_strings_display = array_merge($mod_strings_display, $GLOBALS['mod_strings']);
+                    
+                    // Find the Items to Display
+                    // Assume there is no address at 0,0; it's in the Atlantic Ocean!
+                    $where_conds = "(" . $this->display_object->table_name . "_cstm.jjwg_maps_lat_c != 0 OR " .
+                            "" . $this->display_object->table_name . "_cstm.jjwg_maps_lng_c != 0) " .
+                            " AND " .
+                            "(" . $this->display_object->table_name . "_cstm.jjwg_maps_geocode_status_c = 'OK')";
+                    $query = $this->display_object->create_new_list_query('', $where_conds, array(), array(), 0, '', false, $this->display_object, false);
+                    if ($display_module == 'Contacts') { // Contacts - Account Name
+                        $query = str_replace(' FROM contacts ', ' ,accounts.name AS account_name, accounts.id AS account_id  FROM contacts  ', $query);
+                        $query = str_replace(' FROM contacts ', ' FROM contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id and accounts_contacts.deleted = 0 LEFT JOIN accounts ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 ', $query);
+                    }
+                    // Add List JOIN
+                    $query = str_replace(' FROM '.$this->display_object->table_name.' ', 
+                            ' FROM '.$this->display_object->table_name.' LEFT JOIN prospect_lists_prospects ON '.
+                            'prospect_lists_prospects.related_id = '.$this->display_object->table_name.'.id AND '.
+                            '(prospect_lists_prospects.deleted=0 OR prospect_lists_prospects.deleted IS NULL) '.
+                            'LEFT JOIN prospect_lists ON prospect_lists_prospects.prospect_list_id = prospect_lists.id ', 
+                            $query);
+                    // Restrict WHERE to $list_id
+                    $query = str_replace(' WHERE ', 'WHERE prospect_lists.id = \''.$this->jjwg_Maps->db->quote($list_id).'\' AND ', $query);
+                    //var_dump($query);
+                    $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
+                    while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
+                        if (!empty($display['id'])) {
+                            $marker_data = $this->getMarkerData($display_module, $display, false, $mod_strings_display);
+                            $marker_data['group'] = $GLOBALS['app_list_strings']['moduleList'][$display_module];
+                            if (!empty($marker_data)) {
+                                $GLOBALS['map_markers'][] = $marker_data;
+                            }
+                        }
+                    }
+                    $temp_marker_groups[] = $GLOBALS['app_list_strings']['moduleList'][$display_module];
+                    
+                }
+                
+                $this->map_markers_groups = $temp_marker_groups;
+                $GLOBALS['map_markers_groups'] = $temp_marker_groups;
+            }
+            
+            
             // Map Records
         } elseif (@(!empty($_REQUEST['uid']) || !empty($_REQUEST['current_post']))) {
 
@@ -841,12 +906,9 @@ class jjwg_MapsController extends SugarController {
             if (isset($display['account_id'])) {
                 $marker['account_id'] = $display['account_id'];
             }
-            if (isset($display['assigned_user_name'])) {
-                $marker['assigned_user_name'] = $display['assigned_user_name'];
-            }
-            if (isset($display['marker_image'])) {
-                $marker['image'] = $display['marker_image'];
-            }
+            $marker['assigned_user_name'] = (isset($display['assigned_user_name'])) ? $display['assigned_user_name'] : '';
+            $marker['image'] = (isset($display['marker_image'])) ? $display['marker_image'] : '';
+            
             // Define Marker Group
             if (!$center_marker) {
                 // Group Field for the Display Module
