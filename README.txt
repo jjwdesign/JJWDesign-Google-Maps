@@ -4,17 +4,97 @@ Created by Jeffrey J. Walters
 http://www.jjwdesign.com/
 Copyright (C) 2010-2014 Jeffrey J. Walters
 
-GNU Affero General Public License:
+Version 2.1.8 Changes 11/20/2013
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Improvements:
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+1.) Added Legend Marker Group Toggling
+2.) Areas Module: Calculations for Area and Centroid
+3.) Code Cleanup/Refactor
+4.) Adding Legend Visibility to DataTables Filtering
+5.) $GLOBALS Corrections
+6.) Areas and Markers Modules: Map Detail/Edit Size Adjustments
+7.) IFrame Auto-Height jQuery Plugin
+8.) Map Target Lists by ID
+9.) Geocoding 'location_type' Adjustments
 
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Version 2.1.7 Changes 11/07/2013
+
+Improvements:
+
+1.) Configuration: Gecoding API URL and Support for Proxy Script
+2.) Popupdef Link Correction
+3.) Added DataTables Listing with Sort, Filter and Page Functionality
+4.) View/IFrame URL Update
+5.) Updating Logic Hooks: TODO Static Methods
+6.) Improved Legend Display now as Maps Overlay
+7.) Upgraded Clustering to use MarkerClustererPlus
+8.) Added Map Clusterer Control Toggle
+9.) Improved Language Support for Datatables
+10.) Group by Field now supports enum types with DOM
+11.) Corrected .json SugarOnDemand Package Scanner Issues
+
+
+Version 2.1.3 Changes 10/11/2013
+
+Improvements:
+
+1.) Language Added for Administration Links
+2.) Added logic support for "Accounts_Members" display type
+3.) Map Areas: Right Click to Remove Vertex
+4.) Corrected Maps Center Point Bugs
+5.) Added Max Zoom Restriction to Maps
+6.) Improved Throttle Control of Google Maps API Requests
+7.) Map Markers: Corrected Marker Locale Bug - Edit View
+
+
+Version 2.1 Changes 10/02/2013
+
+The Map Areas module now uses the Google Maps Javascript API v3 Drawing Library to provide enhanced area editing capabilities. Several Javascript bug fixes have been included in this revision. Language files have been improved and updated for all modules.
+
+Version 2.0.7 Changes 08/22/2013
+
+I'm happy to announce that the JJWDesign Google Maps Package v2.0.7 now installs effortlessly on SugarCRM On-Demand. The project package now passes the Package Scanner and File Scanner requirements to allow it to install on SugarCRM On-Demand. You no longer need the assistance of SugarCRM Support to install this package, yet you will still need SugarCRM Support assistance to uninstall older versions of this package.
+
+Version 2.0.1 Changes 02/03/2013
+
+Serveral bug fixes have been included in this revision.
+
+
+Version 2.0 Changes: 08/21/2012
+
+Version 2.0 is a significant achievement for this project. We've come a long way from the simple idea of mapping leads. Thank you to all those who have contributed and/or donated.
+
+Requirements:
+1.) Version 2.0 now requires cURL to be installed on the server. file_get_contents() is no longer used, per SugarCRM On-Demand restrictions.
+
+Improvements:
+
+1.) Add Configuration Page: You can now adjust/save the majority of the settings thru this easy to use configuration form.
+2.) Complete rewrite of view.map_markers.php to reduce the overall amount of JavaScript code. This was a much needed improvement. The intent is to allow the page to load faster and to be able to display a larger set of markers without crashing Internet Browsers. It should also make extending Javascript/Jquery/Google Maps API functionality much easier for future plugin development.
+3.) Added functionality for mapping Meetings from the Meetings Module. Geocoding of the Meeting objects is based on the Related module type and record (flex relate). Custom list view changes.
+4.) Added functionality for mapping Prospects/Targets from the Prospects Module. Custom list view changes. More on this soon.
+5.) Complete rewrite of all Logic Hooks to better manage the address relationships on change (save). Several new logic hooks added. See custom/module directory for more details. This was a major overhaul of the logic hooks.
+6.) Edit/Display View: Redefined the Parent Type list (flex relate field) for all Maps added in the jjwg_Maps Module. It now only allows you to select from Modules that have address information.
+7.) Cache Improved: Additional logic now added to take full advantage of the Address Cache module. All successfully geocoded addresses are now stored in the Address Cache module for later retrieval.
+8.) Serveral dozen or two small improvements that I don't recall at this time.
+9.) Updated jQuery to version 1.8.0
+
+
+Changes Specifically for SugarCRM On-Demand Users
+
+1.) Removed instances of is_dir()
+2.) Removed instanced of is_file()
+3.) Removed any not acceptable file types
+4.) Changed Google API Request from file_get_contents() to use PHP cURL.
+
+
+Bugs:
+
+1.) Bug: Many PHP notice messages corrected, for those running with them on.
+2.) Bug: Corrected IE6 javascript error issues in view.map_markers.php
+3.) Bug: CSS link path issue corrected.
+4.) Bug: Corrected several bugs related to Map Areas/Markers display issues.
+
+

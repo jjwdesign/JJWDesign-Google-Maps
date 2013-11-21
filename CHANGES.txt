@@ -1,3 +1,18 @@
+Version 2.1.8 Changes 11/20/2013
+
+Improvements:
+
+1.) Added Legend Marker Group Toggling
+2.) Areas Module: Calculations for Area and Centroid
+3.) Code Cleanup/Refactor
+4.) Adding Legend Visibility to DataTables Filtering
+5.) $GLOBALS Corrections
+6.) Areas and Markers Modules: Map Detail/Edit Size Adjustments
+7.) IFrame Auto-Height jQuery Plugin
+8.) Map Target Lists by ID
+9.) Geocoding 'location_type' Adjustments
+
+
 Version 2.1.7 Changes 11/07/2013
 
 Improvements:
