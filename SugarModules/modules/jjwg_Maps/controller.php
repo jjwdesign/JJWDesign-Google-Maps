@@ -225,7 +225,7 @@ class jjwg_MapsController extends SugarController {
                 if (!empty($aInfo['address']) && empty($aInfo['status'])) {
                     // Limit Geocode Requests to Google based on $this->settings['google_geocoding_limit']
                     if ($google_geocoding_inc < $this->settings['google_geocoding_limit']) {
-                        $aInfoGoogle = $this->jjwg_Maps->getGoogleMapsGeocode($aInfo['address']);
+                        $aInfoGoogle = $this->jjwg_Maps->getGoogleMapsGeocode($aInfo['address'], false, false);
                         if (!empty($aInfoGoogle)) {
                             $aInfo = $aInfoGoogle;
                             // Set last status
@@ -421,7 +421,7 @@ class jjwg_MapsController extends SugarController {
         
         if (!empty($_REQUEST['geocoding_address']) && !empty($_REQUEST['process_trigger']) &&
                 strlen($_REQUEST['geocoding_address']) <= 255) {
-            $GLOBALS['geocoding_results'] = $this->jjwg_Maps->getGoogleMapsGeocode($_REQUEST['geocoding_address'], true);
+            $GLOBALS['geocoding_results'] = $this->jjwg_Maps->getGoogleMapsGeocode($_REQUEST['geocoding_address'], true, true);
         }
     }
 
@@ -625,7 +625,7 @@ class jjwg_MapsController extends SugarController {
             // Use Quick Address as Center Point
             else {
                 // Geocode 'quick_address'
-                $aInfo = $this->jjwg_Maps->getGoogleMapsGeocode($_REQUEST['quick_address']);
+                $aInfo = $this->jjwg_Maps->getGoogleMapsGeocode($_REQUEST['quick_address'], false, true);
                 // If not status 'OK', then fail here and exit. Note: Inside of iFrame
                 if (!empty($aInfo['status']) && $aInfo['status'] != 'OK' && preg_match('/[A-Z\_]/', $aInfo['status'])) {
                     echo '<br /><br /><div><b>'.$GLOBALS['mod_strings']['LBL_MAP_LAST_STATUS'].': '.$aInfo['status'].'</b></div><br /><br />';
@@ -766,6 +766,7 @@ class jjwg_MapsController extends SugarController {
                     $query = str_replace(' WHERE ', 'WHERE prospect_lists.id = \''.$this->jjwg_Maps->db->quote($list_id).'\' AND ', $query);
                     //var_dump($query);
                     $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
+                    $display_type_found = false;
                     while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
                         if (!empty($display['id'])) {
                             $marker_data = $this->getMarkerData($display_module, $display, false, $mod_strings_display);
@@ -773,9 +774,12 @@ class jjwg_MapsController extends SugarController {
                             if (!empty($marker_data)) {
                                 $GLOBALS['map_markers'][] = $marker_data;
                             }
+                            $display_type_found = true;
                         }
                     }
-                    $temp_marker_groups[] = $GLOBALS['app_list_strings']['moduleList'][$display_module];
+                    if ($display_type_found) {
+                        $temp_marker_groups[] = $GLOBALS['app_list_strings']['moduleList'][$display_module];
+                    }
                     
                 }
                 

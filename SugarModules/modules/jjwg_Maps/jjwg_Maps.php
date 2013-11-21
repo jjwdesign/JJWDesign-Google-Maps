@@ -758,18 +758,21 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     /**
      * getGoogleMapsGeocode - Get Lng/Lat using Google Maps V3
      * @var $address
-     * @var $return_full_array - true or false
+     * @var $return_full_array boolean
+     * @var $allow_approximate boolean
      */
-    function getGoogleMapsGeocode($address, $return_full_array = false) {
+    function getGoogleMapsGeocode($address, $return_full_array = false, $allow_approximate = true) {
 
         $GLOBALS['log']->debug(__METHOD__.' START');
         $GLOBALS['log']->info(__METHOD__.' $address: '.$address);
         
         $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
 
-        // Google Maps API v3 - The new v3 Google Maps API no longer requires a Maps API Key!
-        // Old Default: https://maps.google.com/maps/api/geocode/json?sensor=false
-        // New Default: https://maps.googleapis.com/maps/api/geocode/json?sensor=false
+        /**
+         * Google Maps API v3 - The new v3 Google Maps API no longer requires a Maps API Key!
+         * Old Default: https://maps.google.com/maps/api/geocode/json?sensor=false
+         * New Default: https://maps.googleapis.com/maps/api/geocode/json?sensor=false
+         */
         $base_url = $this->settings['geocoding_api_url'];
         if (!(strpos($base_url, '?') > 0)) $base_url .= '?';
         // Add Address Parameter
@@ -802,15 +805,17 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $googlemaps = $this->jsonObj->decode($json_contents);
         $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '.$googlemaps);
 
-        // Status: "OK" : geocoding was successful
-        // "ZERO_RESULTS" : indicates that the geocode was successful but returned no results
-        // "OVER_QUERY_LIMIT" : indicates that you are over your quota.
-        // "REQUEST_DENIED" : lack of sensor parameter
-        // "INVALID_REQUEST" generally indicates that the query (address or latlng) is missing.
-        //echo "Status: ".$googlemaps->status."\n";
-
-        if (!empty($googlemaps) && isset($googlemaps['status'])) {
-
+        /**
+         * https://developers.google.com/maps/documentation/geocoding/#Results
+         * Status: "OK" : geocoding was successful
+         * "ZERO_RESULTS" : indicates that the geocode was successful but returned no results
+         * "OVER_QUERY_LIMIT" : indicates that you are over your quota
+         * "REQUEST_DENIED" : lack of sensor parameter
+         * "INVALID_REQUEST" generally indicates that the query (address or lat/lng) is missing.
+         * Limit to location_type = 'ROOFTOP', 'RANGE_INTERPOLATED' or 'GEOMETRIC_CENTER' but not 'APPROXIMATE'
+         */
+        if (!empty($googlemaps) && isset($googlemaps['status']) && 
+                ($allow_approximate || $googlemaps['results'][0]['geometry']['location_type'] != 'APPROXIMATE')) {
             // Debug: Log Over Limit
             if ($googlemaps['status'] == 'OVER_QUERY_LIMIT') {
                 $GLOBALS['log']->warn(__METHOD__.' Google Maps API Status of OVER_QUERY_LIMIT: indicates that you are over your quota.');
