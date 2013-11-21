@@ -71,13 +71,18 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       font-weight: bold;
       color: #000000;
     }
+    div.dataTables_filter {
+      margin-right: 10px;
+    }
   </style>
-  <link rel="stylesheet" type="text/css" href="modules/jjwg_Maps/DataTables/media/css/jquery.dataTables.css" />
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/css/TableTools.min.css" />
   <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/jquery.iframe-auto-height.plugin.1.9.3.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
-  <script type="text/javascript" src="modules/jjwg_Maps/DataTables/media/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script>
   <script type="text/javascript">
 // Define SugarCRM App data for Javascript
 var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? $jsonObj->encode($GLOBALS['app_strings']) : '[]'; ?>;
@@ -474,6 +479,8 @@ if (num_markers > 0) {
         "bFilter": true,
         "bStateSave": true,
         "bProcessing": true,
+        "sDom": '<Tlfrtip>',
+        "oTableTools": {"sSwfPath": "//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/swf/copy_csv_xls_pdf.swf"},
         "fnDrawCallback": function(oSettings) {
             if (typeof window.parent.resizeDataTables == 'function') {
                 window.parent.resizeDataTables();
