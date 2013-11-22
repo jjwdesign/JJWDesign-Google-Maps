@@ -22,7 +22,6 @@ class Jjwg_MapsViewMap_Display extends SugarView {
 <script>
 
   function resizeDataTables() {
-      console.log('Hello from resizeDataTables');
       $('#mapDisplayIframe').css('height: 200px;');
       setTimeout(function() {
           $('#resizeMapDisplayIframe').trigger("click");
@@ -34,7 +33,6 @@ class Jjwg_MapsViewMap_Display extends SugarView {
     // fire iframe resize when window is resized
     var windowResizeFunction = function(resizeFunction, iframe) {
         $(window).resize(function () {
-            console.debug("window resized - firing resizeHeight on iframe");
             resizeFunction(iframe);
         });
     };
@@ -42,14 +40,13 @@ class Jjwg_MapsViewMap_Display extends SugarView {
     // fire iframe resize when a link is clicked
     var clickFunction = function (resizeFunction, iframe) {
         $('#resizeMapDisplayIframe').click(function () {
-            console.debug("link clicked - firing resizeHeight on iframe");
             resizeFunction(iframe);
             return false
         });
     };
     
     $('#mapDisplayIframe').iframeAutoHeight({
-        debug: true,
+        debug: false,
         triggerFunctions: [
             windowResizeFunction,
             clickFunction
@@ -61,7 +58,7 @@ class Jjwg_MapsViewMap_Display extends SugarView {
 </script>
 
 <iframe id="mapDisplayIframe" src="<?php echo $url; ?>" 
-	width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" 
+	width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" 
         scrolling="auto"><p>Sorry, your browser does not support iframes.</p></iframe>
 
 <?php
