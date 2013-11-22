@@ -267,7 +267,7 @@ class Jjwg_MapsViewConfig extends SugarView {
     }
     ?>
     <tr>
-        <td colspan="2">&nbsp;</td>
+        <td colspan="2"><hr /></td>
     </tr>
     
     
@@ -376,7 +376,7 @@ class Jjwg_MapsViewConfig extends SugarView {
     }
     ?>
     <tr>
-        <td colspan="2">&nbsp;</td>
+        <td colspan="2"><hr /></td>
     </tr>
 
     <tr>
@@ -441,13 +441,31 @@ class Jjwg_MapsViewConfig extends SugarView {
     <tr>
         <td colspan="2"><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_DESC']; ?></td>
     </tr>
+    <tr class="row odd">
+        <td><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_TITLE']; ?> </strong></td>
+        <td>
+            <?php $enabled = !empty($GLOBALS['jjwg_config']['allow_approximate_location_type']) ? '1' : '0'; ?>
+            <select id="allow_approximate_location_type" tabindex="143" 
+                name="allow_approximate_location_type" title="">
+                <?php foreach ($enabled_disabled as $key=>$value) { ?>
+                    <option value="<?php echo htmlspecialchars($key); ?>" <?php 
+                    if ($key == $enabled) echo 'selected="selected"';
+                    ?>><?php echo htmlspecialchars($value); ?>
+                <?php } ?>
+            </select>
+            &nbsp; <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_DEFAULT']; ?> <?php echo htmlspecialchars($enabled_disabled[$GLOBALS['jjwg_config_defaults']['allow_approximate_location_type']]) ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_DESC']; ?></td>
+    </tr>
     <tr>
         <td><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_EXPORT_ADDRESSES_LIMIT_TITLE']; ?> </strong></td>
         <td><input type="text" name="export_addresses_limit" id="export_addresses_limit" 
             value="<?php echo (isset($GLOBALS['jjwg_config']['export_addresses_limit'])) ? 
                 htmlspecialchars($GLOBALS['jjwg_config']['export_addresses_limit']) : 
                 htmlspecialchars($GLOBALS['jjwg_config_defaults']['export_addresses_limit']); ?>" 
-            title='' tabindex='143' size="10" maxlength="25">
+            title='' tabindex='144' size="10" maxlength="25">
             &nbsp; <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_DEFAULT']; ?> 
                 <?php echo htmlspecialchars($GLOBALS['jjwg_config_defaults']['export_addresses_limit']) ?>
         </td>
@@ -459,7 +477,7 @@ class Jjwg_MapsViewConfig extends SugarView {
 
 
     <tr>
-        <td colspan="2">&nbsp;</td>
+        <td colspan="2"><hr /></td>
     </tr>
 
     <tr>
@@ -507,7 +525,7 @@ class Jjwg_MapsViewConfig extends SugarView {
     
     
     <tr>
-        <td colspan="2">&nbsp;</td>
+        <td colspan="2"><hr /></td>
     </tr>
 
     <tr>
@@ -537,7 +555,7 @@ class Jjwg_MapsViewConfig extends SugarView {
 
 
     <tr>
-        <td colspan="2">&nbsp;</td>
+        <td colspan="2"><hr /></td>
     </tr>
 
     <tr>

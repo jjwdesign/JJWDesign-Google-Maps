@@ -92,34 +92,33 @@ var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? $jsonObj->encod
 var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? $jsonObj->encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
 var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? $jsonObj->encode($GLOBALS['jjwg_config']) : '[]'; ?>;
 <?php
-sort($GLOBALS['map_markers_groups']);
 // Check to see if map center is empty of lng,lat of 0,0
-if (empty($GLOBALS['map_center']) || (empty($GLOBALS['map_center']['lat']) && empty($GLOBALS['map_center']['lng']))) {
+if (empty($this->bean->map_center) || (empty($this->bean->map_center['lat']) && empty($this->bean->map_center['lng']))) {
     // Ensure something shows on the map
-    if (empty($GLOBALS['map_markers']) && empty($GLOBALS['custom_markers']) && empty($GLOBALS['custom_areas'])) {
+    if (empty($this->bean->map_markers) && empty($this->bean->custom_markers) && empty($this->bean->custom_areas)) {
         // Define default point as map center
-        $GLOBALS['map_center']['lat'] = $GLOBALS['jjwg_config']['map_default_center_latitude'];
-        $GLOBALS['map_center']['lng'] = $GLOBALS['jjwg_config']['map_default_center_longitude'];
-        if (!isset($GLOBALS['map_center']['html'])) $GLOBALS['map_center']['html'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
-        if (!isset($GLOBALS['map_center']['html'])) $GLOBALS['map_center']['name'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
+        $this->bean->map_center['lat'] = $GLOBALS['jjwg_config']['map_default_center_latitude'];
+        $this->bean->map_center['lng'] = $GLOBALS['jjwg_config']['map_default_center_longitude'];
+        if (!isset($this->bean->map_center['html'])) $this->bean->map_center['html'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
+        if (!isset($this->bean->map_center['name'])) $this->bean->map_center['name'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
     }
 }
 ?>
-var map_center = <?php echo (!empty($GLOBALS['map_center'])) ? $jsonObj->encode($GLOBALS['map_center']) : 'null'; ?>;
-var map_markers = <?php echo (!empty($GLOBALS['map_markers'])) ? $jsonObj->encode($GLOBALS['map_markers']) : '[]'; ?>;
-var map_markers_groups = <?php echo (!empty($GLOBALS['map_markers_groups'])) ? $jsonObj->encode($GLOBALS['map_markers_groups']) : '[]'; ?>;
-var custom_markers = <?php echo (!empty($GLOBALS['custom_markers'])) ? $jsonObj->encode($GLOBALS['custom_markers']) : '[]'; ?>;
-var custom_areas = <?php echo (!empty($GLOBALS['custom_areas'])) ? $jsonObj->encode($GLOBALS['custom_areas']) : '[]'; ?>;
+var map_center = <?php echo (!empty($this->bean->map_center)) ? $jsonObj->encode($this->bean->map_center) : 'null'; ?>;
+var map_markers = <?php echo (!empty($this->bean->map_markers)) ? $jsonObj->encode($this->bean->map_markers) : '[]'; ?>;
+var map_markers_groups = <?php echo (!empty($this->bean->map_markers_groups)) ? $jsonObj->encode($this->bean->map_markers_groups) : '[]'; ?>;
+var custom_markers = <?php echo (!empty($this->bean->custom_markers)) ? $jsonObj->encode($this->bean->custom_markers) : '[]'; ?>;
+var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? $jsonObj->encode($this->bean->custom_areas) : '[]'; ?>;
 <?php
     // Define Map Data
-    $num_markers = count($GLOBALS['map_markers']);
-    $num_groups = count($GLOBALS['map_markers_groups']);
+    $num_markers = count($this->bean->map_markers);
+    $num_groups = count($this->bean->map_markers_groups);
     if ($num_groups > 216) $num_groups = 216;
     $group_name_to_num = array();
     $i = 1;
     // Define Group Name to Icon Number Mapping 1-216(max)
-    if (!empty($GLOBALS['map_markers_groups'])) {
-        foreach ($GLOBALS['map_markers_groups'] as $name) {
+    if (!empty($this->bean->map_markers_groups)) {
+        foreach ($this->bean->map_markers_groups as $name) {
             $group_name_to_num[$name] = $i;
             $i++;
         }
@@ -141,10 +140,10 @@ var custom_areas = <?php echo (!empty($GLOBALS['custom_areas'])) ? $jsonObj->enc
     // Define Custom Markers Dir and Common Icons
     $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
     $custom_markers_icons = array();
-    foreach($GLOBALS['custom_markers'] as $marker) {
+    foreach($this->bean->custom_markers as $marker) {
       $custom_markers_icons[] = $marker['image'];
     }
-    $num_custom_markers = count($GLOBALS['custom_markers']);
+    $num_custom_markers = count($this->bean->custom_markers);
     $custom_markers_icons = array_unique($custom_markers_icons);
 ?>
 
@@ -583,15 +582,15 @@ if (num_markers > 0) {
   <br clear="all" />
   
 <?php
-  if (!empty($GLOBALS['map_center']) || $num_markers > 0) {
+  if (!empty($this->bean->map_center) || $num_markers > 0) {
 ?>
   <div id="legend">
   <b><?php echo $GLOBALS['mod_strings']['LBL_MAP_LEGEND']; ?></b><br/>
 <?php
-  if (!empty($GLOBALS['map_center'])) {
+  if (!empty($this->bean->map_center)) {
 ?>
     <img src="<?php echo $GLOBALS['sugar_config']['site_url'].'/'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
-    <?php echo $GLOBALS['map_center']['name']; ?><br/>
+    <?php echo $this->bean->map_center['name']; ?><br/>
 <?php
   }
 ?>
@@ -644,8 +643,7 @@ if (num_markers > 0) {
 <?php
 // Testing Dump
 //echo "<pre>";
-//var_dump($this);
-//var_dump($GLOBALS['current_language']);
+//var_dump($this->bean);
 //var_dump($GLOBALS['app_list_strings']);
 //var_dump($GLOBALS['app_strings']);
 //var_dump($GLOBALS['mod_strings']);

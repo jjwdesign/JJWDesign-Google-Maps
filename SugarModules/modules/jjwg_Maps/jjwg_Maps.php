@@ -68,6 +68,10 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          */
         'google_geocoding_limit' => 100,
         /**
+         * 'allow_approximate_location_type' allows a Geocoding 'location_type' of 'APPROXIMATE' to be considered an 'OK' Status
+         */
+        'allow_approximate_location_type' => false,
+        /**
          * 'map_markers_limit' sets the query limit when selecting records to display on a map.
          * @var integer
          */
@@ -168,6 +172,62 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @var object
      */
     var $jsonObj;
+
+
+    /**
+     * geocoded_counts - Geocoding totals
+     * @var array 
+     */
+    var $geocoded_counts = null;
+    
+    /**
+     * geocoded_headings - Display headings
+     * @var array 
+     */
+    var $geocoded_headings = null;
+    
+    /**
+     * geocoded_module_totals - Geocoded module totals
+     * @var array 
+     */
+    var $geocoded_module_totals = null;
+    
+    /**
+     * geocoding_results - Google Geocoding API Results
+     * @var array 
+     */
+    var $geocoding_results = null;
+
+    /**
+     * map_center - Map Center (Related)
+     * @var array 
+     */
+    var $map_center = null;
+    
+    /**
+     * map_markers - Map Marker Data (Display)
+     * @var array 
+     */
+    var $map_markers = null;
+    
+    /**
+     * map_markers_groups - Sets the array of map groups
+     * @var array
+     */
+    var $map_markers_groups = array();
+
+    /**
+     * map_markers - Custom Markers Data (jjwg_Markers)
+     * @var array 
+     */
+    var $custom_markers = null;
+    
+    /**
+     * custom_areas - Custom Areas Data (jjwg_Areas)
+     * @var array 
+     */
+    var $custom_areas = null;
+
 
 
     /**
@@ -272,6 +332,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $this->settings['address_cache_save_enabled'] = (!empty($rev['address_cache_save_enabled'])) ? true : false;
             // Logic Hooks: true/false or 1/0
             $this->settings['logic_hooks_enabled'] = (!empty($rev['logic_hooks_enabled'])) ? true : false;
+            // Allow APPROXIMATE 'location_type'
+            $this->settings['allow_approximate_location_type'] = (!empty($rev['allow_approximate_location_type'])) ? true : false;
             
             // Set Geocoding API URL or Proxy URL
             if (isset($rev['geocoding_api_url'])) {
@@ -346,7 +408,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $int_settings = array('geocoding_limit', 'google_geocoding_limit',
                 'map_markers_limit', 'map_default_distance', 'export_addresses_limit',
                 'map_clusterer_grid_size', 'map_clusterer_max_zoom',
-                'address_cache_get_enabled', 'address_cache_save_enabled', 'logic_hooks_enabled');
+                'address_cache_get_enabled', 'address_cache_save_enabled', 
+                'logic_hooks_enabled', 'allow_approximate_location_type');
             foreach ($int_settings as $setting) {
                 if (isset($data[$setting]) && is_numeric(trim($data[$setting]))) {
                     $admin->saveSetting($category, $setting, (int) trim($data[$setting]));
@@ -766,6 +829,11 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $GLOBALS['log']->debug(__METHOD__.' START');
         $GLOBALS['log']->info(__METHOD__.' $address: '.$address);
         
+        /* allow_approximate_location_type - overrides only to true */
+        if (!empty($this->settings['allow_approximate_location_type'])) {
+            $allow_approximate = true;
+        }
+        
         $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
 
         /**
@@ -814,21 +882,28 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          * "INVALID_REQUEST" generally indicates that the query (address or lat/lng) is missing.
          * Limit to location_type = 'ROOFTOP', 'RANGE_INTERPOLATED' or 'GEOMETRIC_CENTER' but not 'APPROXIMATE'
          */
-        if (!empty($googlemaps) && isset($googlemaps['status']) && 
-                ($allow_approximate || $googlemaps['results'][0]['geometry']['location_type'] != 'APPROXIMATE')) {
-            // Debug: Log Over Limit
+        $aInfo = array('address' => $address);
+        if (!empty($googlemaps) && isset($googlemaps['status'])) {
             if ($googlemaps['status'] == 'OVER_QUERY_LIMIT') {
-                $GLOBALS['log']->warn(__METHOD__.' Google Maps API Status of OVER_QUERY_LIMIT: indicates that you are over your quota.');
+            // Debug: Log Over Limit
+                $GLOBALS['log']->warn(__METHOD__.' Google Maps API Status of OVER_QUERY_LIMIT: Over Your Quota');
+            } elseif (!$allow_approximate && $googlemaps['results'][0]['geometry']['location_type'] == 'APPROXIMATE') {
+                // Consider 'APPROXIMATE' to be similar to 'ZERO_RESULTS'
+                @$aInfo = array(
+                    'address' => $address,
+                    'status' => 'APPROXIMATE',
+                    'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
+                    'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
+                );
+            } else {
+                // Return address info
+                @$aInfo = array(
+                    'address' => $address,
+                    'status' => $googlemaps['status'],
+                    'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
+                    'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
+                );
             }
-            // Return address info
-            @$aInfo = array(
-                'address' => $address,
-                'status' => $googlemaps['status'],
-                'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
-                'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
-            );
-        } else {
-            $aInfo = array('address' => $address);
         }
 
         if ($return_full_array) {

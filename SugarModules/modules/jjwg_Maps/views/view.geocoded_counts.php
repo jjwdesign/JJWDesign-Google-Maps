@@ -23,24 +23,24 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
 
     echo '<table cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 50% !important;"><tbody>';
     echo '<tr><th>'.$GLOBALS['mod_strings']['LBL_MODULE_HEADING'].'</th>';
-    foreach ($GLOBALS['geocoded_headings'] as $heading) {
+    foreach ($this->bean->geocoded_headings as $heading) {
       echo '<th>'.$heading.'</th>';
     }
     echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_TOTAL_HEADING'].'</th>';
     echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_RESET_HEADING'].'</th>';
     echo '</tr>'."\n";
     
-    foreach ($GLOBALS['geocoded_modules'] as $module) {
+    foreach ($GLOBALS['jjwg_config']['valid_geocode_modules'] as $module) {
         
       $geocode_url = $GLOBALS['sugar_config']['site_url'].'/index.php?module=jjwg_Maps&action=geocode_addresses&display_module='.$module;
       $reset_url = $GLOBALS['sugar_config']['site_url'].'/index.php?module=jjwg_Maps&action=reset_geocoding&display_module='.$module;
       
       echo '<tr>';
       echo '<td><strong><a href="'.htmlspecialchars($geocode_url).'">'.$GLOBALS['app_list_strings']['moduleList'][$module].'</a></strong></td>';
-      foreach ($GLOBALS['geocoded_headings'] as $heading) {
-        echo '<td>'.$GLOBALS['geocoded_counts'][$module][$heading].'</td>';
+      foreach ($this->bean->geocoded_headings as $heading) {
+        echo '<td>'.$this->bean->geocoded_counts[$module][$heading].'</td>';
       }
-      echo '<td><strong>'.$GLOBALS['geocoded_module_totals'][$module].'</strong></td>';
+      echo '<td><strong>'.$this->bean->geocoded_module_totals[$module].'</strong></td>';
       echo '<td><strong><a href="'.htmlspecialchars($reset_url).'">'.$GLOBALS['mod_strings']['LBL_MODULE_RESET_HEADING'].'</a.</strong></td>';
       echo '</tr>'."\n";
     }

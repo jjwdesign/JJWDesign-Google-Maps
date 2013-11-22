@@ -31,7 +31,7 @@ value="<?php echo htmlspecialchars($_REQUEST['geocoding_address']); ?>" title=''
     if (!empty($_REQUEST['process_trigger'])) { 
     
       echo '<br /><br /><pre>';
-      print_r($GLOBALS['geocoding_results']);
+      print_r($this->bean->geocoding_results);
       echo '</pre><br /><br />';
     
     }

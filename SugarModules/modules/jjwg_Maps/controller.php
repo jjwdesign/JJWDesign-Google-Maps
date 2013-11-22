@@ -25,12 +25,6 @@ class jjwg_MapsController extends SugarController {
     var $map_marker_data_points = array();
 
     /**
-     * $map_markers_groups sets the array of groups to be used to display a map
-     * @var array
-     */
-    var $map_markers_groups = array();
-
-    /**
      * @var google_maps_response_codes
      * 
      */
@@ -91,13 +85,14 @@ class jjwg_MapsController extends SugarController {
     
     /**
      * Load Configuration Settings using Administration Module
-     * See jjwg_Maps module for setting config
+     * See jjwg_Maps module for settings
+     * 
      * $GLOBALS['jjwg_config_defaults']
      * $GLOBALS['jjwg_config']
      */
     function configuration() {
 
-        $this->jjwg_Maps = new jjwg_Maps();
+        $this->bean = new jjwg_Maps();
         $this->settings = $GLOBALS['jjwg_config'];
     }
     
@@ -110,26 +105,27 @@ class jjwg_MapsController extends SugarController {
         $this->view = 'geocoded_counts';
         $GLOBALS['log']->debug(__METHOD__.' START');
 
-        $GLOBALS['geocoded_counts'] = array();
-        $GLOBALS['geocoded_modules'] = $this->settings['valid_geocode_modules'];
-        $GLOBALS['geocoded_headings'] = array('N/A');
-        $GLOBALS['geocoded_module_totals'] = array();
+        $this->bean->geocoded_counts = array();
+        $this->bean->geocoded_headings = array('N/A');
+        $this->bean->geocoded_module_totals = array();
 
         $responses = array('N/A' => '');
         foreach ($this->google_maps_response_codes as $code) {
             if (!in_array($code, array('OVER_QUERY_LIMIT', 'REQUEST_DENIED'))) {
                 $responses[$code] = $code;
-                $GLOBALS['geocoded_headings'][] = $code;
+                $this->bean->geocoded_headings[] = $code;
             }
         }
+        $responses['Approximate'] = 'APPROXIMATE';
         $responses['Empty'] = 'Empty';
-        $GLOBALS['geocoded_headings'][] = 'Empty';
+        $this->bean->geocoded_headings[] = 'Approximate';
+        $this->bean->geocoded_headings[] = 'Empty';
 
         // foreach module
         foreach ($this->settings['valid_geocode_modules'] as $module_type) {
 
-            if (!isset($GLOBALS['geocoded_counts'][$module_type])) {
-                $GLOBALS['geocoded_module_totals'][$module_type] = 0;
+            if (!isset($this->bean->geocoded_counts[$module_type])) {
+                $this->bean->geocoded_module_totals[$module_type] = 0;
             }
 
             // Define display object from the necessary classes (utils.php)
@@ -151,18 +147,18 @@ class jjwg_MapsController extends SugarController {
                     $query .= $this->display_object->table_name . "_cstm.jjwg_maps_geocode_status_c = '" . $code . "'";
                 }
                 //var_dump($query);
-                $count_result = $this->jjwg_Maps->db->query($query);
-                $count = $this->jjwg_Maps->db->fetchByAssoc($count_result);
+                $count_result = $this->bean->db->query($query);
+                $count = $this->bean->db->fetchByAssoc($count_result);
                 if (empty($count)) $count['c'] = 0;
-                $GLOBALS['geocoded_counts'][$module_type][$response] = $count['c'];
+                $this->bean->geocoded_counts[$module_type][$response] = $count['c'];
             } // end foreach response type
             // Get Totals
-            $GLOBALS['geocoded_module_totals'][$module_type]++;
+            $this->bean->geocoded_module_totals[$module_type]++;
             $query = "SELECT count(*) c FROM " . $this->display_object->table_name . " WHERE " . $this->display_object->table_name . ".deleted = 0";
             //var_dump($query);
-            $count_result = $this->jjwg_Maps->db->query($query);
-            $count = $this->jjwg_Maps->db->fetchByAssoc($count_result);
-            $GLOBALS['geocoded_module_totals'][$module_type] = $count['c'];
+            $count_result = $this->bean->db->query($query);
+            $count = $this->bean->db->fetchByAssoc($count_result);
+            $this->bean->geocoded_module_totals[$module_type] = $count['c'];
         } // end each module type
     }
 
@@ -193,10 +189,10 @@ class jjwg_MapsController extends SugarController {
             $this->display_object = get_module_info($module_type);
 
             // Find the Items to Geocode - Get Geocode Addresses Result
-            $display_result = $this->jjwg_Maps->getGeocodeAddressesResult($this->display_object->table_name);
+            $display_result = $this->bean->getGeocodeAddressesResult($this->display_object->table_name);
 
             // Iterate through the display rows
-            while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
+            while ($display = $this->bean->db->fetchByAssoc($display_result)) {
 
                 $GLOBALS['log']->debug(__METHOD__.' $display[\'id\': '.$display['id']);
                 $geocoding_inc++;
@@ -205,7 +201,7 @@ class jjwg_MapsController extends SugarController {
                 
                 // Get address info array (address, status, lat, lng) from defineMapsAddress()
                 // This will provide a related address & optionally a status, lat and lng from an account or other object
-                $aInfo = $this->jjwg_Maps->defineMapsAddress($this->display_object->object_name, $display);
+                $aInfo = $this->bean->defineMapsAddress($this->display_object->object_name, $display);
                 //var_dump($aInfo);
                 
                 // Call Controller Method to Define Custom Address Logic
@@ -225,7 +221,7 @@ class jjwg_MapsController extends SugarController {
                 if (!empty($aInfo['address']) && empty($aInfo['status'])) {
                     // Limit Geocode Requests to Google based on $this->settings['google_geocoding_limit']
                     if ($google_geocoding_inc < $this->settings['google_geocoding_limit']) {
-                        $aInfoGoogle = $this->jjwg_Maps->getGoogleMapsGeocode($aInfo['address'], false, false);
+                        $aInfoGoogle = $this->bean->getGoogleMapsGeocode($aInfo['address'], false, false);
                         if (!empty($aInfoGoogle)) {
                             $aInfo = $aInfoGoogle;
                             // Set last status
@@ -251,7 +247,7 @@ class jjwg_MapsController extends SugarController {
                         !($aInfo['lng'] == 0 && $aInfo['lat'] == 0)) {
 
                     // Save Geocode $aInfo to custom fields
-                    $update_result = $this->jjwg_Maps->updateGeocodeInfoByAssocQuery($this->display_object->table_name, $display, $aInfo);
+                    $update_result = $this->bean->updateGeocodeInfoByAssocQuery($this->display_object->table_name, $display, $aInfo);
                     
                     // Save address, lng and lat to cache module - if not already found from cache
                     if (!$cache_found) {
@@ -265,13 +261,14 @@ class jjwg_MapsController extends SugarController {
                 // 'INVALID_REQUEST' - generally indicates that the query (address) is missing.
                 // Also, capture empty $aInfo or address.
                 } elseif (empty($aInfo) || empty($aInfo['address']) || (!empty($aInfo['address']) &&
-                        ($aInfo['status'] == 'ZERO_RESULTS' || $aInfo['status'] == 'INVALID_REQUEST'))) {
+                        ($aInfo['status'] == 'ZERO_RESULTS' || $aInfo['status'] == 'INVALID_REQUEST' || 
+                        $aInfo['status'] == 'APPROXIMATE'))) {
 
                     if (empty($aInfo['status'])) {
                         $aInfo['status'] = 'Empty';
                     }
                     // Save Geocode $aInfo to custom fields
-                    $update_result = $this->jjwg_Maps->updateGeocodeInfoByAssocQuery($this->display_object->table_name, $display, $aInfo);
+                    $update_result = $this->bean->updateGeocodeInfoByAssocQuery($this->display_object->table_name, $display, $aInfo);
 
                 // Bad Geocode Results - Stop
                 // 'OVER_QUERY_LIMIT' - indicates that you are over your quota.
@@ -325,15 +322,15 @@ class jjwg_MapsController extends SugarController {
         $this->display_object = get_module_info($module_type);
 
         // Find the Items to Geocode - Get Geocode Addresses Result
-        $display_result = $this->jjwg_Maps->getGeocodeAddressesResult($this->display_object->table_name, $this->settings['export_addresses_limit']);
+        $display_result = $this->bean->getGeocodeAddressesResult($this->display_object->table_name, $this->settings['export_addresses_limit']);
 
         $address_data[] = array('address', 'lat', 'lng');
         // Iterate through the display rows
-        while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
+        while ($display = $this->bean->db->fetchByAssoc($display_result)) {
 
             // Get address info array (address, status, lat, lng) from defineMapsAddress()
             // This will provide a related address & optionally a status, lat and lng from an account or other object
-            $aInfo = $this->jjwg_Maps->defineMapsAddress($this->display_object->object_name, $display);
+            $aInfo = $this->bean->defineMapsAddress($this->display_object->object_name, $display);
             //var_dump($aInfo);
             
             // Call Method to Define Custom Address Logic
@@ -421,7 +418,7 @@ class jjwg_MapsController extends SugarController {
         
         if (!empty($_REQUEST['geocoding_address']) && !empty($_REQUEST['process_trigger']) &&
                 strlen($_REQUEST['geocoding_address']) <= 255) {
-            $GLOBALS['geocoding_results'] = $this->jjwg_Maps->getGoogleMapsGeocode($_REQUEST['geocoding_address'], true, true);
+            $this->bean->geocoding_results = $this->bean->getGoogleMapsGeocode($_REQUEST['geocoding_address'], true, true);
         }
     }
 
@@ -435,7 +432,7 @@ class jjwg_MapsController extends SugarController {
         if (!empty($GLOBALS['current_user']->is_admin)) {
             if (!empty($_REQUEST['submit'])) {
                 // Post-Get-Redirect
-                $save_result = $this->jjwg_Maps->saveConfiguration($_REQUEST);
+                $save_result = $this->bean->saveConfiguration($_REQUEST);
                 $config_save_notice = ($save_result == true) ? '1' : '0';
                 SugarApplication::redirect('index.php?module=jjwg_Maps&action=config&config_save_notice='.$config_save_notice);
             } else {
@@ -460,7 +457,7 @@ class jjwg_MapsController extends SugarController {
         // Admin Only
         if (!empty($GLOBALS['current_user']->is_admin)) {
             if (is_object($this->display_object)) {
-                $delete_result = $this->jjwg_Maps->deleteAllGeocodeInfoByBeanQuery($this->display_object);
+                $delete_result = $this->bean->deleteAllGeocodeInfoByBeanQuery($this->display_object);
                 SugarApplication::redirect('index.php?module=jjwg_Maps&action=geocoded_counts');
             } else {
                 $this->view = 'geocoded_counts';
@@ -543,23 +540,21 @@ class jjwg_MapsController extends SugarController {
         $this->view = 'map_markers';
 
         // Define globals for use in the view.
-        $GLOBALS['map_center'] = array();
-        $GLOBALS['map_markers'] = array();
-        $GLOBALS['map_markers_groups'] = array();
-        $GLOBALS['custom_markers'] = array();
-        $GLOBALS['custom_areas'] = array();
-        
+        $this->bean->map_center = array();
+        $this->bean->map_markers = array();
+        $this->bean->map_markers_groups = array();
+        $this->bean->custom_markers = array();
+        $this->bean->custom_areas = array();
+
         // Create New Sugar_Smarty Object
         $this->sugarSmarty = new Sugar_Smarty();
-        $GLOBALS['mod_strings'];
-        $GLOBALS['app_strings'];
-        $GLOBALS['app_list_strings'];
         $this->sugarSmarty->assign("mod_strings", $GLOBALS['mod_strings']);
         $this->sugarSmarty->assign("app_strings", $GLOBALS['app_strings']);
         $this->sugarSmarty->assign('moduleListSingular', $GLOBALS['app_list_strings']['moduleListSingular']);
         $this->sugarSmarty->assign('moduleList', $GLOBALS['app_list_strings']['moduleList']);
         //echo '<pre>';
         //var_dump($_REQUEST);
+
         // Related Map Record Defines the Map
         if (!empty($_REQUEST['record']) ||
                 (!empty($_REQUEST['relate_id']) && !empty($_REQUEST['relate_module'])) ||
@@ -614,10 +609,10 @@ class jjwg_MapsController extends SugarController {
                 $where_conds = $this->relate_object->table_name . ".id = '" . $map_parent_id . "'";
                 $query = $this->relate_object->create_new_list_query("" . $this->relate_object->table_name . ".assigned_user_id", $where_conds, array(), array(), 0, '', false, $this->relate_object, false);
                 //var_dump($query);
-                $relate_result = $this->jjwg_Maps->db->query($query);
-                $relate = $this->jjwg_Maps->db->fetchByAssoc($relate_result);
+                $relate_result = $this->bean->db->query($query);
+                $relate = $this->bean->db->fetchByAssoc($relate_result);
                 // Add Relate (Center Point) Marker
-                $GLOBALS['map_center'] = $this->getMarkerData($map_parent_type, $relate, true, $mod_strings_related);
+                $this->bean->map_center = $this->getMarkerData($map_parent_type, $relate, true, $mod_strings_related);
                 // Define Center Point
                 $center_lat = $this->relate_object->jjwg_maps_lat_c;
                 $center_lng = $this->relate_object->jjwg_maps_lng_c;
@@ -625,7 +620,7 @@ class jjwg_MapsController extends SugarController {
             // Use Quick Address as Center Point
             else {
                 // Geocode 'quick_address'
-                $aInfo = $this->jjwg_Maps->getGoogleMapsGeocode($_REQUEST['quick_address'], false, true);
+                $aInfo = $this->bean->getGoogleMapsGeocode($_REQUEST['quick_address'], false, true);
                 // If not status 'OK', then fail here and exit. Note: Inside of iFrame
                 if (!empty($aInfo['status']) && $aInfo['status'] != 'OK' && preg_match('/[A-Z\_]/', $aInfo['status'])) {
                     echo '<br /><br /><div><b>'.$GLOBALS['mod_strings']['LBL_MAP_LAST_STATUS'].': '.$aInfo['status'].'</b></div><br /><br />';
@@ -640,7 +635,7 @@ class jjwg_MapsController extends SugarController {
                 $aInfo['jjwg_maps_address_c'] = $_REQUEST['quick_address'];
                 $aInfo['jjwg_maps_lat_c'] = $aInfo['lat'];
                 $aInfo['jjwg_maps_lng_c'] = $aInfo['lng'];
-                $GLOBALS['map_center'] = $this->getMarkerData($map_parent_type, $aInfo, true);
+                $this->bean->map_center = $this->getMarkerData($map_parent_type, $aInfo, true);
                 // Define Center Point
                 $center_lat = $aInfo['lat'];
                 $center_lng = $aInfo['lng'];
@@ -672,20 +667,20 @@ class jjwg_MapsController extends SugarController {
                 $query = str_replace(' FROM opportunities ', ' ,accounts.name AS account_name, accounts.id AS account_id  FROM opportunities  ', $query);
                 $query = str_replace(' FROM opportunities ', ' FROM opportunities LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id and accounts_opportunities.deleted = 0 LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id AND accounts.deleted=0 ', $query);
             } elseif ($map_module_type == 'Accounts_Members') { // 'Accounts_Members' is a special display type
-                $query = str_replace(' AND accounts.deleted=0', ' AND accounts.deleted=0 AND accounts.parent_id = \''.$this->jjwg_Maps->db->quote($map_parent_id).'\'', $query);
+                $query = str_replace(' AND accounts.deleted=0', ' AND accounts.deleted=0 AND accounts.parent_id = \''.$this->bean->db->quote($map_parent_id).'\'', $query);
             }
             //var_dump($query);
-            $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
-            while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
+            $display_result = $this->bean->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
+            while ($display = $this->bean->db->fetchByAssoc($display_result)) {
                 if (!empty($map_distance) && !empty($display['id'])) {
                     $marker_data_module_type = ($map_module_type == 'Accounts_Members') ? 'Accounts' : $map_module_type;
                     $marker_data = $this->getMarkerData($marker_data_module_type, $display, false, $mod_strings_display);
                     if (!empty($marker_data)) {
-                        $GLOBALS['map_markers'][] = $marker_data;
+                        $this->bean->map_markers[] = $marker_data;
                     }
                 }
             }
-            //var_dump($GLOBALS['map_markers']);
+            //var_dump($this->bean->map_markers);
             // Next define the Custom Markers and Areas related to this Map
             // Define relate and display objects from the necessary classes (utils.php)
             @$markers_object = get_module_info('jjwg_Markers');
@@ -699,7 +694,7 @@ class jjwg_MapsController extends SugarController {
                     foreach ($related_custom_markers as $marker_bean) {
                         $marker_data = $this->getMarkerDataCustom($marker_bean);
                         if (!empty($marker_data)) {
-                            $GLOBALS['custom_markers'][] = $marker_data;
+                            $this->bean->custom_markers[] = $marker_data;
                         }
                     }
                 }
@@ -712,7 +707,7 @@ class jjwg_MapsController extends SugarController {
                     foreach ($related_custom_areas as $area_bean) {
                         $area_data = $this->getAreaDataCustom($area_bean);
                         if (!empty($area_data)) {
-                            $GLOBALS['custom_areas'][] = $area_data;
+                            $this->bean->custom_areas[] = $area_data;
                         }
                     }
                 }
@@ -722,7 +717,7 @@ class jjwg_MapsController extends SugarController {
             // Map Target List (ProspectLists)
         } elseif (@(!empty($_REQUEST['list_id']))) {    
 
-            $GLOBALS['map_markers'] = array();
+            $this->bean->map_markers = array();
             $this->display_object = get_module_info('ProspectLists');
             // Use the Export Query
             if (@!empty($_REQUEST['list_id'])) {
@@ -763,16 +758,16 @@ class jjwg_MapsController extends SugarController {
                             'LEFT JOIN prospect_lists ON prospect_lists_prospects.prospect_list_id = prospect_lists.id ', 
                             $query);
                     // Restrict WHERE to $list_id
-                    $query = str_replace(' WHERE ', 'WHERE prospect_lists.id = \''.$this->jjwg_Maps->db->quote($list_id).'\' AND ', $query);
+                    $query = str_replace(' WHERE ', 'WHERE prospect_lists.id = \''.$this->bean->db->quote($list_id).'\' AND ', $query);
                     //var_dump($query);
-                    $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
+                    $display_result = $this->bean->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
                     $display_type_found = false;
-                    while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
+                    while ($display = $this->bean->db->fetchByAssoc($display_result)) {
                         if (!empty($display['id'])) {
                             $marker_data = $this->getMarkerData($display_module, $display, false, $mod_strings_display);
                             $marker_data['group'] = $GLOBALS['app_list_strings']['moduleList'][$display_module];
                             if (!empty($marker_data)) {
-                                $GLOBALS['map_markers'][] = $marker_data;
+                                $this->bean->map_markers[] = $marker_data;
                             }
                             $display_type_found = true;
                         }
@@ -783,8 +778,7 @@ class jjwg_MapsController extends SugarController {
                     
                 }
                 
-                $this->map_markers_groups = $temp_marker_groups;
-                $GLOBALS['map_markers_groups'] = $temp_marker_groups;
+                $this->bean->map_markers_groups = $temp_marker_groups;
             }
             
             
@@ -810,7 +804,7 @@ class jjwg_MapsController extends SugarController {
                 }
             }
             //var_dump($records_where);
-            $GLOBALS['map_markers'] = array();
+            $this->bean->map_markers = array();
 
             // Find the Items to Display
             // Assume there is no address at 0,0; it's in the Atlantic Ocean!
@@ -830,14 +824,14 @@ class jjwg_MapsController extends SugarController {
                 $query = str_replace(' FROM opportunities ', ' FROM opportunities LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id and accounts_opportunities.deleted = 0 LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id AND accounts.deleted=0 ', $query);
             }
             //var_dump($query);
-            $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
-            while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
-                $GLOBALS['map_markers'][] = $this->getMarkerData($display_module, $display, false, $mod_strings_display);
+            $display_result = $this->bean->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
+            while ($display = $this->bean->db->fetchByAssoc($display_result)) {
+                $this->bean->map_markers[] = $this->getMarkerData($display_module, $display, false, $mod_strings_display);
             } // end while
         }
 
-        // Define the groups for the view
-        $GLOBALS['map_markers_groups'] = $this->map_markers_groups;
+        // Sort marker groups for the view
+        sort($this->bean->map_markers_groups);
     }
     
     // end function action_map_markers
@@ -851,9 +845,6 @@ class jjwg_MapsController extends SugarController {
      */
     function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array()) {
         
-        $GLOBALS['mod_strings'];
-        $GLOBALS['app_strings'];
-        $GLOBALS['app_list_strings'];
 //        echo "<pre>";
 //        print_r($display);
 //        print_r($mod_strings_display);
@@ -864,7 +855,7 @@ class jjwg_MapsController extends SugarController {
         // Set only partial display data for efficiency
         $marker['name'] = $display['name'];
         // Or, Set all display data for flexibility
-        //$marker = $display;
+        $marker = $display;
         if (empty($marker['name'])) {
             $marker['name'] = 'N/A';
         }
@@ -903,7 +894,7 @@ class jjwg_MapsController extends SugarController {
             }
             // Set Marker Point as Used (true)
             $this->map_marker_data_points[(string) $marker['lat']][(string) $marker['lng']] = true;
-
+            
             if (isset($display['account_name'])) {
                 $marker['account_name'] = $display['account_name'];
             }
@@ -928,8 +919,8 @@ class jjwg_MapsController extends SugarController {
                 } else {
                     $marker['group'] = $GLOBALS['mod_strings']['LBL_MAP_NULL_GROUP_NAME']; // null group
                 }
-                if (!in_array($marker['group'], $this->map_markers_groups)) {
-                    $this->map_markers_groups[] = $marker['group'];
+                if (!in_array($marker['group'], $this->bean->map_markers_groups)) {
+                    $this->bean->map_markers_groups[] = $marker['group'];
                 }
             }
             
@@ -949,7 +940,7 @@ class jjwg_MapsController extends SugarController {
             }
             $current_user_data = get_object_vars($GLOBALS['current_user']);
             $this->sugarSmarty->assign('current_user', $current_user_data);
-            $this->sugarSmarty->assign('current_user_address', $this->jjwg_Maps->defineMapsFormattedAddress($current_user_data, 'address'));
+            $this->sugarSmarty->assign('current_user_address', $this->bean->defineMapsFormattedAddress($current_user_data, 'address'));
             $this->sugarSmarty->assign("mod_strings", $mod_strings_display);
             // Define Maps Info Window HTML by Sugar Smarty Template
             $this->sugarSmarty->assign("module_type", $module_type);
