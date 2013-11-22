@@ -1,8 +1,25 @@
-JJWDesign Google Maps
-Project hosted on SugarForge
+JJWDesign Google Maps for SugarCRM
+
+Project hosted on SugarForge.org
+Do not Download ZIP from Github.com
+Download ZIP from SugarForge.org
+http://www.sugarforge.org/frs/?group_id=901
+
 Created by Jeffrey J. Walters
 http://www.jjwdesign.com/
 Copyright (C) 2010-2014 Jeffrey J. Walters
+
+Version 2.1.9 Changes 11/22/2013
+
+Improvements:
+
+1.) DataTables TableTools Plugin referenced from CDNJS
+2.) Listing Exports: Copy, CSV, Excel, PDF, Print
+3.) 'Approximate' result type based on Geocoding 'location_type'
+4.) Configuration setting to Allow 'Approximate' location types
+5.) Debugging details for older IE browsers
+6.) Code Rewriting ($bean style)
+
 
 Version 2.1.8 Changes 11/20/2013
 
