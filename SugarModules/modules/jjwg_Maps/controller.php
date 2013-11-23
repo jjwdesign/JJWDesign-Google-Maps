@@ -855,7 +855,7 @@ class jjwg_MapsController extends SugarController {
         // Set only partial display data for efficiency
         $marker['name'] = $display['name'];
         // Or, Set all display data for flexibility
-        $marker = $display;
+        //$marker = $display;
         if (empty($marker['name'])) {
             $marker['name'] = 'N/A';
         }
