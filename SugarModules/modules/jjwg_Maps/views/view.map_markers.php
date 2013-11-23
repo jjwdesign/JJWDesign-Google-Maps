@@ -489,6 +489,11 @@ if (num_markers > 0) {
         "aaData": map_markers,
         "aoColumns": [
             {
+                "mDataProp": "id",
+                "bSearchable": false,
+                "bVisible": true
+            },
+            {
                 "sWidth": "28%", 
                 "mDataProp": "name",
                 "mRender": function (data, type, row) {
@@ -622,6 +627,7 @@ if (num_markers > 0) {
         <table cellpadding="3" cellspacing="0" border="1" width="100%" class="list view" id="displayDataTable">
             <thead>
                 <tr>
+                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_ID']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_NAME']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['app_strings']['LBL_LIST_PHONE']; ?></th>
