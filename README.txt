@@ -9,6 +9,16 @@ Created by Jeffrey J. Walters
 http://www.jjwdesign.com/
 Copyright (C) 2010-2014 Jeffrey J. Walters
 
+
+Version 2.1.10 Changes 11/25/2013
+
+Improvements:
+
+1.) Click DataTables Row Marker Image to panTo Map Marker InfoWindow
+2.) Corrected DataTable ID/image visibility issues
+3.) Corrected Map/DataTables load/initialize issues
+
+
 Version 2.1.9 Changes 11/22/2013
 
 Improvements:
