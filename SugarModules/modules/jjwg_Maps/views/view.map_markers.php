@@ -449,7 +449,7 @@ function setCustomAreas() {
         });
     }
 
-  }
+}
 
 
 
@@ -502,109 +502,118 @@ function initialize() {
 
 
 
-if (num_markers > 0) {
+// Define DataTable Data
+$(document).ready(function(){
     
-  // Define DataTable Data
-  $(document).ready(function(){
     
-    //console.log(map_markers);
+    // Call Google Map initialize()
+    initialize();
     
-    var oDataTable = $('#displayDataTable').dataTable({
-        "bPaginate": true,
-        "bFilter": true,
-        "bStateSave": true,
-        "bProcessing": true,
-        "sDom": '<Tlfrtip>',
-        "oTableTools": {"sSwfPath": "//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/swf/copy_csv_xls_pdf.swf"},
-        "fnDrawCallback": function(oSettings) {
-            if (typeof window.parent.resizeDataTables == 'function') {
-                window.parent.resizeDataTables();
-            }
-        },
-        "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo $GLOBALS['current_language']; ?>.lang.txt" },
-        "aaData": map_markers,
-        "aoColumns": [
-            {
-                "mDataProp": "id",
-                "bSearchable": false,
-                "bVisible": false
+    
+    if (num_markers > 0) {
+
+        //console.log(map_markers);
+
+        var oDataTable = $('#displayDataTable').dataTable({
+            "bPaginate": true,
+            "bFilter": true,
+            "bStateSave": true,
+            "bProcessing": true,
+            "sDom": '<Tlfrtip>',
+            "oTableTools": {"sSwfPath": "//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/swf/copy_csv_xls_pdf.swf"},
+            "fnDrawCallback": function(oSettings) {
+                if (typeof window.parent.resizeDataTables == 'function') {
+                    window.parent.resizeDataTables();
+                }
             },
-            {
-                "sWidth": "30%", 
-                "mDataProp": "name",
-                "mRender": function (data, type, row) {
-                    if (type == 'display') {
-                        return '<a target="_blank" href="./index.php?module=' + row.module + 
-                            '&amp;action=DetailView&amp;record=' + row.id + 
-                            '" class="link target_blank">' + data + '</a>';
-                    } else {
-                        return data;
+            "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo $GLOBALS['current_language']; ?>.lang.txt" },
+            "aaData": map_markers,
+            "aoColumns": [
+                {
+                    "sWidth": "1%", 
+                    "mDataProp": "id",
+                    "bSearchable": false
+                },
+                {
+                    "sWidth": "25%", 
+                    "mDataProp": "name",
+                    "mRender": function (data, type, row) {
+                        if (type == 'display') {
+                            return '<a target="_blank" href="./index.php?module=' + row.module + 
+                                '&amp;action=DetailView&amp;record=' + row.id + 
+                                '" class="link target_blank">' + data + '</a>';
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    "sWidth": "35%", 
+                    "mDataProp": "address"
+                },
+                {
+                    "sWidth": "10%", 
+                    "mDataProp": "phone"
+                },
+                {
+                    "sWidth": "10%",
+                    "mDataProp": "group",
+                    "mRender": function (data, type, row) {
+                        if (data !== null && data !== '') {
+                            return data;
+                        } else {
+                            return "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}";
+                        }
+                    }
+                },
+                {
+                    "sWidth": "10%",
+                    "mDataProp": "assigned_user_name"
+                },
+                {
+                    "sWidth": "7%",
+                    "mDataProp": "module",
+                    "mRender": function (data, type, row) {
+                        if (app_list_strings['moduleListSingular'][data] !== '') {
+                            return app_list_strings['moduleListSingular'][data];
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    "sWidth": "2%",
+                    "mDataProp": "image",
+                    "bSearchable": false,
+                    "mRender": function (data, type, row) {
+                        if (type == 'display') {
+                            return '<a href="#" onclick="clickMarkerById(\'' + row.id + '\')" class="link">' + 
+                                '<img src="custom/themes/default/images/jjwg_Address_Cache.gif" /></a>';
+                        } else {
+                            return '';
+                        }
                     }
                 }
-            },
-            {
-                "sWidth": "30%", 
-                "mDataProp": "address"
-            },
-            {
-                "sWidth": "10%", 
-                "mDataProp": "phone"
-            },
-            {
-                "sWidth": "10%",
-                "mDataProp": "group",
-                "mRender": function (data, type, row) {
-                    if (data !== null && data !== '') {
-                        return data;
-                    } else {
-                        return "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}";
-                    }
+            ]
+        });
+        // Force Visibility of ID Column
+        oDataTable.fnSetColumnVis(0, false);
+        
+        // Filter by Legend Toggle
+        $.fn.dataTableExt.afnFiltering.push(
+            function( oSettings, aData, iDataIndex ) {
+                // Check the marker group visibility
+                var group_name = aData[3];
+                if (group_name == "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}") {
+                    var group_num = 1;
+                } else {
+                    var group_num = group_name_to_num[group_name];
                 }
-            },
-            {
-                "sWidth": "10%",
-                "mDataProp": "assigned_user_name"
-            },
-            {
-                "sWidth": "7%",
-                "mDataProp": "module",
-                "mRender": function (data, type, row) {
-                    if (app_list_strings['moduleListSingular'][data] !== '') {
-                        return app_list_strings['moduleListSingular'][data];
-                    } else {
-                        return data;
-                    }
-                }
-            },
-            {
-                "sWidth": "3%",
-                "mDataProp": "image",
-                "bSearchable": false,
-                "mRender": function (data, type, row) {
-                    if (type == 'display') {
-                        return '<a href="#" onclick="clickMarkerById(\'' + row.id + '\')" class="link">' + 
-                            '<img src="custom/themes/default/images/jjwg_Address_Cache.gif" /></a>';
-                    } else {
-                        return '';
+                return markerGroupVisible[group_num];
             }
-                }
-            }
-        ]
-    });
-    
-    // Filter by Legend Toggle
-    $.fn.dataTableExt.afnFiltering.push(
-        function( oSettings, aData, iDataIndex ) {
-            // Check the marker group visibility
-            var group_name = aData[3];
-            if (group_name == "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}") {
-                var group_num = 1;
-            } else {
-                var group_num = group_name_to_num[group_name];
-            }
-            return markerGroupVisible[group_num];
-        }
-    );    
+        );
+        
+    }
     
     // Toogle Marker Group Visibility on Click of Image
     $('#legend img').click(function(){
@@ -616,20 +625,21 @@ if (num_markers > 0) {
             $(this).css({ opacity: 1.0 });
         }
         // Redraw DataTable
-        oDataTable.fnDraw();
+        if (num_markers > 0) {
+            oDataTable.fnDraw();
+        }
         
-  });
+    });
     
     
-  });
-  
-}
+});
+
 
 </script>
 
 </head>
 
-<body onload="initialize()">
+<body>
   
   <div id="map_canvas"></div>
   
@@ -676,7 +686,7 @@ if (num_markers > 0) {
         <table cellpadding="3" cellspacing="0" border="1" width="100%" class="list view" id="displayDataTable">
             <thead>
                 <tr>
-                    <th scope="col"><?php echo $GLOBALS['app_strings']['LBL_ID']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_ID']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_NAME']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['app_strings']['LBL_LIST_PHONE']; ?></th>
