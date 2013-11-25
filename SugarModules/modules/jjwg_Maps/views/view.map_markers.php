@@ -231,6 +231,7 @@ function setMarkers() {
             icon: markerImage[group_name_to_num[loc[i].group]],
             shape: shape,
             title: loc[i].name,
+            id: loc[i].id,
             group_name: loc[i].group,
             group_num: group_name_to_num[loc[i].group],
             infoHtml: loc[i].html,
@@ -278,6 +279,40 @@ function toggleMarkerGroupVisibility(group_num) {
     
     return markerGroupVisible[group_num];
     
+}
+
+
+function clickMarkerById(id) {
+    
+    for (var i=0; i<=marker.length-1; i++) {
+        if (typeof marker[i] === 'object') {
+            if (marker[i].id == id) {
+                map.panTo(marker[i].position);
+                google.maps.event.trigger(marker[i], "click");
+            }
+        }
+    }
+    return false;
+}
+
+
+function panToMarkerById(id) {
+    
+    for (var i=0; i<=marker.length-1; i++) {
+        if (typeof marker[i] === 'object') {
+            if (marker[i].id == id) {
+                var lat = marker[i].position.ob;
+                var lng = marker[i].position.pb;
+                moveToLocation(lat, lng)
+            }
+        }
+    }
+}
+
+function panToLocation(lat, lng){
+    
+    var center = new google.maps.LatLng(lat, lng);
+    map.panTo(center);
 }
 
 
@@ -472,6 +507,7 @@ if (num_markers > 0) {
   // Define DataTable Data
   $(document).ready(function(){
     
+    //console.log(map_markers);
     
     var oDataTable = $('#displayDataTable').dataTable({
         "bPaginate": true,
@@ -491,10 +527,10 @@ if (num_markers > 0) {
             {
                 "mDataProp": "id",
                 "bSearchable": false,
-                "bVisible": true
+                "bVisible": false
             },
             {
-                "sWidth": "28%", 
+                "sWidth": "30%", 
                 "mDataProp": "name",
                 "mRender": function (data, type, row) {
                     if (type == 'display') {
@@ -507,7 +543,7 @@ if (num_markers > 0) {
                 }
             },
             {
-                "sWidth": "28%", 
+                "sWidth": "30%", 
                 "mDataProp": "address"
             },
             {
@@ -538,6 +574,19 @@ if (num_markers > 0) {
                     } else {
                         return data;
                     }
+                }
+            },
+            {
+                "sWidth": "3%",
+                "mDataProp": "image",
+                "bSearchable": false,
+                "mRender": function (data, type, row) {
+                    if (type == 'display') {
+                        return '<a href="#" onclick="clickMarkerById(\'' + row.id + '\')" class="link">' + 
+                            '<img src="custom/themes/default/images/jjwg_Address_Cache.gif" /></a>';
+                    } else {
+                        return '';
+            }
                 }
             }
         ]
@@ -627,13 +676,14 @@ if (num_markers > 0) {
         <table cellpadding="3" cellspacing="0" border="1" width="100%" class="list view" id="displayDataTable">
             <thead>
                 <tr>
-                    <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_ID']; ?></th>
+                    <th scope="col"><?php echo $GLOBALS['app_strings']['LBL_ID']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_NAME']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['app_strings']['LBL_LIST_PHONE']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_GROUP']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_ASSIGNED_TO_NAME']; ?></th>
                     <th scope="col"><?php echo $GLOBALS['mod_strings']['LBL_MAP_TYPE']; ?></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
