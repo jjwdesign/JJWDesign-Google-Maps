@@ -125,6 +125,15 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          */
         'map_clusterer_max_zoom' => 14,
         /**
+         * 'map_adsense_removal_key' is used to remove Adsense Ads from the Maps
+         * @var string
+         */
+        'map_adsense_removal_key' => 'Donate and Contact JJWDesign for Key',
+        /**
+         * 'map_adsense_pub_id' is the Adsense Publisher ID
+         */
+        'map_adsense_pub_id' => 'pub-1684392434841062',
+        /**
          * 'map_default_center_latitude' sets the default center latitude position for maps.
          * @var float
          */
@@ -344,8 +353,17 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
             }
             
-        }
+            // Set Adsense Removal Key
+            if (isset($rev['map_adsense_removal_key'])) {
+                $this->settings['map_adsense_removal_key'] = $rev['map_adsense_removal_key'];
+            }
+            // Set Adsense Pub ID
+            if (isset($rev['map_adsense_pub_id'])) {
+                $this->settings['map_adsense_pub_id'] = $rev['map_adsense_pub_id'];
+            }
         
+        }
+
         // Set for Global Use
         $GLOBALS['jjwg_config'] = $this->settings;
     }
@@ -434,7 +452,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             }
             
             // Set Geocoding API URL or Proxy URL
-            if (substr($data['geocoding_api_url'], 0, 4) != 'http') $data['geocoding_api_url'] = 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false';
+            if (substr($data['geocoding_api_url'], 0, 4) != 'http' && substr($data['geocoding_api_url'], 0, 2) != '//') {
+                $data['geocoding_api_url'] = $this->settings['geocoding_api_url'];
+            }
             if (isset($data['geocoding_api_url'])) {
                 $admin->saveSetting($category, 'geocoding_api_url', trim($data['geocoding_api_url']));
             }
@@ -443,6 +463,14 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['geocoding_api_secret'])) {
                 $admin->saveSetting($category, 'geocoding_api_secret', trim($data['geocoding_api_secret']));
             }
+            
+            // Set Adsense Removal Key
+            if (empty($data['map_adsense_removal_key'])) $data['map_adsense_removal_key'] = '';
+            if (isset($data['map_adsense_removal_key'])) {
+                $admin->saveSetting($category, 'map_adsense_removal_key', trim($data['map_adsense_removal_key']));
+            }
+            // Set Adsense Pub ID
+            $admin->saveSetting($category, 'map_adsense_pub_id', $this->settings['map_adsense_pub_id']);
             
             return true;
         }

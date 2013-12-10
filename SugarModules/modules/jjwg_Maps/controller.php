@@ -537,6 +537,7 @@ class jjwg_MapsController extends SugarController {
      */
     function action_map_markers() {
 
+        header_remove('X-Frame-Options: SAMEORIGIN');
         $this->view = 'map_markers';
 
         // Define globals for use in the view.

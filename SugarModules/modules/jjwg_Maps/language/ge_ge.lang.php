@@ -145,3 +145,5 @@ $mod_strings['LBL_CONFIG_MAP_CLUSTER_GRID_SIZE_DESC'] = "'map_clusterer_grid_siz
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_TITLE'] = 'Map Markers Clusterer Max Zoom:';
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC'] = "'map_clusterer_max_zoom' wird verwendet, um die maximale Zoomstufe, bei der Clusterbildung werden nicht angewendet gesetzt.";
 $mod_strings['LBL_CONFIG_CUSTOM_CONTROLLER_DESC'] = "Wichtiger Hinweis: Alle gespeicherten Einstellungen können im 'config' Tisch unter der Kategorie 'jjwg' gefunden werden Hinweis, ein Brauch, controller.php Datei sollte nicht mehr verwendet, um die Einstellungen zu überschreiben.";
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_TITLE'] = 'Karte AdSense Removal Key:';
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_DESC'] = 'Spenden für dieses Projekt! Dann kontaktieren Sie JJWDesign.com für ein AdSense Entfernen-Taste.';

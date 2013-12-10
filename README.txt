@@ -10,6 +10,16 @@ http://www.jjwdesign.com/
 Copyright (C) 2010-2014 Jeffrey J. Walters
 
 
+Version 2.1.11 Changes 12/10/2013
+
+Improvements:
+
+1.) Detail View map embedding issues corrected
+2.) Set Geocoding API URL format check corrected
+3.) Configuration settings to remove Adsense Ads
+4.) JavaScript code rewriting/updating
+
+
 Version 2.1.10 Changes 11/25/2013
 
 Improvements:

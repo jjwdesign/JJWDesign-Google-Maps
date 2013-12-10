@@ -10,7 +10,7 @@ class Jjwg_MapsViewMap_Display extends SugarView {
   
   function display() {
     
-    $url = 'index.php?module='.$GLOBALS['currentModule'].'&action=map_markers';
+    $url = $GLOBALS['sugar_config']['site_url'].'/index.php?module='.$GLOBALS['currentModule'].'&action=map_markers';
     foreach (array_keys($_REQUEST) as $key) {
       if (!in_array($key, array('action', 'module', 'entryPoint'))) {
         $url .= '&'.$key.'='.urlencode($_REQUEST[$key]);
