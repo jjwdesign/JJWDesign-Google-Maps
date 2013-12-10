@@ -483,6 +483,12 @@ function initialize() {
     legend = document.getElementById('legend');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
     
+    // Set a maximum zoom Level only on initial zoom
+    map.fitBounds(bounds);
+    google.maps.event.addListenerOnce(map, "idle", function() { 
+        if (map.getZoom() > 15) map.setZoom(15);
+    });
+    
     // Now using MarkerClustererPlus v2.1.1
     markerClusterer = new MarkerClusterer(map, markers, {
         maxZoom: (typeof jjwg_config['map_clusterer_max_zoom'] === 'undefined') ? jjwg_config_defaults['map_clusterer_max_zoom'] : jjwg_config['map_clusterer_max_zoom'],
@@ -492,23 +498,12 @@ function initialize() {
     markerClustererToggle = true;
     setClusterControl();
 
-  // Set a maximum zoom Level only on initial zoom
-  map.fitBounds(bounds);
-  google.maps.event.addListenerOnce(map, "idle", function() { 
-    if (map.getZoom() > 15) map.setZoom(15);
-  });
-
 }
 
 
 
 // Define DataTable Data
-$(document).ready(function(){
-    
-    
-    // Call Google Map initialize()
-    initialize();
-    
+function setODataTable() {
     
     if (num_markers > 0) {
 
@@ -614,6 +609,27 @@ $(document).ready(function(){
         );
         
     }
+}
+    
+
+$(document).ready(function(){
+    
+    // Call Google Map initialize()
+    initialize();
+
+    // Set DataTables Data
+    setODataTable();
+    
+    // Tabs Loading Bug - Hidden IFrame Map
+    $('div.detailview_tabs ul li a', parent.document).on('click', function (){
+        // Allow 1/4 sec for Tabs JavaScript to execute
+        setTimeout(function(){
+            // Reset Bounds, Max Zoom and Repaint Marker Clustering
+            map.fitBounds(bounds);
+            if (map.getZoom() > 15) map.setZoom(15);
+            markerClusterer.repaint();
+        },250);
+    });
     
     // Toogle Marker Group Visibility on Click of Image
     $('#legend img').click(function(){
