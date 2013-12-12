@@ -10,6 +10,13 @@ http://www.jjwdesign.com/
 Copyright (C) 2010-2014 Jeffrey J. Walters
 
 
+Version 2.1.12 Changes 12/12/2013
+
+Improvements:
+
+1.) Point in Areas/Polygon Bug - Closing the Last Point
+
+
 Version 2.1.11 Changes 12/10/2013
 
 Improvements:

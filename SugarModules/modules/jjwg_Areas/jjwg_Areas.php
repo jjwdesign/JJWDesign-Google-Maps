@@ -276,7 +276,12 @@ class jjwg_Areas extends jjwg_Areas_sugar {
         
         $this->point_on_vertex = $point_on_vertex;
         $polygon = preg_split('/[\s]+/', $this->coordinates);
- 
+        
+        // Chek $polygon count
+        if (!(count($polygon) > 1)) return false;
+        // Add the first point to the end, in order to properly close the loop completely
+        if ($polygon[count($polygon)-1] != $polygon[0]) $polygon[] = $polygon[0];
+        
         // Transform string coordinates into arrays with x and y values
         $point = $this->point_string_to_coordinates($point);
         $vertices = array();
