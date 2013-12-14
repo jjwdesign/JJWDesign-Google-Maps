@@ -197,6 +197,9 @@ var markers = [];
 // Areas/Polygons objects
 var myAreaPolygon = null;
 
+// DataTable
+var oDataTable = null;
+
 
 function setCenterMarker() {
   
@@ -545,7 +548,7 @@ function setODataTable() {
 
         //console.log(map_markers);
 
-        var oDataTable = $('#displayDataTable').dataTable({
+        oDataTable = $('#displayDataTable').dataTable({
             "bPaginate": true,
             "bFilter": true,
             "bStateSave": true,
