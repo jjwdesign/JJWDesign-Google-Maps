@@ -32,8 +32,8 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
     
     foreach ($GLOBALS['jjwg_config']['valid_geocode_modules'] as $module) {
         
-      $geocode_url = $GLOBALS['sugar_config']['site_url'].'/index.php?module=jjwg_Maps&action=geocode_addresses&display_module='.$module;
-      $reset_url = $GLOBALS['sugar_config']['site_url'].'/index.php?module=jjwg_Maps&action=reset_geocoding&display_module='.$module;
+      $geocode_url = './index.php?module=jjwg_Maps&action=geocode_addresses&display_module='.$module;
+      $reset_url = './index.php?module=jjwg_Maps&action=reset_geocoding&display_module='.$module;
       
       echo '<tr>';
       echo '<td><strong><a href="'.htmlspecialchars($geocode_url).'">'.$GLOBALS['app_list_strings']['moduleList'][$module].'</a></strong></td>';
@@ -57,7 +57,7 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
     echo $GLOBALS['mod_strings']['LBL_CRON_INSTRUCTIONS'];
     echo '<br /><br />';
 
-    $cron_url = $GLOBALS['sugar_config']['site_url'].'/index.php?module=jjwg_Maps&entryPoint=jjwg_Maps&cron=1';
+    $cron_url = './index.php?module=jjwg_Maps&entryPoint=jjwg_Maps&cron=1';
 
     echo '<a href="'.$cron_url.'">'.$cron_url.'</a>';
     echo '<br /><br />';
@@ -69,7 +69,7 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
     echo $GLOBALS['mod_strings']['LBL_EXPORT_INSTRUCTIONS'];
     echo '<br /><br />';
 
-    $export_url = $GLOBALS['sugar_config']['site_url'].'/index.php?module=jjwg_Maps&action=export_geocoding_addresses&display_module=';
+    $export_url = './index.php?module=jjwg_Maps&action=export_geocoding_addresses&display_module=';
 
     echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Accounts">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_ACCOUNTS'].'</a>';
     echo '<br /><br />';
@@ -84,7 +84,7 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
     echo '<br /><br />';
     echo '<br /><br />';
 
-    $delete_url = $GLOBALS['sugar_config']['site_url'].'/index.php?module=jjwg_Maps&action=delete_all_address_cache';
+    $delete_url = './index.php?module=jjwg_Maps&action=delete_all_address_cache';
     echo '<a href="'.htmlspecialchars($delete_url).'">'.$GLOBALS['app_strings']['LBL_DELETE'].' - '.$GLOBALS['mod_strings']['LBL_ADDRESS_CACHE'].'</a>';
     
   }

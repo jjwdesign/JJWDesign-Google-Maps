@@ -703,7 +703,7 @@ $(document).ready(function(){
 <?php
   if (!empty($this->bean->map_center)) {
 ?>
-    <img src="<?php echo $GLOBALS['sugar_config']['site_url'].'/'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
+    <img src="<?php echo './'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
     <?php echo $this->bean->map_center['name']; ?><br/>
 <?php
   }
@@ -712,7 +712,7 @@ $(document).ready(function(){
 <?php
   foreach($group_name_to_num as $group_name => $group_number) {
 ?>
-    <img src="<?php echo $GLOBALS['sugar_config']['site_url'].'/'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" 
+    <img src="<?php echo './'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" 
          rel="<?php echo $group_number; ?>" align="middle" />
 <?php
     if (empty($group_name)) {
