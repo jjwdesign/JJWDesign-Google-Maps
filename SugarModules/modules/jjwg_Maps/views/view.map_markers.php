@@ -185,6 +185,8 @@ var legend = null;
 var markerClusterer = null;
 var markerClustererToggle = null;
 var clusterControlDiv = null;
+// Clusterer Images - Protocol Independent
+MarkerClusterer.IMAGE_PATH = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
 
 // InfoWindow objects: array of InfoWindow objects used for all markers, custom markers and custom areas
 var infowindow = [];
