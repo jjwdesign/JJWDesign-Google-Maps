@@ -134,6 +134,10 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          */
         'map_adsense_pub_id' => 'pub-1684392434841062',
         /**
+         *'map_adsense_channel_number' is the AdSense Channel Number
+         */
+        'map_adsense_channel_number' => '4243785793',
+        /**
          * 'map_default_center_latitude' sets the default center latitude position for maps.
          * @var float
          */
@@ -357,9 +361,12 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($rev['map_adsense_removal_key'])) {
                 $this->settings['map_adsense_removal_key'] = $rev['map_adsense_removal_key'];
             }
-            // Set Adsense Pub ID
+            // Set Adsense Pub ID and Channel Number
             if (isset($rev['map_adsense_pub_id'])) {
                 $this->settings['map_adsense_pub_id'] = $rev['map_adsense_pub_id'];
+            }
+            if (isset($rev['map_adsense_channel_number'])) {
+                $this->settings['map_adsense_channel_number'] = $rev['map_adsense_channel_number'];
             }
         
         }
@@ -469,8 +476,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['map_adsense_removal_key'])) {
                 $admin->saveSetting($category, 'map_adsense_removal_key', trim($data['map_adsense_removal_key']));
             }
-            // Set Adsense Pub ID
+            // Set Adsense Pub ID and Channel Number
             $admin->saveSetting($category, 'map_adsense_pub_id', $this->settings['map_adsense_pub_id']);
+            $admin->saveSetting($category, 'map_adsense_channel_number', $this->settings['map_adsense_channel_number']);
             
             return true;
         }

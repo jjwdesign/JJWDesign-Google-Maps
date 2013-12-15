@@ -88,6 +88,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
   <script type="text/javascript">
 // Define SugarCRM App data for Javascript
 var pub_id = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_pub_id'])) ? $GLOBALS['jjwg_config']['map_adsense_pub_id'] : ''; ?>';
+var channel_number = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_channel_number'])) ? $GLOBALS['jjwg_config']['map_adsense_channel_number'] : ''; ?>';
 var config_au_remove_key = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_removal_key'])) ? $GLOBALS['jjwg_config']['map_adsense_removal_key'] : ''; ?>';
 var aU = false;
 var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? $jsonObj->encode($GLOBALS['app_strings']) : '[]'; ?>;
@@ -478,6 +479,7 @@ function setAU() {
             textColor: '#000000',
             urlColor: '#009900',
             publisherId: pub_id,
+            channelNumber: channel_number,
             map: map,
             visible: true
         };
