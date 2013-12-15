@@ -1,3 +1,14 @@
+Version 2.1.14 Changes 12/14/2013
+
+Improvements:
+
+1.) Bug: oDataTable reference issue
+2.) Bug: Make Clusterer Images - Protocol Independent
+3.) Changing links to relative URI paths
+4.) Bug: Limit URI query string parameters. Used to avoid URL length errors.
+5.) Bug: SugarOnDemand does not permit reading .txt files
+
+
 Version 2.1.12 Changes 12/12/2013
 
 Improvements:
