@@ -189,6 +189,11 @@ var clusterControlDiv = null;
 // Clusterer Images - Protocol Independent
 MarkerClusterer.IMAGE_PATH = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
 
+// Drawing Controls
+var drawingManager = null;
+var selectedShape = null;
+var selectedShapeMarkerById = null;
+
 // InfoWindow objects: array of InfoWindow objects used for all markers, custom markers and custom areas
 var infowindow = [];
 
@@ -233,7 +238,7 @@ function setCenterMarker() {
 function setMarkers() {
   
     // Markers and InfoWindows
-    for (var i=1; i<=map_markers.length; i++) {
+    for (var i=1, mLen=map_markers.length; i<=mLen; i++) {
         loc[i] = map_markers[i-1];
         if (loc[i].group == '') loc[i].group = map_markers_groups[0];
         myLatLng[i] = new google.maps.LatLng(loc[i].lat, loc[i].lng);
@@ -274,7 +279,7 @@ function toggleMarkerGroupVisibility(group_num) {
     if (typeof group_num !== 'undefined' && group_num !== '') {
         // Markers
         var toggled = false;
-        for (var i=0; i<=marker.length-1; i++) {
+        for (var i=0, mLen=marker.length; i<mLen; i++) {
             if (typeof marker[i] === 'object') {
                 if (marker[i].group_num == group_num) {
                     // Change Marker Visibility
@@ -296,7 +301,7 @@ function toggleMarkerGroupVisibility(group_num) {
 
 function clickMarkerById(id) {
     
-    for (var i=0; i<=marker.length-1; i++) {
+    for (var i=0, mLen=marker.length; i<mLen; i++) {
         if (typeof marker[i] === 'object') {
             if (marker[i].id == id) {
                 map.panTo(marker[i].position);
@@ -310,7 +315,7 @@ function clickMarkerById(id) {
 
 function panToMarkerById(id) {
     
-    for (var i=0; i<=marker.length-1; i++) {
+    for (var i=0, mLen=marker.length; i<mLen; i++) {
         if (typeof marker[i] === 'object') {
             if (marker[i].id == id) {
                 var lat = marker[i].position.ob;
@@ -377,11 +382,156 @@ function setClusterControl() {
 }
     
     
+function setDrawingControls() {
+    
+    // Drawing Controls
+    var overlayOptions = { strokeColor: "#000099", strokeOpacity: 0.8, strokeWeight: 1, fillColor: "#000099", fillOpacity: 0.20, clickable: true, draggable: true, editable: true, zIndex: 5 };
+    drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: null,
+        drawingControl: true,
+        drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [
+                google.maps.drawing.OverlayType.RECTANGLE,
+                google.maps.drawing.OverlayType.CIRCLE,
+                google.maps.drawing.OverlayType.POLYGON
+            ]
+        },
+        rectangleOptions: overlayOptions, 
+        circleOptions: overlayOptions, 
+        polygonOptions: overlayOptions
+    });
+    drawingManager.setMap(map);
+    
+    google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+        // Switch back to non-drawing mode after drawing a shape
+        drawingManager.setDrawingMode(null);
+        // Add an event listeners
+        var newShape = e.overlay;
+        newShape.type = e.type;
+        google.maps.event.addListener(newShape, 'click', function() {
+            setSelection(newShape);
+        });
+        google.maps.event.addListener(newShape, 'dragend', function() {
+            setSelection(newShape);
+        });
+        if (newShape.type == 'polygon') {
+            // Right click to remove vertex
+            google.maps.event.addListener(newShape, 'rightclick', function(mev){
+                if (mev.vertex != null && this.getPath().getLength() > 2) {
+                    this.getPath().removeAt(mev.vertex);
+                }
+            });
+        }
+        setSelection(newShape);
+    });
+    
+    // Clear the current selection when the drawing mode is changed, or when the map is clicked.
+    google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
+    google.maps.event.addListener(map, 'click', clearSelection);
+    
+    
+    // "Delete Selected" Shape Button
+    deleteSelectedDiv = document.createElement('div');
+    // Set CSS styles for the DIV containing the control
+    // Setting padding to 5 px will offset the control
+    // from the edge of the map
+    deleteSelectedDiv.style.padding = '6px';
+
+    // Set CSS for the control border
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#ffffff';
+    controlUI.style.borderStyle = 'solid';
+    controlUI.style.borderColor = '#a9a9a9';
+    controlUI.style.borderWidth = '1px';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'Click to Remove Selected Shape';
+    deleteSelectedDiv.appendChild(controlUI);
+    
+    // Set CSS for the control interior
+    var controlText = document.createElement('div');
+    controlText.style.fontFamily = 'Arial,Verdana,Helvetica,sans-serif';
+    controlText.style.fontSize = '12px';
+    controlText.style.paddingLeft = '4px';
+    controlText.style.paddingRight = '4px';
+    controlText.style.paddingTop = '4px';
+    controlText.style.paddingBottom = '4px';
+    controlText.innerHTML = 'Remove';
+    controlUI.appendChild(controlText);
+
+    deleteSelectedDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(deleteSelectedDiv);
+    
+    // Clear the current selection when the remove shape button is clicked
+    google.maps.event.addDomListener(deleteSelectedDiv, 'click', deleteSelectedShape);
+    
+}
+
+function listSelectedShape() {
+    // Check for selectedShape
+    //console.log(selectedShape);
+    selectedShapeMarkerById = [];
+    if (typeof selectedShape === 'object') {
+        // Loop thru mMarker objects
+        for (var i=0, mLen=marker.length; i<mLen; i++) {
+            if (typeof marker[i] === 'object') {
+                selectedShapeMarkerById[marker[i].id] = false;
+                // Contains/Bounds Checks
+                if (selectedShape.type == 'polygon') {
+                    if (google.maps.geometry.poly.containsLocation(marker[i].position, selectedShape)) {
+                        selectedShapeMarkerById[marker[i].id] = true;
+                    }
+                } else if (selectedShape.type == 'rectangle' || selectedShape.type == 'circle') {
+                    var shapeBounds = selectedShape.getBounds();
+                    if (shapeBounds.contains(marker[i].position)) {
+                        selectedShapeMarkerById[marker[i].id] = true;
+                    }
+                }
+            }
+        }
+        //console.log(selectedShapeMarkerById);
+        // Redraw oDataTable
+        oDataTable.fnDraw();
+    }
+}
+
+function clearSelection() {
+    if (selectedShape) {
+        selectedShape.setEditable(false);
+        selectedShape = null;
+        selectedShapeMarkerById = null;
+    }
+    // Redraw oDataTable
+    oDataTable.fnDraw();
+}
+
+function setSelection(shape, editable) {
+    editable = (typeof editable !== 'undefined') ? editable : true;
+    clearSelection();
+    selectedShape = shape;
+    if (editable === true) {
+        shape.setEditable(true);
+    }
+    listSelectedShape();
+}
+
+function deleteSelectedShape() {
+    if (selectedShape) {
+        selectedShape.setMap(null);
+        selectedShape = null;
+        selectedShapeMarkerById = null;
+    }
+    // Redraw oDataTable
+    oDataTable.fnDraw();
+}
+
+
 function setCustomMarkers() {
     
     // Define the Custom Marker Images (jjwg_Markers Module)
     var customImage = [];
-    for (var i=0; i<custom_markers_icons.length; i++) {
+    for (var i=0, cLen=custom_markers_icons.length; i<cLen; i++) {
         image = custom_markers_icons[i];
         customImage[image] = new google.maps.MarkerImage(custom_markers_dir+image+'.png',
             new google.maps.Size(32,37),
@@ -391,7 +541,7 @@ function setCustomMarkers() {
     }
     var custom_shape = {coord: [1, 1, 1, 37, 32, 37, 32, 1],type: 'poly'};
 
-    for (var i=num_markers+1; i<=num_markers+num_custom_markers; i++) {
+    for (var i=num_markers+1, numTot=num_markers+num_custom_markers; i<=numTot; i++) {
         
         loc[i] = custom_markers[i-num_markers-1];
         myLatLng[i] = new google.maps.LatLng(loc[i].lat, loc[i].lng);
@@ -427,12 +577,12 @@ function setCustomAreas() {
     var p = [];
     myAreaPolygon = [];
     
-    for (var i=0; i<custom_areas.length; i++) {
+    for (var i=0, cLen=custom_areas.length; i<cLen; i++) {
         
         // coordinates: space separated lng,lat,elv points
         myCoords = [];
         polygon = custom_areas[i].coordinates.replace(/^[\s\n\r]+|[\s\n\r]+$/g,"").split(/[\n\r ]+/);
-        for (var j=0; j<polygon.length; j++) {
+        for (var j=0, pLen=polygon.length; j<pLen; j++) {
             p = polygon[j].split(",");
             myCoords[j] = new google.maps.LatLng(parseFloat(p[1]), parseFloat(p[0])); // lat, lng
             bounds.extend(myCoords[j]);
@@ -440,6 +590,7 @@ function setCustomAreas() {
         myAreaPolygon[i] = new google.maps.Polygon({
             paths: myCoords,
             strokeColor: "#000099",
+            type: "polygon",
             strokeOpacity: 0.8,
             strokeWeight: 1,
             fillColor: "#000099",
@@ -458,7 +609,13 @@ function setCustomAreas() {
             infowindow[this.infoI].setContent(this.infoHtml);
             infowindow[this.infoI].setPosition(event.latLng);
             infowindow[this.infoI].open(map);
+            // List Selection and InfoWindow closeclick
+            setSelection(this, false);
+            google.maps.event.addListener(infowindow[this.infoI], 'closeclick', function(event) {
+                clearSelection();
+            });
         });
+
     }
 
 }
@@ -488,6 +645,7 @@ function setAU() {
     }
 }
 
+
 function initialize() {
 
     map = new google.maps.Map(document.getElementById("map_canvas"), {
@@ -502,7 +660,7 @@ function initialize() {
     bounds = new google.maps.LatLngBounds();
     
     // Define the Marker Images
-    for (var i=0; i<=map_markers_groups.length; i++) {
+    for (var i=0, gLen=map_markers_groups.length; i<=gLen; i++) {
         markerImage[i] = new google.maps.MarkerImage(icons_dir+'/marker_'+i+'.png',
         new google.maps.Size(20,34), new google.maps.Point(0,0), new google.maps.Point(10,34));
         // Set initial visibility toggle to true for legend groups
@@ -539,6 +697,8 @@ function initialize() {
     markerClustererToggle = true;
     setClusterControl();
 
+    // Drawing Select to List Controls
+    setDrawingControls();
 }
 
 
@@ -638,6 +798,18 @@ function setODataTable() {
         // Filter by Legend Toggle
         $.fn.dataTableExt.afnFiltering.push(
             function( oSettings, aData, iDataIndex ) {
+                
+                // Check Shape Selection: Limit by selectedShape and selectedShapeMarkerById
+                if (selectedShapeMarkerById) {
+                    if (typeof selectedShape === 'object') {
+                        // Note: 'id' is hidden from aData
+                        var rowId = oSettings.aoData[iDataIndex]._aData.id;
+                        if (selectedShapeMarkerById[rowId] !== true) {
+                            return 0; // Return 0 (false) for DataTables Filtering
+                        }
+                    }
+                }
+                
                 // Check the marker group visibility
                 var group_name = aData[3];
                 if (group_name == "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}") {
