@@ -1,3 +1,12 @@
+Version 2.1.15 Changes 12/17/2013
+
+Improvements:
+
+1.) Map Areas Enhancements: List Selection by Area
+2.) Bug: DataTables language to lowercase
+3.) Adding DataTables language en_uk.lang.js
+
+
 Version 2.1.14 Changes 12/14/2013
 
 Improvements:
