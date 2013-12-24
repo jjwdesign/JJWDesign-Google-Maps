@@ -10,8 +10,6 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
   
   function display() {
     
-    $jsonObj = new JSON(JSON_LOOSE_TYPE);
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
  
@@ -95,9 +93,9 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
   <script type="text/javascript">
 
 // Define Map Data for Javascript
-var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? $jsonObj->encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
-var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? $jsonObj->encode($GLOBALS['jjwg_config']) : '[]'; ?>;
-var polygonPoints = <?php echo (!empty($GLOBALS['polygon'])) ? $jsonObj->encode($GLOBALS['polygon']) : '[]'; ?>;    
+var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
+var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config']) : '[]'; ?>;
+var polygonPoints = <?php echo (!empty($GLOBALS['polygon'])) ? json_encode($GLOBALS['polygon']) : '[]'; ?>;    
 
 $(function(){
 

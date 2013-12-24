@@ -7,7 +7,6 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 require_once('include/utils.php');
 require_once('include/export_utils.php');
-require_once('include/JSON.php');
 require_once("include/Sugar_Smarty.php");
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
@@ -59,12 +58,6 @@ class jjwg_MapsController extends SugarController {
      * @var object
      */
     var $jjwg_Address_Cache;
-
-    /**
-     * JSON object for decoding Google Response
-     * @var object
-     */
-    var $jsonObj;
 
     /**
      * smarty object for the generic configuration template
@@ -169,7 +162,6 @@ class jjwg_MapsController extends SugarController {
     function action_geocode_addresses() {
 
         $GLOBALS['log']->debug(__METHOD__.' START');
-        $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
 
         if (!empty($_REQUEST['display_module']) && in_array($_REQUEST['display_module'], $this->settings['valid_geocode_modules'])) {
             $geocode_modules = array($_REQUEST['display_module']);
@@ -305,6 +297,77 @@ class jjwg_MapsController extends SugarController {
         
     }
 
+    
+    /**
+     *  Add a number of display_module objects to a target list
+     *  Return JSON encoded result count
+     */
+    function action_add_to_target_list() {
+        
+        $result = array('post' => $_POST);
+        
+        // Target List
+        $list_id = (!empty($_POST['list_id'])) ? $_POST['list_id'] : '';
+        $list = get_module_info('ProspectLists');
+        if (!empty($list_id) && is_guid($list_id)) {
+            $list->retrieve($list_id);
+            $result['list'] = $list;
+        }
+        // Selected Area IDs - Validate
+        $selected_ids = array();
+        foreach ($_POST['selected_ids'] as $sel_id) {
+            if (is_guid($sel_id)) {
+                $selected_ids[] = $sel_id;
+            }
+        }
+        $result['selected_ids'] = $selected_ids;
+        
+        // Display Module Type
+        $module_type = '';
+        if (!empty($_POST['display_module']) && in_array($_POST['display_module'], $this->settings['valid_geocode_modules'])) {
+            $module_type = $_POST['display_module'];
+            $result['module_type'] = $module_type;
+            // Define display object
+            $this->display_object = get_module_info($module_type);
+        }
+        
+        if (!empty($list) && $list_id == $list->id && !empty($selected_ids) && !empty($this->display_object) && 
+                in_array($this->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects'))) {
+            
+            $object_name = $this->display_object->object_name;
+            $result['object_name'] = $object_name;
+            
+            if ($object_name == 'Account') {
+                $list->load_relationship('accounts');
+                foreach ($selected_ids as $sel_id) {
+                    $list->accounts->add($sel_id);
+                }
+            } elseif ($object_name == 'Contact') {
+                $list->load_relationship('contacts');
+                foreach ($selected_ids as $sel_id) {
+                    $list->contacts->add($sel_id);
+                }
+            } elseif ($object_name == 'Lead') {
+                $list->load_relationship('leads');
+                foreach ($selected_ids as $sel_id) {
+                    $list->leads->add($sel_id);
+                }
+            } elseif ($object_name == 'Prospect') {
+                $list->load_relationship('prospects');
+                foreach ($selected_ids as $sel_id) {
+                    $list->prospects->add($sel_id);
+                }
+            }
+            $result['message'] = 'Target List Updated';
+        } else {
+            $result['message'] = 'Target List NOT Updated';
+        }
+        
+        // JSON Encoded $result
+        header('Content-Type: application/json');
+        echo @json_encode($result);
+    }
+
     /**
      * export addresses in need of geocoding
      */
@@ -414,7 +477,6 @@ class jjwg_MapsController extends SugarController {
     function action_geocoding_test() {
 
         $this->view = 'geocoding_test';
-        $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
         
         if (!empty($_REQUEST['geocoding_address']) && !empty($_REQUEST['process_trigger']) &&
                 strlen($_REQUEST['geocoding_address']) <= 255) {
@@ -497,7 +559,6 @@ class jjwg_MapsController extends SugarController {
     function action_quick_radius() {
 
         $this->view = 'quick_radius';
-        $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
 
         if (!isset($_REQUEST['distance'])) $_REQUEST['distance'] = $this->settings['map_default_distance'];
         if (!isset($_REQUEST['unit_type'])) $_REQUEST['unit_type'] = $this->settings['map_default_unit_type'];
@@ -537,7 +598,7 @@ class jjwg_MapsController extends SugarController {
      */
     function action_map_markers() {
 
-        header_remove('X-Frame-Options: SAMEORIGIN');
+        header_remove('X-Frame-Options');
         $this->view = 'map_markers';
 
         // Define globals for use in the view.
@@ -833,6 +894,22 @@ class jjwg_MapsController extends SugarController {
 
         // Sort marker groups for the view
         sort($this->bean->map_markers_groups);
+        
+        // Set display object for later use
+        $this->bean->display_object = $this->display_object;
+        
+        // Get Prospect List Array Dropdown
+        $list = get_module_info('ProspectLists');
+        $list_query = $list->create_list_query('prospect_lists.name', '1=1', 0);
+        $list_result = $list->db->query($list_query);
+        $list_array = array();
+        while ($alist = $list->db->fetchByAssoc($list_result)) {
+            if (!empty($alist['name']) && !empty($alist['id'])) {
+                $list_array[$alist['id']] = $alist['name'];
+            }
+        }
+        $this->bean->list_array = $list_array;
+    
     }
     
     // end function action_map_markers

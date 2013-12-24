@@ -10,8 +10,6 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
 
   function display() {
     
-    $jsonObj = new JSON(JSON_LOOSE_TYPE);
-    
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
  
 <html xmlns="http://www.w3.org/1999/xhtml"> 
@@ -91,12 +89,13 @@ var pub_id = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_pub_id']))
 var channel_number = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_channel_number'])) ? $GLOBALS['jjwg_config']['map_adsense_channel_number'] : ''; ?>';
 var config_au_remove_key = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_removal_key'])) ? $GLOBALS['jjwg_config']['map_adsense_removal_key'] : ''; ?>';
 var aU = false;
-var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? $jsonObj->encode($GLOBALS['app_strings']) : '[]'; ?>;
-var app_list_strings = <?php echo (!empty($GLOBALS['app_list_strings'])) ? $jsonObj->encode($GLOBALS['app_list_strings']) : '[]'; ?>;
-var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? $jsonObj->encode($GLOBALS['mod_strings']) : '[]'; ?>;
+var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? json_encode($GLOBALS['app_strings']) : '[]'; ?>;
+var app_list_strings = <?php echo (!empty($GLOBALS['app_list_strings'])) ? json_encode($GLOBALS['app_list_strings']) : '[]'; ?>;
+var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? json_encode($GLOBALS['mod_strings']) : '[]'; ?>;
 // Define Map Data for Javascript
-var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? $jsonObj->encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
-var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? $jsonObj->encode($GLOBALS['jjwg_config']) : '[]'; ?>;
+var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
+var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config']) : '[]'; ?>;
+var list_array = <?php echo (!empty($this->bean->list_array)) ? json_encode($this->bean->list_array) : '[]'; ?>;
 <?php
 // Check to see if map center is empty of lng,lat of 0,0
 if (empty($this->bean->map_center) || (empty($this->bean->map_center['lat']) && empty($this->bean->map_center['lng']))) {
@@ -110,11 +109,11 @@ if (empty($this->bean->map_center) || (empty($this->bean->map_center['lat']) && 
     }
 }
 ?>
-var map_center = <?php echo (!empty($this->bean->map_center)) ? $jsonObj->encode($this->bean->map_center) : 'null'; ?>;
-var map_markers = <?php echo (!empty($this->bean->map_markers)) ? $jsonObj->encode($this->bean->map_markers) : '[]'; ?>;
-var map_markers_groups = <?php echo (!empty($this->bean->map_markers_groups)) ? $jsonObj->encode($this->bean->map_markers_groups) : '[]'; ?>;
-var custom_markers = <?php echo (!empty($this->bean->custom_markers)) ? $jsonObj->encode($this->bean->custom_markers) : '[]'; ?>;
-var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? $jsonObj->encode($this->bean->custom_areas) : '[]'; ?>;
+var map_center = <?php echo (!empty($this->bean->map_center)) ? json_encode($this->bean->map_center) : 'null'; ?>;
+var map_markers = <?php echo (!empty($this->bean->map_markers)) ? json_encode($this->bean->map_markers) : '[]'; ?>;
+var map_markers_groups = <?php echo (!empty($this->bean->map_markers_groups)) ? json_encode($this->bean->map_markers_groups) : '[]'; ?>;
+var custom_markers = <?php echo (!empty($this->bean->custom_markers)) ? json_encode($this->bean->custom_markers) : '[]'; ?>;
+var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode($this->bean->custom_areas) : '[]'; ?>;
 <?php
     // Define Map Data
     $num_markers = count($this->bean->map_markers);
@@ -154,14 +153,13 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? $jsonObj->en
 ?>
 
 // Define Map Data for Javascript
-var num_markers = <?php echo (!empty($num_markers)) ? $jsonObj->encode($num_markers) : '0'; ?>;
-var num_groups = <?php echo (!empty($num_groups)) ? $jsonObj->encode($num_groups) : '0'; ?>;
-var group_name_to_num = <?php echo (!empty($group_name_to_num)) ? $jsonObj->encode($group_name_to_num) : '[]'; ?>;
-var icons_dir = <?php echo (!empty($icons_dir)) ? $jsonObj->encode($icons_dir) : "'custom/themes/default/images/jjwg_Maps/0-10/'"; ?>;
-var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? $jsonObj->encode($num_custom_markers) : '0'; ?>;
-var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? $jsonObj->encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/'"; ?>;
-var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? $jsonObj->encode($custom_markers_icons) : '[]'; ?>;
-
+var num_markers = <?php echo (!empty($num_markers)) ? json_encode($num_markers) : '0'; ?>;
+var num_groups = <?php echo (!empty($num_groups)) ? json_encode($num_groups) : '0'; ?>;
+var group_name_to_num = <?php echo (!empty($group_name_to_num)) ? json_encode($group_name_to_num) : '[]'; ?>;
+var icons_dir = <?php echo (!empty($icons_dir)) ? json_encode($icons_dir) : "'custom/themes/default/images/jjwg_Maps/0-10/'"; ?>;
+var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? json_encode($num_custom_markers) : '0'; ?>;
+var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? json_encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/'"; ?>;
+var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? json_encode($custom_markers_icons) : '[]'; ?>;
 
 /******************************************************************************/
 
@@ -205,6 +203,8 @@ var myAreaPolygon = null;
 
 // DataTable
 var oDataTable = null;
+var oDataTableShown = null;
+var oDataTableShownIds = null;
 
 
 function setCenterMarker() {
@@ -501,9 +501,9 @@ function clearSelection() {
         selectedShape.setEditable(false);
         selectedShape = null;
         selectedShapeMarkerById = null;
+        // Redraw oDataTable
+        oDataTable.fnDraw();
     }
-    // Redraw oDataTable
-    oDataTable.fnDraw();
 }
 
 function setSelection(shape, editable) {
@@ -721,6 +721,7 @@ function setODataTable() {
                 if (typeof window.parent.resizeDataTables == 'function') {
                     window.parent.resizeDataTables();
                 }
+                setODataTableShown();
             },
             "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo strtolower($GLOBALS['current_language']); ?>.lang.js" },
             "aaData": map_markers,
@@ -799,13 +800,14 @@ function setODataTable() {
         $.fn.dataTableExt.afnFiltering.push(
             function( oSettings, aData, iDataIndex ) {
                 
+                var shown = true;
                 // Check Shape Selection: Limit by selectedShape and selectedShapeMarkerById
                 if (selectedShapeMarkerById) {
                     if (typeof selectedShape === 'object') {
                         // Note: 'id' is hidden from aData
                         var rowId = oSettings.aoData[iDataIndex]._aData.id;
                         if (selectedShapeMarkerById[rowId] !== true) {
-                            return 0; // Return 0 (false) for DataTables Filtering
+                            shown = false;
                         }
                     }
                 }
@@ -817,13 +819,31 @@ function setODataTable() {
                 } else {
                     var group_num = group_name_to_num[group_name];
                 }
-                return markerGroupVisible[group_num];
+                if (markerGroupVisible[group_num] !== true) {
+                    shown = false;
+                }
+                
+                return shown;
             }
         );
         
     }
 }
     
+function setODataTableShown() {
+
+    // Set the shown oDataTable based on the above filtering 
+    // Triggered by fnDrawCallback
+    oDataTableShown = oDataTable._('tr', {"filter":"applied"});
+    //console.log(oDataTableShown);
+    oDataTableShownIds = [];
+    for (var i=0, mLen=oDataTableShown.length; i<mLen; i++) {
+        var rowData = oDataTableShown[i];
+        oDataTableShownIds.push(rowData.id);
+    }
+    //console.log(oDataTableShownIds);
+}
+
 
 $(document).ready(function(){
     
@@ -860,6 +880,39 @@ $(document).ready(function(){
         
     });
     
+    // Target List Form Submit
+    $('#tagetList').on("submit", function(event) {
+        
+        event.preventDefault();
+        
+        if (confirm('Are you sure you want to add the Selected Items to the Target List?')) {
+            
+            $('#tagetListResult').html('Processing...');
+            var formData = $(this).serializeArray();
+            var formUrl = $(this).attr("action");
+            // Add oDataTableShownIds
+            for (var i=0, mLen=oDataTableShownIds.length; i<mLen; i++) {
+                var valId = oDataTableShownIds[i];
+                formData.push({ name: "selected_ids[]", value: valId });
+            }
+            
+            $.ajax({
+                url: formUrl,
+                type: "post",
+                data: formData
+            }).done(function(response) {
+                //console.log(response);
+                $('#tagetListResult').html(response.message + 
+                    ' (' + response.list.name + ')');
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                response = jQuery.parseJSON(jqXHR.responseText);
+                //console.log(response);
+                $('#tagetListResult').html('#' + errorThrown + ' ' + 
+                    textStatus + '. ' + response.message + 
+                    ' (' + response.list.name + ')');
+            });
+        }
+    });
     
 });
 
@@ -934,6 +987,33 @@ $(document).ready(function(){
 <?php
   }
 ?>
+
+<?php
+  if (in_array($this->bean->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects')) &&
+          ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) && !empty($this->bean->list_array)) {
+?>
+<br clear="all" />
+<div>
+    <form id="tagetList" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
+        <input type="hidden" name="module" value="<?php echo htmlspecialchars($GLOBALS['currentModule']); ?>">
+        <input type="hidden" name="display_module" value="<?php echo htmlspecialchars($this->bean->display_object->module_name); ?>">
+        <input type="hidden" name="action" value="add_to_target_list" />
+        <input type="hidden" name="to_pdf" value="1" />
+        <select id="list_id" tabindex="3" name="list_id" title="">
+            <?php foreach ($this->bean->list_array as $key=>$value) { ?>
+                <option value="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($value); ?></option>
+            <?php } ?>
+        </select>
+        <input type="submit" value="Add to List">
+        <span id="tagetListResult"></span>
+    </form>
+</div>
+<?php
+  }
+?>
+
+</body>
+</html>
 
 <?php
 // Testing Dump

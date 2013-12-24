@@ -5,7 +5,6 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 // modules/jjwg_Maps/jjwg_Maps.php
 
-require_once('include/JSON.php');
 require_once('modules/jjwg_Maps/jjwg_Maps_sugar.php');
 require_once('modules/Administration/Administration.php');
 
@@ -179,12 +178,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @var object
      */
     var $jjwg_Address_Cache;
-
-    /**
-     * JSON object for decoding Google Response
-     * @var object
-     */
-    var $jsonObj;
 
 
     /**
@@ -870,8 +863,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $allow_approximate = true;
         }
         
-        $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
-
         /**
          * Google Maps API v3 - The new v3 Google Maps API no longer requires a Maps API Key!
          * Old Default: https://maps.google.com/maps/api/geocode/json?sensor=false
@@ -906,7 +897,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
 
         curl_close($ch);
         $GLOBALS['log']->debug(__METHOD__.' $json_contents: '.$json_contents);
-        $googlemaps = $this->jsonObj->decode($json_contents);
+        $googlemaps = json_decode($json_contents);
         $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '.$googlemaps);
 
         /**

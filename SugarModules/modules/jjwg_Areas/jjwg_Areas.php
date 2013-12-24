@@ -3,7 +3,6 @@
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
-require_once('include/JSON.php');
 require_once('modules/jjwg_Areas/jjwg_Areas_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
@@ -133,6 +132,7 @@ class jjwg_Areas extends jjwg_Areas_sugar {
         
         $n = count($this->polygon);
         $a = $this->define_area($this->polygon);
+        if (empty($a)) return $this->centroid;
         $cx = 0.0;
         $cy = 0.0;
 
