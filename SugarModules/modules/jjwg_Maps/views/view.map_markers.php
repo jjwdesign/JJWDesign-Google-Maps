@@ -989,7 +989,7 @@ $(document).ready(function(){
 ?>
 
 <?php
-  if (in_array($this->bean->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects')) &&
+  if (in_array($this->bean->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects', 'Users')) &&
           ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) && !empty($this->bean->list_array)) {
 ?>
 <br clear="all" />

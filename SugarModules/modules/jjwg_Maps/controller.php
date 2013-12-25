@@ -332,7 +332,7 @@ class jjwg_MapsController extends SugarController {
         }
         
         if (!empty($list) && $list_id == $list->id && !empty($selected_ids) && !empty($this->display_object) && 
-                in_array($this->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects'))) {
+                in_array($this->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects', 'Users'))) {
             
             $object_name = $this->display_object->object_name;
             $result['object_name'] = $object_name;
@@ -356,6 +356,11 @@ class jjwg_MapsController extends SugarController {
                 $list->load_relationship('prospects');
                 foreach ($selected_ids as $sel_id) {
                     $list->prospects->add($sel_id);
+                }
+            } elseif ($object_name == 'User') {
+                $list->load_relationship('users');
+                foreach ($selected_ids as $sel_id) {
+                    $list->users->add($sel_id);
                 }
             }
             $result['message'] = 'Target List Updated';
