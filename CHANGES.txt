@@ -1,3 +1,13 @@
+Version 2.1.16 Changes 12/30/2013
+
+Improvements:
+
+1.) Marker Selection Shapes: Rectangle, Circle, Polygon
+2.) Add to Target List from DataTables Listing
+3.) Added Additional ACL Control Logic
+4.) Various Bug Fixes and Updating Code
+
+
 Version 2.1.15 Changes 12/17/2013
 
 Improvements:
