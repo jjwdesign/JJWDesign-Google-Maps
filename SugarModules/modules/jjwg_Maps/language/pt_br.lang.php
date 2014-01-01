@@ -61,6 +61,9 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use os links abaixo para exportar end
 'Quando você terminar de geocodificação, importar os endereços para o módulo de cache de endereços para ser usado com os seus mapas. '.
 'Note, o endereço do módulo de cache é opcional. Todas as informações geocodificação é armazenado no módulo representativo.';
 $mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
+$mod_strings['LBL_ADD_TO_TARGET_LIST'] = 'Adicionar à lista de destino';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_CONFIRM'] = 'Tem certeza que você deseja adicionar os itens selecionados para a lista de alvos?';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_PROCESSING'] = 'Processamento...';
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configurações';
 $mod_strings['LBL_CONFIG_SAVED'] = 'Configurações salvas com sucesso!';

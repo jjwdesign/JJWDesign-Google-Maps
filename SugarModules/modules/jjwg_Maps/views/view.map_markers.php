@@ -885,9 +885,9 @@ $(document).ready(function(){
         
         event.preventDefault();
         
-        if (confirm('Are you sure you want to add the Selected Items to the Target List?')) {
+        if (confirm('<?php echo $GLOBALS['mod_strings']['LBL_ADD_TO_TARGET_LIST']; ?>')) {
             
-            $('#tagetListResult').html('Processing...');
+            $('#tagetListResult').html('<?php echo $GLOBALS['mod_strings']['LBL_ADD_TO_TARGET_LIST_PROCESSING']; ?>');
             var formData = $(this).serializeArray();
             var formUrl = $(this).attr("action");
             // Add oDataTableShownIds
@@ -990,7 +990,8 @@ $(document).ready(function(){
 
 <?php
   if (in_array($this->bean->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects', 'Users')) &&
-          ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) && !empty($this->bean->list_array)) {
+          ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) && 
+          empty($_REQUEST['list_id']) && !empty($this->bean->list_array)) {
 ?>
 <br clear="all" />
 <div>
@@ -1004,7 +1005,7 @@ $(document).ready(function(){
                 <option value="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($value); ?></option>
             <?php } ?>
         </select>
-        <input type="submit" value="Add to List">
+        <input type="submit" value="<?php echo $GLOBALS['mod_strings']['LBL_ADD_TO_TARGET_LIST']; ?>">
         <span id="tagetListResult"></span>
     </form>
 </div>

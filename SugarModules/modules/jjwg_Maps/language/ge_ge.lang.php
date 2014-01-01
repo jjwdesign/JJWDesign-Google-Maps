@@ -61,6 +61,9 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Verwenden Sie die folgenden Links, um
 'Wenn Sie fertig sind Geocodierung, importieren Sie die Adressen in die Adress-Cache-Modul mit Ihren Karten verwendet werden. '.
 'Beachten Sie, dass die Adress-Cache-Modul optional. Alle geocoding Informationen sind in der Vertreter-Modul gespeichert.';
 $mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
+$mod_strings['LBL_ADD_TO_TARGET_LIST'] = 'In den Zielliste';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_CONFIRM'] = 'Sind Sie sicher, dass Sie die ausgewählten Elemente in der Zielliste hinzufügen?';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_PROCESSING'] = 'Verarbeitung...';
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Konfigurationseinstellungen';
 $mod_strings['LBL_CONFIG_SAVED'] = 'Einstellungen erfolgreich gespeichert !';

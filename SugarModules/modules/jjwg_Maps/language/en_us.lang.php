@@ -61,6 +61,9 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use the links below to export full ad
 'When you are finished geocoding, import the addresses into the Address Cache module to be used with your maps.'.
 'Note, the Address Cache module is optional. All geocoding information is stored in the representative module.';
 $mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
+$mod_strings['LBL_ADD_TO_TARGET_LIST'] = 'Add to Target List';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_CONFIRM'] = 'Are you sure you want to add the Selected Items to the Target List?';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_PROCESSING'] = 'Processing...';
 
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configuration Settings';
