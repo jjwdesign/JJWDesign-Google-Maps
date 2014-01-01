@@ -818,14 +818,13 @@ class jjwg_MapsController extends SugarController {
                         $query = str_replace(' FROM contacts ', ' FROM contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id and accounts_contacts.deleted = 0 LEFT JOIN accounts ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 ', $query);
                     }
                     // Add List JOIN
-                    $query = str_replace(' FROM '.$this->display_object->table_name.' ', 
-                            ' FROM '.$this->display_object->table_name.' LEFT JOIN prospect_lists_prospects ON '.
-                            'prospect_lists_prospects.related_id = '.$this->display_object->table_name.'.id AND '.
-                            '(prospect_lists_prospects.deleted=0 OR prospect_lists_prospects.deleted IS NULL) '.
-                            'LEFT JOIN prospect_lists ON prospect_lists_prospects.prospect_list_id = prospect_lists.id ', 
+                    $query = str_replace(' FROM '.$this->display_object->table_name.' ', ' FROM '.$this->display_object->table_name.' '.
+                            'LEFT JOIN prospect_lists_prospects ON prospect_lists_prospects.related_id = '.$this->display_object->table_name.'.id AND prospect_lists_prospects.deleted=0 '.
+                            'LEFT JOIN prospect_lists ON prospect_lists_prospects.prospect_list_id = prospect_lists.id AND prospect_lists.deleted=0 ', 
                             $query);
-                    // Restrict WHERE to $list_id
-                    $query = str_replace(' WHERE ', 'WHERE prospect_lists.id = \''.$this->bean->db->quote($list_id).'\' AND ', $query);
+                    // Restrict WHERE to related type and $list_id
+                    $query .= ' AND prospect_lists_prospects.related_type = \''.$this->display_object->module_name.'\' AND '.
+                            'prospect_lists.id = \''.$this->bean->db->quote($list_id).'\'';
                     //var_dump($query);
                     $display_result = $this->bean->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
                     $display_type_found = false;
