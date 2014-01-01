@@ -12,6 +12,15 @@ Copyright (C) 2010-2014 Jeffrey J. Walters
 
 
 
+Version 2.1.17 Changes 01/01/2014
+
+Improvements:
+
+1.) Adding Language File Labels
+2.) Target List Map Bug: Restrict WHERE to related type and $list_id
+3.) Advanced Search - Related Field Bug: Get relate/link patched 'where' and 'join'
+
+
 Version 2.1.16 Changes 12/30/2013
 
 Improvements:
