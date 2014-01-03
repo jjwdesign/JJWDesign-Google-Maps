@@ -586,6 +586,10 @@ class jjwg_MapsController extends SugarController {
     function action_map_display() {
 
         $this->view = 'map_display';
+        
+        // Bug: 'current_post' too large for iFrame URL used in Google Library calls
+        $_SESSION['jjwg_Maps']['current_post'] = $_REQUEST['current_post'];
+        $_REQUEST['current_post'] = 'session';
     }
 
     /**
@@ -856,6 +860,11 @@ class jjwg_MapsController extends SugarController {
             } else {
                 $display_module = 'Accounts';
             }
+            if ($_REQUEST['current_post'] == 'session') {
+                $current_post = $_SESSION['jjwg_Maps']['current_post'];
+            } else {
+                $current_post = $_REQUEST['current_post'];
+            }
             $query = '';
             $sub_query = '';
             $records_where = '';
@@ -869,9 +878,9 @@ class jjwg_MapsController extends SugarController {
                 // Several records selected or this page
                 $records = explode(',', $_REQUEST['uid']);
                 $records_where = $this->display_object->table_name . ".id IN('" . implode("','", $records) . "')";
-            } elseif (!empty($_REQUEST['current_post'])) {
+            } elseif (!empty($current_post)) {
                 // Select all records (advanced search)
-                @$search_array = generateSearchWhere($display_module, $_REQUEST['current_post']);
+                @$search_array = generateSearchWhere($display_module, $current_post);
                 if (!empty($search_array['where'])) {
                     // Related Field Bug: Get relate/link patched 'where' and 'join'
                     @$ret_array = create_export_query_relate_link_patch($display_module, $search_array['searchFields'], $search_array['where']);
