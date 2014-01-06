@@ -12,6 +12,16 @@ Copyright (C) 2010-2014 Jeffrey J. Walters
 
 
 
+
+Version 2.1.18 Changes 01/06/2014
+
+Improvements:
+
+1.) Bug: URL length issue with Google Maps libraries - moving 'current_post' into session.
+2.) Bugs with SugarOnDemand: Export query where/join issues.
+3.) Advanced Search link/relate field type issues.
+
+
 Version 2.1.17 Changes 01/01/2014
 
 Improvements:
