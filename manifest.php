@@ -116,11 +116,6 @@ $installdefs = array (
       'from' => '<basepath>/custom/modules/Accounts/views/view.list.php',
       'to' => 'custom/modules/Accounts/views/view.list.php',
     ),
-    // Accounts - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Accounts/AccountsListViewSmarty.php',
-      'to' => 'custom/modules/Accounts/AccountsListViewSmarty.php',
-    ),
     // Accounts - Logic Hook
     array (
       'from' => '<basepath>/custom/modules/Accounts/AccountsJjwg_MapsLogicHook.php',
@@ -131,11 +126,6 @@ $installdefs = array (
     array (
       'from' => '<basepath>/custom/modules/Cases/views/view.list.php',
       'to' => 'custom/modules/Cases/views/view.list.php',
-    ),
-    // Cases - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Cases/CasesListViewSmarty.php',
-      'to' => 'custom/modules/Cases/CasesListViewSmarty.php',
     ),
     // Cases - Logic Hook
     array (
@@ -148,11 +138,6 @@ $installdefs = array (
       'from' => '<basepath>/custom/modules/Contacts/views/view.list.php',
       'to' => 'custom/modules/Contacts/views/view.list.php',
     ),
-    // Contacts - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Contacts/ContactsListViewSmarty.php',
-      'to' => 'custom/modules/Contacts/ContactsListViewSmarty.php',
-    ),
     // Contacts - Logic Hook
     array (
       'from' => '<basepath>/custom/modules/Contacts/ContactsJjwg_MapsLogicHook.php',
@@ -163,11 +148,6 @@ $installdefs = array (
     array (
       'from' => '<basepath>/custom/modules/Leads/views/view.list.php',
       'to' => 'custom/modules/Leads/views/view.list.php',
-    ),
-    // Leads - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Leads/LeadsListViewSmarty.php',
-      'to' => 'custom/modules/Leads/LeadsListViewSmarty.php',
     ),
     // Leads - Logic Hook
     array (
@@ -180,11 +160,6 @@ $installdefs = array (
       'from' => '<basepath>/custom/modules/Meetings/views/view.list.php',
       'to' => 'custom/modules/Meetings/views/view.list.php',
     ),
-    // Meetings - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Meetings/MeetingsListViewSmarty.php',
-      'to' => 'custom/modules/Meetings/MeetingsListViewSmarty.php',
-    ),
     // Meetings - Logic Hook
     array (
       'from' => '<basepath>/custom/modules/Meetings/MeetingsJjwg_MapsLogicHook.php',
@@ -195,11 +170,6 @@ $installdefs = array (
     array (
       'from' => '<basepath>/custom/modules/Opportunities/views/view.list.php',
       'to' => 'custom/modules/Opportunities/views/view.list.php',
-    ),
-    // Opportunities - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Opportunities/OpportunitiesListViewSmarty.php',
-      'to' => 'custom/modules/Opportunities/OpportunitiesListViewSmarty.php',
     ),
     // Opportunities - Logic Hook
     array (
@@ -212,11 +182,6 @@ $installdefs = array (
       'from' => '<basepath>/custom/modules/Project/views/view.list.php',
       'to' => 'custom/modules/Project/views/view.list.php',
     ),
-    // Project - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Project/ProjectListViewSmarty.php',
-      'to' => 'custom/modules/Project/ProjectListViewSmarty.php',
-    ),
     // Project - Logic Hook
     array (
       'from' => '<basepath>/custom/modules/Project/ProjectJjwg_MapsLogicHook.php',
@@ -227,11 +192,6 @@ $installdefs = array (
     array (
       'from' => '<basepath>/custom/modules/Prospects/views/view.list.php',
       'to' => 'custom/modules/Prospects/views/view.list.php',
-    ),
-    // Prospects - Extend List View Smarty
-    array (
-      'from' => '<basepath>/custom/modules/Prospects/ProspectsListViewSmarty.php',
-      'to' => 'custom/modules/Prospects/ProspectsListViewSmarty.php',
     ),
     // Prospects - Logic Hook
     array (
