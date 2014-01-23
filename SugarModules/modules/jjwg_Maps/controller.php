@@ -621,6 +621,7 @@ class jjwg_MapsController extends SugarController {
         $this->sugarSmarty = new Sugar_Smarty();
         $this->sugarSmarty->assign("mod_strings", $GLOBALS['mod_strings']);
         $this->sugarSmarty->assign("app_strings", $GLOBALS['app_strings']);
+        $this->sugarSmarty->assign('app_list_strings', $GLOBALS['app_list_strings']);
         $this->sugarSmarty->assign('moduleListSingular', $GLOBALS['app_list_strings']['moduleListSingular']);
         $this->sugarSmarty->assign('moduleList', $GLOBALS['app_list_strings']['moduleList']);
         //echo '<pre>';
