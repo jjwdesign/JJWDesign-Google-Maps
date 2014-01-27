@@ -23,7 +23,8 @@ $mod_strings['LBL_MAP_USER_GROUPS'] = 'Benutzer-Gruppen:';
 $mod_strings['LBL_MAP_GROUP'] = 'Gruppe';
 $mod_strings['LBL_MAP_TYPE'] = 'Typ';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'zugeordnet zu:';
-$mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
+$mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Route';
+$mod_strings['LBL_MAP_GOOGLE_MAPS_VIEW'] = 'Google Maps Anzeigen';
 
 $mod_strings['LNK_NEW_MAP'] = 'neue Karte';
 $mod_strings['LNK_NEW_RECORD'] = 'neue Karte';

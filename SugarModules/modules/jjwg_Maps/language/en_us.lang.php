@@ -24,6 +24,7 @@ $mod_strings['LBL_MAP_GROUP'] = 'Group';
 $mod_strings['LBL_MAP_TYPE'] = 'Type';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'Assigned to:';
 $mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
+$mod_strings['LBL_MAP_GOOGLE_MAPS_VIEW'] = 'Google Maps View';
 
 $mod_strings['LNK_NEW_MAP'] = 'Add New Map';
 $mod_strings['LNK_NEW_RECORD'] = 'Add New Map';
