@@ -13,19 +13,19 @@ $manifest = array (
         ),
     'key'=>'jjwg',
     'author' => 'Jeff Walters',
-    'description' => 'JJWDesign Google Maps v2.1.18 for SugarCRM v6.2+',
+    'description' => 'JJWDesign Google Maps v2.1.19 for SugarCRM v6.2+',
     'icon' => 'images/default/images/icon_jjwg_Maps.gif',
     'is_uninstallable' => true,
     'name' => 'JJWDesign_Google_Maps',
-    'published_date' => '2014-01-06 12:12:12',
+    'published_date' => '2014-01-29 11:11:11',
     'type' => 'module',
-    'version' => '2.1.18-6.2+',
+    'version' => '2.1.19-6.2+',
     'remove_tables' => 'prompt'
 );
 
 
 $installdefs = array (
-  'id' => 'Google_Maps_20140106',
+  'id' => 'Google_Maps_20140129',
 
   'beans' => 
   array (

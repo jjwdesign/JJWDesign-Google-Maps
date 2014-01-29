@@ -13,6 +13,15 @@ Copyright (C) 2010-2014 Jeffrey J. Walters
 
 
 
+Version 2.1.19 Changes 01/29/2014
+
+Improvements:
+
+1.) Revising List View Map Buttons to be built thru buildMyMenuItem() method
+2.) Target new window/tab for Google directions
+3.) InfoWindows: Adding basic Google Maps View link for address
+
+
 Version 2.1.18 Changes 01/06/2014
 
 Improvements:
