@@ -586,6 +586,7 @@ class jjwg_MapsController extends SugarController {
     function action_map_display() {
 
         $this->view = 'map_display';
+        if (!isset($_REQUEST['current_post'])) $_REQUEST['current_post'] = '';
         
         // Bug: 'current_post' too large for iFrame URL used in Google Library calls
         $_SESSION['jjwg_Maps']['current_post'] = $_REQUEST['current_post'];
