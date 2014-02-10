@@ -51,7 +51,8 @@ class jjwg_MapsController extends SugarController {
      * jjwg_Maps - Maps module's object
      * @var object
      */
-    var $jjwg_Maps;
+    var $bean;
+    var $jjwg_Maps; // Deprecated reference
 
     /**
      * jjwg_Address_Cache - Address cache module's object
@@ -86,6 +87,7 @@ class jjwg_MapsController extends SugarController {
     function configuration() {
 
         $this->bean = new jjwg_Maps();
+        $this->jjwg_Maps = &$this->bean; // Set deprecated reference
         $this->settings = $GLOBALS['jjwg_config'];
     }
     

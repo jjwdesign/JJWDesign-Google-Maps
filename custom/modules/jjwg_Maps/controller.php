@@ -29,7 +29,9 @@ class Customjjwg_MapsController extends jjwg_MapsController
             $type = (isset($this->settings['geocode_modules_to_address_type']['your_Customs'])) ? 
                 $this->settings['geocode_modules_to_address_type']['your_Customs'] : 
                 'billing';
-            $aInfo['address'] = $this->jjwg_Maps->defineMapsFormattedAddress($display, $type);
+            $GLOBALS['log']->debug(__METHOD__.' $type: '.print_r($type, true));
+            
+            $aInfo['address'] = $this->bean->defineMapsFormattedAddress($display, $type);
         }
         
         return $aInfo;
