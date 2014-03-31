@@ -185,8 +185,15 @@ class jjwg_MapsController extends SugarController {
             // Find the Items to Geocode - Get Geocode Addresses Result
             $display_result = $this->bean->getGeocodeAddressesResult($this->display_object->table_name);
 
-            // Iterate through the display rows
+            /* 
+             * Iterate through the display rows
+             * We build up an array here to prevent locking issues on some DBs (looking at you MSSQL)
+             */
+            $tmpDisplayResults = array();
             while ($display = $this->bean->db->fetchByAssoc($display_result)) {
+                $tmpDisplayResults[] = $display;
+            }
+            foreach($tmpDisplayResults as $display){
 
                 $GLOBALS['log']->debug(__METHOD__.' $display[\'id\': '.$display['id']);
                 $geocoding_inc++;
