@@ -11,6 +11,11 @@ Copyright (C) 2010-2014 Jeffrey J. Walters
 
 
 
+Version 2.1.20 Changes 05/25/2015
+
+Improvements:
+
+1.) Removed Google Adsense Code! No more ad units.
 
 
 Version 2.1.19 Changes 01/29/2014
