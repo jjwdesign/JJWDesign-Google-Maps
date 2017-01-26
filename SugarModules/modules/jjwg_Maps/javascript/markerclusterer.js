@@ -1611,8 +1611,9 @@ MarkerClusterer.BATCH_SIZE_IE = 500;
  * @type {string}
  * @constant
  */
-MarkerClusterer.IMAGE_PATH = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
-
+// MarkerClusterer.IMAGE_PATH = "https://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+// link to googlecode is dead.  the project has moved to github.
+MarkerClusterer.IMAGE_PATH = "https://raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/images/m";
 
 /**
  * The default extension name for the marker cluster images.
