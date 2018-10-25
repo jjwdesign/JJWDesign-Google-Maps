@@ -49,7 +49,15 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          * 'geocoding_api_url' sets the URL used for geocoding (Google or Proxy)
          * @var string
          */
-        'geocoding_api_url' => 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false',
+        'geocoding_api_url' => 'https://maps.googleapis.com/maps/api/geocode/json?key=',
+        
+        /**
+        * 'api_key' sets the private api key get from Google APIs: 
+        * https://developers.google.com/maps/documentation/javascript/get-api-key
+        * @var string
+        */
+        'api_key' => 'HERE YOUR API KEY',
+        
         /**
          * 'geocoding_api_secret' sets a secret phrase to be used by a Proxy for hash comparison
          * @var string
@@ -221,14 +229,19 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      */
     var $custom_areas = null;
 
-
+    /*
+    * Used in views to show the map e.g. in markers module
+    */
+    public function getKey(){
+        return $this->settings['api_key'];
+    }
 
     /**
-     * Constructor
+     * PHP 7 Constructor
      */
-    function jjwg_Maps() {
+    function __construct() {
 
-        parent::jjwg_Maps_sugar();
+        parent::__construct();
         // Admin Config Setting
         $this->configuration();
     }
@@ -329,8 +342,12 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $this->settings['allow_approximate_location_type'] = (!empty($rev['allow_approximate_location_type'])) ? true : false;
             
             // Set Geocoding API URL or Proxy URL
-            if (isset($rev['geocoding_api_url'])) {
-                $this->settings['geocoding_api_url'] = $rev['geocoding_api_url'];
+            if (isset($rev['geocoding_api_url']) && isset($rev['api_key'])) {
+                if(strpos($rev['geocoding_api_url'],$rev['api_key'])===false)
+                    $this->settings['geocoding_api_url'] = $rev['geocoding_api_url'] . $rev['api_key'];
+            } else {
+                if(strpos($this->settings['geocoding_api_url'],$this->settings['api_key'])===false)
+                    $this->settings['geocoding_api_url'] = $this->settings['geocoding_api_url'] . $this->settings['api_key'];
             }
             // Set Google Maps API Secret
             if (isset($rev['geocoding_api_secret'])) {
